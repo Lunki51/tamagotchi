@@ -10,7 +10,7 @@ public class Game {
 
     public Animal getAnimal(){
         return animal;
-    };
+    }
 
     public String getStatsString() {
         return Arrays.toString(animal.getStats());

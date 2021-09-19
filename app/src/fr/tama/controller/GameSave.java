@@ -12,13 +12,15 @@ public class GameSave {
     private LocalDateTime date;
     private int slot;
     private Tamagotchi tamagotchi;
+    private Location location;
     private static Connection connection;
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private GameSave(LocalDateTime date, Tamagotchi tamagotchi,int slot){
+    private GameSave(LocalDateTime date, Tamagotchi tamagotchi,int slot,Location location){
         this.date=date;
         this.slot = slot;
         this.tamagotchi=tamagotchi;
+        this.location = location;
     }
 
     public void save(){
@@ -34,23 +36,35 @@ public class GameSave {
             File dbfile =new File(".");
             String url = "jdbc:sqlite:"+dbfile.getAbsolutePath()+"\\tama-db";
             connection= DriverManager.getConnection(url);
-            String sql = "INSERT INTO save(date, mood, shape, current, faim, fatigue, toilette, proprete, bonheur, profile) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO save(date, mood, shape, current, profile,location) VALUES(?,?,?,?,?,?)";
 
             try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setString(1, this.date.format(FORMAT));
                 pstmt.setString(2, tamagotchi.getMood().toString());
                 pstmt.setString(3, tamagotchi.getShape().toString());
                 pstmt.setString(4, tamagotchi.getCurrent().toString());
-                pstmt.setInt(5, tamagotchi.getAttribute("faim").getValue());
-                pstmt.setInt(6,  tamagotchi.getAttribute("fatigue").getValue());
-                pstmt.setInt(7,  tamagotchi.getAttribute("toilette").getValue());
-                pstmt.setInt(8,  tamagotchi.getAttribute("propete").getValue());
-                pstmt.setInt(9,  tamagotchi.getAttribute("bonheur").getValue());
-                pstmt.setInt(10,slot);
-                pstmt.executeUpdate();
+                pstmt.setString(5,this.location.getName());
+                pstmt.setInt(5,slot);
+                int id = pstmt.executeUpdate();
+
+                for(Attribute attr : tamagotchi.getAttributes()){
+                    sql = "INSERT INTO attribute(name,value,save) VALUES(?,?,?)";
+                    try (PreparedStatement pstmt2 = connection.prepareStatement(sql)) {
+                        pstmt2.setString(1, attr.getName());
+                        pstmt2.setInt(2, attr.getValue());
+                        pstmt2.setInt(3, id);
+                        pstmt2.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
+
+
+
         }catch(SQLException e){
                 e.printStackTrace();
         }
@@ -95,6 +109,7 @@ public class GameSave {
 
         Tamagotchi tamagotchi = null;
         LocalDateTime date = LocalDateTime.now();
+        Location location = null;
 
         try{
             File dbfile =new File(".");
@@ -103,16 +118,14 @@ public class GameSave {
 
             String request1 = "SELECT * FROM profile WHERE slot ="+slot;
             String request2 = "SELECT * FROM save WHERE profile ="+slot+" ORDER BY DATE";
-            try (Statement ignored = connection.createStatement();ResultSet rs = ignored.executeQuery(request1)){
+            Statement ignored = connection.createStatement();
+            ResultSet rs = ignored.executeQuery(request1);
                 if(rs.next()){
-
                     String name = rs.getString("name");
                     date =  LocalDateTime.parse(rs.getString("date"),FORMAT);
                     String type = rs.getString("type");
-                    try (
                             Statement ignored2 = connection.createStatement();
-                            ResultSet rs2 = ignored2.executeQuery(request2)
-                    ){
+                            ResultSet rs2 = ignored2.executeQuery(request2);
                         if(rs.next()){
                             tamagotchi = switch (type) {
                                 case "Chien" -> new Chien(
@@ -133,21 +146,15 @@ public class GameSave {
                                         currentFromString(rs2.getString("status")));
                                 default -> new Robot(Status.GOOD, Status.GOOD, Current.AWAKE);
                             };
-                            tamagotchi.setAttribute("faim",rs2.getInt("faim"));
-                            tamagotchi.setAttribute("fatigue",rs2.getInt("fatigue"));
-                            tamagotchi.setAttribute("toilette",rs2.getInt("toilette"));
-                            tamagotchi.setAttribute("proprete",rs2.getInt("proprete"));
-                            tamagotchi.setAttribute("bonheur",rs2.getInt("bonheur"));
+                            location = Location.getLocation(rs2.getString("location"));
+                            String sql = "SELECT * FROM attribute WHERE save ="+rs2.getInt("id");
+                            ignored = connection.createStatement();
+                            ResultSet rs3 = ignored.executeQuery(request1);
+                            while(rs3.next()){
+                                tamagotchi.setAttribute(rs3.getString("name"),rs3.getInt("value"));
+                            }
                         }
-                    }catch(SQLException e){
-                        System.out.println(e.getMessage());
-                    }
                 }
-            }
-            catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -160,10 +167,10 @@ public class GameSave {
             }
         }
 
-        return new GameSave(date,tamagotchi,slot);
+        return new GameSave(date,tamagotchi,slot,location);
     }
 
-    public static GameSave createSave(int slot,Tamagotchi tamagotchi){
+    public static GameSave createSave(int slot,Tamagotchi tamagotchi,Location defaultLoc){
         while(connection!=null){
             try{
                 Thread.sleep(100);
@@ -192,8 +199,9 @@ public class GameSave {
                 e.printStackTrace();
             }
         }
-
-        return new GameSave(date,tamagotchi,slot);
+        GameSave save = new GameSave(date,tamagotchi,slot,defaultLoc);
+        save.save();
+        return save;
     }
 
 }

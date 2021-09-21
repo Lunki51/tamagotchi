@@ -7,8 +7,14 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * GameSave class represent a save inside the database. A save is identified by a slot id. There can be only 3 saves at the same time. When loading or creating a save, use the static
+ * methods to create an object that represent the data in the database. On modified, use the save() method on the given object to update the database with the new data. The save slot cannot be changed
+ * A save can be deleted from the database with the delete method.
+ */
 public class GameSave {
 
+    private boolean deleted = false;
     private LocalDateTime date;
     private int slot;
     private Tamagotchi tamagotchi;
@@ -23,7 +29,11 @@ public class GameSave {
         this.location = location;
     }
 
+    /**
+     * Save the GameSave object into the database.Create a new save from the profil wich this GameSave correspond.
+     */
     public void save(){
+        if(deleted)return;
         while(connection!=null){
             try{
                 Thread.sleep(100);
@@ -46,12 +56,11 @@ public class GameSave {
             pstmt.setString(5, tamagotchi.getCurrent().toString());
             pstmt.setInt(6,slot);
             pstmt.executeUpdate();
+
             ResultSet generatedKeys = pstmt.getGeneratedKeys();
             generatedKeys.next();
             int id = generatedKeys.getInt(1);
-            System.out.println(id);
-
-                for(Attribute attr : tamagotchi.getAttributes()){
+            for(Attribute attr : tamagotchi.getAttributes()){
                     sql = "INSERT INTO attribute VALUES(null,?,?,?)";
                     try (PreparedStatement pstmt2 = connection.prepareStatement(sql)) {
                         pstmt2.setString(1, attr.getName());
@@ -64,8 +73,14 @@ public class GameSave {
 
                 }
 
-
-
+            sql = "UPDATE profile SET name = ?,type=? WHERE slot = ?";
+            pstmt = connection.prepareStatement(sql);
+            String name = tamagotchi.getClass().getName();
+            String[] tab = name.split("\\.");
+            pstmt.setString(1,this.getTamagotchi().getName());
+            pstmt.setString(2,tab[tab.length-1]);
+            pstmt.setInt(3,this.slot);
+            pstmt.executeUpdate();
         }catch(SQLException e){
                 e.printStackTrace();
         }
@@ -79,8 +94,12 @@ public class GameSave {
         }
     }
 
+    /**
+     * Delete the corresponding save from the database.Once deleted, the save cannot be saved again.
+     */
     public void delete(){
-        while(connection!=null){
+        this.deleted = true;
+        while(connection!=null) {
             try{
                 Thread.sleep(100);
             }catch(InterruptedException e){
@@ -92,17 +111,10 @@ public class GameSave {
             File dbfile =new File(".");
             String url = "jdbc:sqlite:"+dbfile.getAbsolutePath()+"/app/tama-db.db";
             connection= DriverManager.getConnection(url);
-            String sql = "DELETE from profile WHERE slot ="+this.slot;
-            String sql2 = "DELETE FROM save WHERE profile="+this.slot;
-            String sql3 = "SELECT saveID FROM save WHERE profile="+this.slot;
-            Statement ignored = connection.createStatement();
-            ResultSet rs = ignored.executeQuery(sql3);
-            while(rs.next()){
-                String sql4 = "DELETE FROM attribute WHERE save="+rs.getString("id");
-                ignored.executeQuery(sql3);
-            }
-            ignored.executeQuery(sql2);
-            ignored.executeQuery(sql);
+            String sql = "DELETE from profile WHERE slot =?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,this.slot);
+            pstmt.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -116,25 +128,11 @@ public class GameSave {
         }
     }
 
-    private static Status statusFromString(String status){
-        return switch (status) {
-            case "VERY_BAD" -> Status.VERY_BAD;
-            case "BAD" -> Status.BAD;
-            case "GOOD" -> Status.GOOD;
-            case "VERY_GOOD" -> Status.VERY_GOOD;
-            default -> Status.GOOD;
-        };
-    }
-
-    private static Current currentFromString(String current){
-        return switch (current) {
-            case "AWAKE" -> Current.AWAKE;
-            case "ASLEEP" -> Current.ASLEEP;
-            case "DEAD" -> Current.DEAD;
-            default -> Current.DEAD;
-        };
-    }
-
+    /**
+     * Load a save from the database and return the corresponding object
+     * @param slot the slot to load
+     * @return an object that represent the save in the database
+     */
     public static GameSave loadSave(int slot){
         while(connection!=null){
             try{
@@ -154,15 +152,18 @@ public class GameSave {
             String url = "jdbc:sqlite:"+dbfile.getAbsolutePath()+"/app/tama-db.db";
             connection= DriverManager.getConnection(url);
 
-            String request1 = "SELECT * FROM profile WHERE slot ="+slot;
-            String request2 = "SELECT * FROM save WHERE profile ="+slot+" ORDER BY DATE";
-            Statement ignored = connection.createStatement();
-            ResultSet rs = ignored.executeQuery(request1);
+            String request1 = "SELECT * FROM profile WHERE slot =?";
+            String request2 = "SELECT * FROM save WHERE profile = ? ORDER BY DATE";
+            PreparedStatement ignored = connection.prepareStatement(request1);
+            ignored.setInt(1,slot);
+            ResultSet rs = ignored.executeQuery();
                 if(rs.next()){
                     String name = rs.getString("name");
-                    date =  LocalDateTime.parse(rs.getString("date"),FORMAT);
+                    date =  LocalDateTime.parse(rs.getString("creationDate"),FORMAT);
                     String type = rs.getString("type");
-                            ResultSet rs2 = ignored.executeQuery(request2);
+                            ignored = connection.prepareStatement(request2);
+                            ignored.setInt(1,slot);
+                            ResultSet rs2 = ignored.executeQuery();
                         if(rs.next()){
                             tamagotchi = switch (type) {
                                 case "Chien" -> new Chien(
@@ -210,6 +211,13 @@ public class GameSave {
         return new GameSave(date,tamagotchi,slot,location);
     }
 
+    /**
+     * Create a new save in the database and replace an older one if override is needed.
+     * @param slot the slot where to create the save
+     * @param tamagotchi the tamagotchi that is saved
+     * @param defaultLoc the location where the tamagotchi start
+     * @return an object that represent the save in the database
+     */
     public static GameSave createSave(int slot,Tamagotchi tamagotchi,Location defaultLoc){
         while(connection!=null){
             try{
@@ -254,19 +262,54 @@ public class GameSave {
         return save;
     }
 
+    /**
+     * Return the date when the save have been created
+     * @return a LocalDateTime that represent the date of the save creation
+     */
     public LocalDateTime getDate() {
         return date;
     }
 
+    /**
+     * The slot where the save is saved
+     * @return the slot
+     */
     public int getSlot() {
         return slot;
     }
 
+    /**
+     * Return the tamagotchi object that represent the save animal
+     * @return
+     */
     public Tamagotchi getTamagotchi() {
         return tamagotchi;
     }
 
+    /**
+     * Return the current location of the tamagotchi
+     * @return a Location object that represent the current location of the tamagotchi
+     */
     public Location getLocation() {
         return location;
+    }
+
+    private static Status statusFromString(String status){
+        return switch (status) {
+            case "VERY_BAD" -> Status.VERY_BAD;
+            case "BAD" -> Status.BAD;
+            case "GOOD" -> Status.GOOD;
+            case "VERY_GOOD" -> Status.VERY_GOOD;
+            default -> Status.GOOD;
+        };
+    }
+
+    private static Current currentFromString(String current){
+        return switch (current) {
+            case "AWAKE" -> Current.AWAKE;
+            case "ASLEEP" -> Current.ASLEEP;
+            case "DEAD" -> Current.DEAD;
+            default -> Current.DEAD;
+        };
     }
 }

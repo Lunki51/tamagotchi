@@ -35,14 +35,14 @@ CREATE TABLE attribute(
 );
 
 CREATE TRIGGER save_remove
-AFTER DELETE ON profile
+BEFORE DELETE ON profile
 BEGIN
 	DELETE FROM save
 	WHERE profile = OLD.slot;
 END;
 
 CREATE TRIGGER attrib_remove
-    AFTER DELETE ON save
+BEFORE DELETE ON save
 BEGIN
     DELETE FROM attribute
     WHERE save = OLD.saveID;
@@ -71,13 +71,4 @@ BEGIN
     DELETE FROM profile
     WHERE slot = NEW.slot;
 
-end;
-
-CREATE TRIGGER profile_replacer_update
-    BEFORE UPDATE ON profile
-BEGIN
-    DELETE FROM save
-    WHERE profile = NEW.slot;
-    DELETE FROM profile
-    WHERE slot = NEW.slot;
 end;

@@ -1,6 +1,7 @@
 package fr.tama.controller;
 
 import fr.tama.model.*;
+import fr.tama.model.*;
 
 import java.io.File;
 import java.sql.*;
@@ -280,7 +281,7 @@ public class GameSave {
 
     /**
      * Return the tamagotchi object that represent the save animal
-     * @return
+     * @return the tamagotchi object
      */
     public Tamagotchi getTamagotchi() {
         return tamagotchi;

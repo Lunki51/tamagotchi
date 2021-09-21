@@ -31,7 +31,7 @@ public class Location {
         return previous;
     }
 
-    private static void setupLcations(){
+    private static void setupLocations(){
         Location cuisine=null,chambre=null,toilette=null,salledb=null,jardin=null;
         cuisine = new Location("Cuisine","Manger",jardin,chambre);
         chambre = new Location("Chambre","Dormir",cuisine,salledb);
@@ -43,7 +43,7 @@ public class Location {
 
     public static Location getLocation(String name){
         if(locations==null){
-            setupLcations();
+            setupLocations();
         }
         for(Location loc : locations){
             if(loc.getName().equals(name))return loc;

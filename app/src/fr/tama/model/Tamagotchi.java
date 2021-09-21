@@ -8,10 +8,11 @@ public abstract class Tamagotchi {
     private Current current;
     private Attribute[] attributes;
 
-    public Tamagotchi(Status mood, Status shape, Current current) {
+    public Tamagotchi(Status mood, Status shape, Current current,String name) {
         this.mood = mood;
         this.shape = shape;
         this.current = current;
+        this.name=name;
         setupDefaultAttributes();
     }
 

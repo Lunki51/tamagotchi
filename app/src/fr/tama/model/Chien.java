@@ -3,8 +3,8 @@ package fr.tama.model;
 public class Chien extends Tamagotchi{
 
 
-    public Chien(Status mood, Status shape, Current current) {
-        super(mood, shape, current);
+    public Chien(Status mood, Status shape, Current current,String name) {
+        super(mood, shape, current,name);
     }
 
     @Override

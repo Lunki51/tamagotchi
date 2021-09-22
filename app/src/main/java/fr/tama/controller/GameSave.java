@@ -62,13 +62,14 @@ public class GameSave {
 
                 }
 
-            sql = "UPDATE profile SET name = ?,type=? WHERE slot = ?";
+            sql = "UPDATE profile SET name = ?,type=?,sex=? WHERE slot = ?";
             pstmt = DBConnection.getConnection().prepareStatement(sql);
             String name = tamagotchi.getClass().getName();
             String[] tab = name.split("\\.");
             pstmt.setString(1,this.getTamagotchi().getName());
             pstmt.setString(2,tab[tab.length-1]);
-            pstmt.setInt(3,this.slot);
+            pstmt.setBoolean(3,tamagotchi.isSex());
+            pstmt.setInt(4,this.slot);
             pstmt.executeUpdate();
         }catch(SQLException e){
                 e.printStackTrace();
@@ -166,14 +167,15 @@ public class GameSave {
 
         try{
 
-        String sql = "INSERT INTO profile VALUES(?,?,?,?)";
+        String sql = "INSERT INTO profile VALUES(?,?,?,?,?)";
         PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
             pstmt.setInt(1, slot);
             String name = tamagotchi.getClass().getName();
             String[] tab = name.split("\\.");
             pstmt.setString(2, tab[tab.length-1]);
-            pstmt.setString(3, tamagotchi.getName());
-            pstmt.setString(4, FORMAT.format(date));
+            pstmt.setBoolean(3,tamagotchi.isSex());
+            pstmt.setString(4, tamagotchi.getName());
+            pstmt.setString(5, FORMAT.format(date));
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

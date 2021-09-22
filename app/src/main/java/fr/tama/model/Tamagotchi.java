@@ -8,6 +8,7 @@ import fr.tama.controller.LangFile;
 public abstract class Tamagotchi {
 
     private String name;
+    private boolean sex;
     private Status mood;
     private Status shape;
     private Current current;
@@ -20,12 +21,17 @@ public abstract class Tamagotchi {
      * @param current the current status of the tamagotchi
      * @param name the name of the tamagotchi
      */
-    public Tamagotchi(Status mood, Status shape, Current current,String name) {
+    public Tamagotchi(Status mood, Status shape, Current current,boolean sex,String name) {
         this.mood = mood;
         this.shape = shape;
         this.current = current;
         this.name=name;
+        this.sex=sex;
         setupDefaultAttributes();
+    }
+
+    public boolean isSex() {
+        return sex;
     }
 
     /**

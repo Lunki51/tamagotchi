@@ -13,6 +13,7 @@ DROP TRIGGER IF EXISTS config_remover;
 CREATE TABLE profile(
 	slot INTEGER PRIMARY KEY NOT NULL CHECK(slot=0 OR slot=1 OR slot=2),
 	type TEXT NOT NULL CHECK(type='Chien' OR type='Chat' OR type='Lapin' OR type='Robot'),
+	sex BOOLEAN NOT NULL,
 	name TEXT NOT NULL,
 	creationDate DATE
 );

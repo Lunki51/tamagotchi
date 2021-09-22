@@ -1,5 +1,7 @@
 package fr.tama.model;
 
+import fr.tama.controller.LangFile;
+
 /**
  * Represent a location in the tamagotchi game
  */
@@ -61,13 +63,13 @@ public class Location {
      * Setup the default locations of the game
      */
     private static void setupLocations(){
-        Location cuisine=null,chambre=null,toilette=null,salledb=null,jardin=null;
-        cuisine = new Location("Cuisine","Manger",jardin,chambre);
-        chambre = new Location("Chambre","Dormir",cuisine,salledb);
-        salledb = new Location("Salle de Bain","Laver",chambre,toilette);
-        toilette = new Location("Toilette","Besoins",salledb,null);
-        jardin = new Location("Jardin","Jouer",null,cuisine);
-        locations = new Location[]{cuisine,chambre,toilette,salledb,jardin};
+        Location kitchen,bedroom=null,toilet=null,bathroom=null,garden=null;
+        kitchen = new Location(LangFile.getLangFile().getString("location_kitchen"), LangFile.getLangFile().getString("attribute_action_hunger"),garden,bedroom);
+        bedroom = new Location(LangFile.getLangFile().getString("location_bedroom"),LangFile.getLangFile().getString("attribute_action_tiredness"),kitchen,bathroom);
+        bathroom = new Location(LangFile.getLangFile().getString("location_bathroom"),LangFile.getLangFile().getString("attribute_action_cleanliness"),bedroom,toilet);
+        toilet = new Location(LangFile.getLangFile().getString("location_toilet"),LangFile.getLangFile().getString("attribute_action_toilet"),bathroom,null);
+        garden = new Location(LangFile.getLangFile().getString("location_garden"),LangFile.getLangFile().getString("attribute_action_happiness"),null,kitchen);
+        locations = new Location[]{kitchen,bedroom,toilet,bathroom,garden};
     }
 
     /**

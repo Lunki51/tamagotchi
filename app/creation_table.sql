@@ -1,12 +1,14 @@
 DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS save;
 DROP TABLE IF EXISTS attribute;
+DROP TABLE IF EXISTS config;
 DROP TRIGGER IF EXISTS save_remove;
 DROP TRIGGER IF EXISTS valid_date_insert;
 DROP TRIGGER IF EXISTS valid_date_update;
 DROP TRIGGER IF EXISTS attrib_remove;
 DROP TRIGGER IF EXISTS profile_replacer_update;
 DROP TRIGGER IF EXISTS profile_replacer_insert;
+DROP TRIGGER IF EXISTS config_remover;
 
 CREATE TABLE profile(
 	slot INTEGER PRIMARY KEY NOT NULL CHECK(slot=0 OR slot=1 OR slot=2),
@@ -33,6 +35,17 @@ CREATE TABLE attribute(
     save INTEGER NOT NULL,
     FOREIGN KEY (save) REFERENCES save(saveID)
 );
+
+CREATE TABLE config(
+    darkMode BOOLEAN NOT NULL,
+    lang TEXT NOT NULL CHECK(lang='fr' OR lang = 'en')
+);
+
+CREATE TRIGGER config_remover
+BEFORE INSERT ON config
+BEGIN
+        DELETE FROM config WHERE true;
+END;
 
 CREATE TRIGGER save_remove
 BEFORE DELETE ON profile

@@ -1,5 +1,7 @@
 package fr.tama.model;
 
+import fr.tama.controller.LangFile;
+
 /**
  * Represent a tamagotchi in the game
  */
@@ -31,11 +33,11 @@ public abstract class Tamagotchi {
      */
     public void setupDefaultAttributes(){
         this.attributes = new Attribute[]{
-                new Attribute("faim",0),
-                new Attribute("toilette",0),
-                new Attribute("fatigue",0),
-                new Attribute("proprete",0),
-                new Attribute("bonheur",0)
+                new Attribute(LangFile.getLangFile().getString("attribute_name_hunger"), 0),
+                new Attribute(LangFile.getLangFile().getString("attribute_name_toilet"),0),
+                new Attribute(LangFile.getLangFile().getString("attribute_name_tiredness"),0),
+                new Attribute(LangFile.getLangFile().getString("attribute_name_cleanliness"),0),
+                new Attribute(LangFile.getLangFile().getString("attribute_name_happiness"),0)
         };
     }
 

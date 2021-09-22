@@ -20,7 +20,6 @@ public class GameSave {
     private int slot;
     private Tamagotchi tamagotchi;
     private Location location;
-    private static Connection connection;
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private GameSave(LocalDateTime date, Tamagotchi tamagotchi,int slot,Location location){
@@ -35,21 +34,10 @@ public class GameSave {
      */
     public void save(){
         if(deleted)return;
-        while(connection!=null){
-            try{
-                Thread.sleep(100);
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            }
-
-        }
         try{
-            File dbfile =new File(".");
-            String url = "jdbc:sqlite:"+dbfile.getAbsolutePath()+"/app/tama-db.db";
-            connection= DriverManager.getConnection(url);
             String sql = "INSERT INTO save(date,location,mood,shape,current,profile) VALUES(?,?,?,?,?,?)";
 
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+            PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
             pstmt.setString(1, this.date.format(FORMAT));
             pstmt.setString(2,this.location.getName());
             pstmt.setString(3, tamagotchi.getMood().toString());
@@ -63,7 +51,7 @@ public class GameSave {
             int id = generatedKeys.getInt(1);
             for(Attribute attr : tamagotchi.getAttributes()){
                     sql = "INSERT INTO attribute VALUES(null,?,?,?)";
-                    try (PreparedStatement pstmt2 = connection.prepareStatement(sql)) {
+                    try (PreparedStatement pstmt2 = DBConnection.getConnection().prepareStatement(sql)) {
                         pstmt2.setString(1, attr.getName());
                         pstmt2.setInt(2, attr.getValue());
                         pstmt2.setInt(3, id);
@@ -75,7 +63,7 @@ public class GameSave {
                 }
 
             sql = "UPDATE profile SET name = ?,type=? WHERE slot = ?";
-            pstmt = connection.prepareStatement(sql);
+            pstmt = DBConnection.getConnection().prepareStatement(sql);
             String name = tamagotchi.getClass().getName();
             String[] tab = name.split("\\.");
             pstmt.setString(1,this.getTamagotchi().getName());
@@ -85,14 +73,6 @@ public class GameSave {
         }catch(SQLException e){
                 e.printStackTrace();
         }
-        finally{
-            try{
-                connection.close();
-                connection = null;
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-        }
     }
 
     /**
@@ -100,32 +80,13 @@ public class GameSave {
      */
     public void delete(){
         this.deleted = true;
-        while(connection!=null) {
-            try{
-                Thread.sleep(100);
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            }
-
-        }
         try{
-            File dbfile =new File(".");
-            String url = "jdbc:sqlite:"+dbfile.getAbsolutePath()+"/app/tama-db.db";
-            connection= DriverManager.getConnection(url);
             String sql = "DELETE from profile WHERE slot =?";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+            PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
             pstmt.setInt(1,this.slot);
             pstmt.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
-        }
-        finally{
-            try{
-                connection.close();
-                connection = null;
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
         }
     }
 
@@ -135,63 +96,52 @@ public class GameSave {
      * @return an object that represent the save in the database
      */
     public static GameSave loadSave(int slot){
-        while(connection!=null){
-            try{
-                Thread.sleep(100);
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            }
-
-        }
-
         Tamagotchi tamagotchi = null;
         LocalDateTime date = LocalDateTime.now();
         Location location = null;
 
         try{
-            File dbfile =new File(".");
-            String url = "jdbc:sqlite:"+dbfile.getAbsolutePath()+"/app/tama-db.db";
-            connection= DriverManager.getConnection(url);
-
             String request1 = "SELECT * FROM profile WHERE slot =?";
-            String request2 = "SELECT * FROM save WHERE profile = ? ORDER BY DATE";
-            PreparedStatement ignored = connection.prepareStatement(request1);
+            String request2 = "SELECT * FROM save WHERE profile = ? ORDER BY saveID DESC";
+            PreparedStatement ignored = DBConnection.getConnection().prepareStatement(request1);
             ignored.setInt(1,slot);
             ResultSet rs = ignored.executeQuery();
                 if(rs.next()){
                     String name = rs.getString("name");
                     date =  LocalDateTime.parse(rs.getString("creationDate"),FORMAT);
                     String type = rs.getString("type");
-                            ignored = connection.prepareStatement(request2);
+                            ignored = DBConnection.getConnection().prepareStatement(request2);
                             ignored.setInt(1,slot);
                             ResultSet rs2 = ignored.executeQuery();
-                        if(rs.next()){
+                        if(rs2.next()){
                             tamagotchi = switch (type) {
                                 case "Chien" -> new Chien(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
-                                        currentFromString(rs2.getString("status")),
+                                        currentFromString(rs2.getString("current")),
                                         name);
                                 case "Chat" -> new Chat(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
-                                        currentFromString(rs2.getString("status")),
+                                        currentFromString(rs2.getString("current")),
                                         name);
                                 case "Lapin" -> new Lapin(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
-                                        currentFromString(rs2.getString("status")),
+                                        currentFromString(rs2.getString("current")),
                                         name);
                                 case "Robot" -> new Robot(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
-                                        currentFromString(rs2.getString("status")),
+                                        currentFromString(rs2.getString("current")),
                                         name);
                                 default -> new Robot(Status.GOOD, Status.GOOD, Current.AWAKE,"");
                             };
                             location = Location.getLocation(rs2.getString("location"));
-                            String sql = "SELECT * FROM attribute WHERE save ="+rs2.getInt("saveID");
-                            ResultSet rs3 = ignored.executeQuery(request1);
+                            String sql = "SELECT * FROM attribute WHERE save =?";
+                            ignored = DBConnection.getConnection().prepareStatement(sql);
+                            ignored.setInt(1,rs2.getInt("saveID"));
+                            ResultSet rs3 = ignored.executeQuery();
                             while(rs3.next()){
                                 tamagotchi.setAttribute(rs3.getString("name"),rs3.getInt("value"));
                             }
@@ -199,14 +149,6 @@ public class GameSave {
                 }
         }catch(SQLException e){
             e.printStackTrace();
-        }
-        finally{
-            try{
-                connection.close();
-                connection = null;
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
         }
 
         return new GameSave(date,tamagotchi,slot,location);
@@ -220,27 +162,12 @@ public class GameSave {
      * @return an object that represent the save in the database
      */
     public static GameSave createSave(int slot,Tamagotchi tamagotchi,Location defaultLoc){
-        while(connection!=null){
-            try{
-                Thread.sleep(100);
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            }
-
-        }
-
         LocalDateTime date = LocalDateTime.now();
 
         try{
 
-        File dbfile =new File(".");
-        String url = "jdbc:sqlite:"+dbfile.getAbsolutePath()+"/app/tama-db.db";
-        connection= DriverManager.getConnection(url);
-
         String sql = "INSERT INTO profile VALUES(?,?,?,?)";
-
-
-        PreparedStatement pstmt = connection.prepareStatement(sql);
+        PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
             pstmt.setInt(1, slot);
             String name = tamagotchi.getClass().getName();
             String[] tab = name.split("\\.");
@@ -250,13 +177,6 @@ public class GameSave {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }finally{
-            try{
-                connection.close();
-                connection = null;
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
         }
         GameSave save = new GameSave(date,tamagotchi,slot,defaultLoc);
         save.save();

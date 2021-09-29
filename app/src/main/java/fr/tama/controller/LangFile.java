@@ -46,8 +46,11 @@ public class LangFile {
         }catch(SQLException e){
             e.printStackTrace();
         }
-
+        if(file.bundle==null){
+            System.err.println("Error bundle is null");
+        }
         return file;
     }
+
 
 }

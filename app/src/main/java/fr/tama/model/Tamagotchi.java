@@ -30,6 +30,10 @@ public abstract class Tamagotchi {
         setupDefaultAttributes();
     }
 
+    /**
+     * Return the sex of the tamagotchi
+     * @return the sex of the tamagotchi
+     */
     public boolean isSex() {
         return sex;
     }

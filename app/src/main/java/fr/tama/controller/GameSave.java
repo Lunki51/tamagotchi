@@ -109,6 +109,7 @@ public class GameSave {
             ResultSet rs = ignored.executeQuery();
                 if(rs.next()){
                     String name = rs.getString("name");
+                    boolean sex = rs.getBoolean("sex");
                     date =  LocalDateTime.parse(rs.getString("creationDate"),FORMAT);
                     String type = rs.getString("type");
                             ignored = DBConnection.getConnection().prepareStatement(request2);
@@ -120,23 +121,27 @@ public class GameSave {
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
+                                        sex,
                                         name);
                                 case "Chat" -> new Chat(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
+                                        sex,
                                         name);
                                 case "Lapin" -> new Lapin(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
+                                        sex,
                                         name);
                                 case "Robot" -> new Robot(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
+                                        sex,
                                         name);
-                                default -> new Robot(Status.GOOD, Status.GOOD, Current.AWAKE,"");
+                                default -> new Robot(Status.GOOD, Status.GOOD, Current.AWAKE,true,"");
                             };
                             location = Location.getLocation(rs2.getString("location"));
                             String sql = "SELECT * FROM attribute WHERE save =?";

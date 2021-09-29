@@ -116,33 +116,42 @@ public class GameSave {
                             ignored.setInt(1,slot);
                             ResultSet rs2 = ignored.executeQuery();
                         if(rs2.next()){
-                            tamagotchi = switch (type) {
-                                case "Chien" -> new Chien(
+                             switch (type) {
+                                case "Chien" :
+                                    tamagotchi = new Chien(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
                                         name);
-                                case "Chat" -> new Chat(
+                                    break;
+                                case "Chat" :
+                                    tamagotchi = new Chat(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
                                         name);
-                                case "Lapin" -> new Lapin(
+                                    break;
+                                 case "Lapin" :
+                                     tamagotchi = new Lapin(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
                                         name);
-                                case "Robot" -> new Robot(
+                                     break;
+                                 case "Robot" :
+                                     tamagotchi = new Robot(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
                                         name);
-                                default -> new Robot(Status.GOOD, Status.GOOD, Current.AWAKE,true,"");
-                            };
+                                     break;
+                                 default :
+                                     tamagotchi = new Robot(Status.GOOD, Status.GOOD, Current.AWAKE,true,"");
+                            }
                             location = Location.getLocation(rs2.getString("location"));
                             String sql = "SELECT * FROM attribute WHERE save =?";
                             ignored = DBConnection.getConnection().prepareStatement(sql);

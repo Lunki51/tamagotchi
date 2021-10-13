@@ -88,6 +88,4 @@ BEGIN
 end;
 
 INSERT INTO config VALUES(false,'fr');
-INSERT INTO config VALUES(false,'en');
-
 

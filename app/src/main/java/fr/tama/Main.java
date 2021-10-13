@@ -1,10 +1,9 @@
 package fr.tama;
 
 import fr.tama.controller.DBConnection;
-import fr.tama.controller.GameSave;
+import fr.tama.model.GameSave;
 import fr.tama.controller.LangFile;
 import fr.tama.model.*;
-import org.w3c.dom.Document;
 
 public class Main {
 

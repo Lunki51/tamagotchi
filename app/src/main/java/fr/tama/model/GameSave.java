@@ -1,9 +1,7 @@
-package fr.tama.controller;
+package fr.tama.model;
 
-import fr.tama.model.*;
-import fr.tama.model.*;
+import fr.tama.controller.DBConnection;
 
-import java.io.File;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

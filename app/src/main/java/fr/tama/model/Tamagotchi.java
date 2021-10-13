@@ -1,6 +1,7 @@
 package fr.tama.model;
 
 import fr.tama.controller.LangFile;
+import org.w3c.dom.Attr;
 
 /**
  * Represent a tamagotchi in the game
@@ -8,6 +9,7 @@ import fr.tama.controller.LangFile;
 public abstract class Tamagotchi {
 
     private String name;
+    private boolean sex;
     private Status mood;
     private Status shape;
     private Current current;
@@ -20,12 +22,21 @@ public abstract class Tamagotchi {
      * @param current the current status of the tamagotchi
      * @param name the name of the tamagotchi
      */
-    public Tamagotchi(Status mood, Status shape, Current current,String name) {
+    public Tamagotchi(Status mood, Status shape, Current current,boolean sex,String name) {
         this.mood = mood;
         this.shape = shape;
         this.current = current;
         this.name=name;
+        this.sex=sex;
         setupDefaultAttributes();
+    }
+
+    /**
+     * Return the sex of the tamagotchi
+     * @return the sex of the tamagotchi
+     */
+    public boolean isSex() {
+        return sex;
     }
 
     /**
@@ -33,11 +44,11 @@ public abstract class Tamagotchi {
      */
     public void setupDefaultAttributes(){
         this.attributes = new Attribute[]{
-                new Attribute(LangFile.getLangFile().getString("attribute_name_hunger"), 0),
-                new Attribute(LangFile.getLangFile().getString("attribute_name_toilet"),0),
-                new Attribute(LangFile.getLangFile().getString("attribute_name_tiredness"),0),
-                new Attribute(LangFile.getLangFile().getString("attribute_name_cleanliness"),0),
-                new Attribute(LangFile.getLangFile().getString("attribute_name_happiness"),0)
+                new Attribute("hunger", 0),
+                new Attribute("toilet",0),
+                new Attribute("tiredness",0),
+                new Attribute("cleanliness",0),
+                new Attribute("hapiness",0)
         };
     }
 

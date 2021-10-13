@@ -64,13 +64,15 @@ public class Location {
      */
     private static void setupLocations(){
         Location kitchen,bedroom=null,toilet=null,bathroom=null,garden=null;
-        kitchen = new Location(LangFile.getLangFile().getString("location_kitchen"), LangFile.getLangFile().getString("attribute_action_hunger"),garden,bedroom);
-        bedroom = new Location(LangFile.getLangFile().getString("location_bedroom"),LangFile.getLangFile().getString("attribute_action_tiredness"),kitchen,bathroom);
-        bathroom = new Location(LangFile.getLangFile().getString("location_bathroom"),LangFile.getLangFile().getString("attribute_action_cleanliness"),bedroom,toilet);
-        toilet = new Location(LangFile.getLangFile().getString("location_toilet"),LangFile.getLangFile().getString("attribute_action_toilet"),bathroom,null);
-        garden = new Location(LangFile.getLangFile().getString("location_garden"),LangFile.getLangFile().getString("attribute_action_happiness"),null,kitchen);
+        kitchen = new Location("kitchen", "hunger",garden,bedroom);
+        bedroom = new Location("bedroom","tiredness",kitchen,bathroom);
+        bathroom = new Location("bathroom","cleanliness",bedroom,toilet);
+        toilet = new Location("toilet","toilet",bathroom,null);
+        garden = new Location("garden","happiness",null,kitchen);
         locations = new Location[]{kitchen,bedroom,toilet,bathroom,garden};
     }
+
+    public static Location[] getLocations(){return locations;}
 
     /**
      * Search for a location by it's name if the default locations are not defined define them

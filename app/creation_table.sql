@@ -13,6 +13,7 @@ DROP TRIGGER IF EXISTS config_remover;
 CREATE TABLE profile(
 	slot INTEGER PRIMARY KEY NOT NULL CHECK(slot=0 OR slot=1 OR slot=2),
 	type TEXT NOT NULL CHECK(type='Chien' OR type='Chat' OR type='Lapin' OR type='Robot'),
+	sex BOOLEAN NOT NULL,
 	name TEXT NOT NULL,
 	creationDate DATE
 );
@@ -38,7 +39,7 @@ CREATE TABLE attribute(
 
 CREATE TABLE config(
     darkMode BOOLEAN NOT NULL,
-    lang TEXT NOT NULL CHECK(lang='fr' OR lang = 'en')
+    lang TEXT NOT NULL
 );
 
 CREATE TRIGGER config_remover
@@ -85,3 +86,8 @@ BEGIN
     WHERE slot = NEW.slot;
 
 end;
+
+INSERT INTO config VALUES(false,'fr');
+INSERT INTO config VALUES(false,'en');
+
+

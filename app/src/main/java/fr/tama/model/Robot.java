@@ -1,8 +1,8 @@
 package fr.tama.model;
 
 public class Robot extends Tamagotchi{
-    public Robot(Status mood, Status shape, Current current,String name) {
-        super(mood, shape, current,name);
+    public Robot(Status mood, Status shape, Current current,boolean sex,String name) {
+        super(mood, shape, current,sex,name);
     }
 
     @Override

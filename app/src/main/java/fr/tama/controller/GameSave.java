@@ -62,13 +62,14 @@ public class GameSave {
 
                 }
 
-            sql = "UPDATE profile SET name = ?,type=? WHERE slot = ?";
+            sql = "UPDATE profile SET name = ?,type=?,sex=? WHERE slot = ?";
             pstmt = DBConnection.getConnection().prepareStatement(sql);
             String name = tamagotchi.getClass().getName();
             String[] tab = name.split("\\.");
             pstmt.setString(1,this.getTamagotchi().getName());
             pstmt.setString(2,tab[tab.length-1]);
-            pstmt.setInt(3,this.slot);
+            pstmt.setBoolean(3,tamagotchi.isSex());
+            pstmt.setInt(4,this.slot);
             pstmt.executeUpdate();
         }catch(SQLException e){
                 e.printStackTrace();
@@ -108,35 +109,49 @@ public class GameSave {
             ResultSet rs = ignored.executeQuery();
                 if(rs.next()){
                     String name = rs.getString("name");
+                    boolean sex = rs.getBoolean("sex");
                     date =  LocalDateTime.parse(rs.getString("creationDate"),FORMAT);
                     String type = rs.getString("type");
                             ignored = DBConnection.getConnection().prepareStatement(request2);
                             ignored.setInt(1,slot);
                             ResultSet rs2 = ignored.executeQuery();
                         if(rs2.next()){
-                            tamagotchi = switch (type) {
-                                case "Chien" -> new Chien(
+                             switch (type) {
+                                case "Chien" :
+                                    tamagotchi = new Chien(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
+                                        sex,
                                         name);
-                                case "Chat" -> new Chat(
+                                    break;
+                                case "Chat" :
+                                    tamagotchi = new Chat(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
+                                        sex,
                                         name);
-                                case "Lapin" -> new Lapin(
+                                    break;
+                                 case "Lapin" :
+                                     tamagotchi = new Lapin(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
+                                        sex,
                                         name);
-                                case "Robot" -> new Robot(
+                                     break;
+                                 case "Robot" :
+                                     tamagotchi = new Robot(
                                         statusFromString(rs2.getString("mood")),
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
+                                        sex,
                                         name);
-                                default -> new Robot(Status.GOOD, Status.GOOD, Current.AWAKE,"");
-                            };
+                                     break;
+                                 default :
+                                     tamagotchi = new Robot(Status.GOOD, Status.GOOD, Current.AWAKE,true,"");
+                            }
                             location = Location.getLocation(rs2.getString("location"));
                             String sql = "SELECT * FROM attribute WHERE save =?";
                             ignored = DBConnection.getConnection().prepareStatement(sql);
@@ -166,14 +181,15 @@ public class GameSave {
 
         try{
 
-        String sql = "INSERT INTO profile VALUES(?,?,?,?)";
+        String sql = "INSERT INTO profile VALUES(?,?,?,?,?)";
         PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
             pstmt.setInt(1, slot);
             String name = tamagotchi.getClass().getName();
             String[] tab = name.split("\\.");
             pstmt.setString(2, tab[tab.length-1]);
-            pstmt.setString(3, tamagotchi.getName());
-            pstmt.setString(4, FORMAT.format(date));
+            pstmt.setBoolean(3,tamagotchi.isSex());
+            pstmt.setString(4, tamagotchi.getName());
+            pstmt.setString(5, FORMAT.format(date));
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

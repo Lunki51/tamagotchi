@@ -39,7 +39,7 @@ CREATE TABLE attribute(
 
 CREATE TABLE config(
     darkMode BOOLEAN NOT NULL,
-    lang TEXT NOT NULL CHECK(lang='fr' OR lang = 'en')
+    lang TEXT NOT NULL
 );
 
 CREATE TRIGGER config_remover
@@ -86,3 +86,8 @@ BEGIN
     WHERE slot = NEW.slot;
 
 end;
+
+INSERT INTO config VALUES(false,'fr');
+INSERT INTO config VALUES(false,'en');
+
+

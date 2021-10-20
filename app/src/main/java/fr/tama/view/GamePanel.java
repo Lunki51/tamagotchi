@@ -1,5 +1,7 @@
 package fr.tama.view;
 
+import fr.tama.controller.LangFile;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,10 +17,10 @@ public class GamePanel extends JPanel {
         top.add(new BackgroundPanel());
         bottom.setLayout(new BorderLayout());
         JPanel menu = new JPanel();
-        menu.add(new JButton("Quit"));
-        menu.add(new JButton("Previous"));
-        menu.add(new JButton("Feed"));
-        menu.add(new JButton("Next")) ;
+        menu.add(new JButton(LangFile.getLangFile().getString("menu.quit")));
+        menu.add(new JButton(LangFile.getLangFile().getString("menu.previous")));
+        menu.add(new JButton(LangFile.getLangFile().getString("menu.feed")));
+        menu.add(new JButton(LangFile.getLangFile().getString("menu.next"))) ;
 
         JPanel center = new JPanel();
 

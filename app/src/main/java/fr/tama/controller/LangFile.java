@@ -1,5 +1,6 @@
 package fr.tama.controller;
 
+import fr.tama.model.AttributeNotFoundException;
 import org.xml.sax.SAXException;
 
 import org.w3c.dom.Document;
@@ -27,6 +28,21 @@ public class LangFile {
 
     public String getString (String string) {
         return bundle.getString(string);
+    }
+
+    public static void setLang(String name){
+        try{
+            String sql = "UPDATE config SET lang=? WHERE TRUE";
+            PreparedStatement pstm = DBConnection.getConnection().prepareStatement(sql);
+            pstm.setString(1,name);
+            pstm.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void addLang(String name,Locale locale){
+        langs.put(name,locale);
     }
 
     public static LangFile getLangFile(){

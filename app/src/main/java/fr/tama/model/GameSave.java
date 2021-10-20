@@ -150,7 +150,12 @@ public class GameSave {
                                  default :
                                      tamagotchi = new Robot(Status.GOOD, Status.GOOD, Current.AWAKE,true,"");
                             }
-                            location = Location.getLocation(rs2.getString("location"));
+                            try{
+                                location = Location.getLocation(rs2.getString("location"));
+                            }catch(AttributeNotFoundException e){
+                                location=Location.getDefaultLocation();
+                            }
+
                             String sql = "SELECT * FROM attribute WHERE save =?";
                             ignored = DBConnection.getConnection().prepareStatement(sql);
                             ignored.setInt(1,rs2.getInt("saveID"));
@@ -230,21 +235,30 @@ public class GameSave {
     }
 
     private static Status statusFromString(String status){
-        return switch (status) {
-            case "VERY_BAD" -> Status.VERY_BAD;
-            case "BAD" -> Status.BAD;
-            case "GOOD" -> Status.GOOD;
-            case "VERY_GOOD" -> Status.VERY_GOOD;
-            default -> Status.GOOD;
-        };
+        switch (status) {
+            case "VERY_BAD":
+                return Status.VERY_BAD;
+            case "BAD" :
+                return Status.BAD;
+            case "GOOD" :
+                return Status.GOOD;
+            case "VERY_GOOD" :
+                return Status.VERY_GOOD;
+            default :
+                return Status.GOOD;
+        }
     }
 
     private static Current currentFromString(String current){
-        return switch (current) {
-            case "AWAKE" -> Current.AWAKE;
-            case "ASLEEP" -> Current.ASLEEP;
-            case "DEAD" -> Current.DEAD;
-            default -> Current.DEAD;
-        };
+        switch (current) {
+            case "AWAKE" :
+                return Current.AWAKE;
+            case "ASLEEP" :
+                return Current.ASLEEP;
+            case "DEAD" :
+                return Current.DEAD;
+            default :
+                return Current.DEAD;
+        }
     }
 }

@@ -11,8 +11,13 @@ public class Main {
     public static void main(String[] args){
 
         Tamagotchi tamagotchi = new Chien(Status.GOOD,Status.VERY_BAD, Current.AWAKE,true,"michel");
-
-        GameSave newSave = GameSave.createSave(0,tamagotchi, Location.getLocation("kitchen"));
+        Location location;
+        try{
+            location = Location.getLocation("kitchen");
+        }catch(AttributeNotFoundException e){
+            location=Location.getDefaultLocation();
+        }
+        GameSave newSave = GameSave.createSave(0,tamagotchi, location);
         newSave.getTamagotchi().setAttribute("faim",100);
         newSave.save();
 
@@ -21,6 +26,8 @@ public class Main {
         newSave.delete();
 
         LangFile file = LangFile.getLangFile();
+
+        LangFile.setLang("en");
 
 
         DBConnection.closeConnection();

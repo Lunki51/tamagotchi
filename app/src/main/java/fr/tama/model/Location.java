@@ -79,13 +79,20 @@ public class Location {
      * @param name the name of the location to search
      * @return the location if found
      */
-    public static Location getLocation(String name){
+    public static Location getLocation(String name) throws AttributeNotFoundException{
         if(locations==null){
             setupLocations();
         }
         for(Location loc : locations){
             if(loc.getName().equals(name))return loc;
         }
-        return null;
+        throw new AttributeNotFoundException();
+    }
+
+    public static Location getDefaultLocation(){
+        if(locations==null)setupLocations();
+        return locations[0];
     }
 }
+
+

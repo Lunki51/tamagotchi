@@ -2,6 +2,8 @@ package fr.tama.model;
 
 import fr.tama.controller.LangFile;
 
+import java.util.Objects;
+
 /**
  * Represent a location in the tamagotchi game
  */
@@ -92,6 +94,14 @@ public class Location {
     public static Location getDefaultLocation(){
         if(locations==null)setupLocations();
         return locations[0];
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location = (Location) o;
+        return name.equals(location.name) && action.equals(location.action) && next.equals(location.next) && previous.equals(location.previous);
     }
 }
 

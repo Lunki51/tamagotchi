@@ -3,6 +3,9 @@ package fr.tama.model;
 import fr.tama.controller.LangFile;
 import org.w3c.dom.Attr;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * Represent a tamagotchi in the game
  */
@@ -113,6 +116,58 @@ public abstract class Tamagotchi {
      */
     public Attribute[] getAttributes() {
         return attributes;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSex(boolean sex) {
+        this.sex = sex;
+    }
+
+    public void setMood(Status mood) {
+        this.mood = mood;
+    }
+
+    public void setShape(Status shape) {
+        this.shape = shape;
+    }
+
+    public void setCurrent(Current current) {
+        this.current = current;
+    }
+
+    public void setAttributes(Attribute[] attributes) {
+        this.attributes = attributes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tamagotchi that = (Tamagotchi) o;
+        boolean valid = true;
+        for(int i=0;i<attributes.length;i++){
+            if (attributes[i].equals(that.attributes[i])) {
+                valid = false;
+                break;
+            }
+        }
+        System.out.println(valid);
+        return sex == that.sex && name.equals(that.name) && mood == that.mood && shape == that.shape && current == that.current && valid;
+    }
+
+    @Override
+    public String toString() {
+        return "Tamagotchi{" +
+                "name='" + name + '\'' +
+                ", sex=" + sex +
+                ", mood=" + mood +
+                ", shape=" + shape +
+                ", current=" + current +
+                ", attributes=" + Arrays.toString(attributes) +
+                '}';
     }
 
     public abstract void eat();

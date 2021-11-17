@@ -5,6 +5,8 @@ import fr.tama.controller.DBConnection;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 /**
  * GameSave class represent a save inside the database. A save is identified by a slot id. There can be only 3 saves at the same time. When loading or creating a save, use the static
@@ -96,7 +98,8 @@ public class GameSave {
      */
     public static GameSave loadSave(int slot){
         Tamagotchi tamagotchi = null;
-        LocalDateTime date = LocalDateTime.now();
+        LocalDateTime.now();
+        LocalDateTime date;
         Location location = null;
 
         try{
@@ -148,12 +151,12 @@ public class GameSave {
                                         name);
                                      break;
                                  default :
-                                     tamagotchi = new Robot(Status.GOOD, Status.GOOD, Current.AWAKE,true,"");
+                                     return null;
                             }
                             try{
                                 location = Location.getLocation(rs2.getString("location"));
                             }catch(AttributeNotFoundException e){
-                                location=Location.getDefaultLocation();
+                                return null;
                             }
 
                             String sql = "SELECT * FROM attribute WHERE save =?";
@@ -164,9 +167,10 @@ public class GameSave {
                                 tamagotchi.setAttribute(rs3.getString("name"),rs3.getInt("value"));
                             }
                         }
-                }
+                }else return null;
         }catch(SQLException e){
             e.printStackTrace();
+            return null;
         }
 
         return new GameSave(date,tamagotchi,slot,location);
@@ -197,7 +201,7 @@ public class GameSave {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        GameSave save = new GameSave(date,tamagotchi,slot,defaultLoc);
+        GameSave save = new GameSave(date.truncatedTo(ChronoUnit.SECONDS),tamagotchi,slot,defaultLoc);
         save.save();
         return save;
     }
@@ -260,5 +264,24 @@ public class GameSave {
             default :
                 return Current.DEAD;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameSave save = (GameSave) o;
+        return deleted == save.deleted && slot == save.slot && date.equals(save.date) && tamagotchi.equals(save.tamagotchi) && location.equals(save.location);
+    }
+
+    @Override
+    public String toString() {
+        return "GameSave{" +
+                "deleted=" + deleted +
+                ", date=" + date +
+                ", slot=" + slot +
+                ", tamagotchi=" + tamagotchi +
+                ", location=" + location +
+                '}';
     }
 }

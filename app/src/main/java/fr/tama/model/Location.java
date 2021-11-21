@@ -22,7 +22,7 @@ public class Location {
      * @param next the next location where you can go
      * @param previous the previous location where you can go
      */
-    public Location(String name, String action, Location next, Location previous) {
+    protected Location(String name, String action, Location next, Location previous) {
         this.name = name;
         this.action = action;
         this.next = next;
@@ -65,16 +65,27 @@ public class Location {
      * Setup the default locations of the game
      */
     private static void setupLocations(){
-        Location kitchen,bedroom=null,toilet=null,bathroom=null,garden=null;
-        kitchen = new Location("kitchen", "hunger",garden,bedroom);
-        bedroom = new Location("bedroom","tiredness",kitchen,bathroom);
-        bathroom = new Location("bathroom","cleanliness",bedroom,toilet);
-        toilet = new Location("toilet","toilet",bathroom,null);
-        garden = new Location("garden","happiness",null,kitchen);
+        Location kitchen = new Location("kitchen", "hunger",null,null);
+        Location bedroom = new Location("bedroom","tiredness",kitchen,null);
+        Location bathroom = new Location("bathroom","cleanliness",bedroom,null);
+        Location toilet = new Location("toilet","toilet",bathroom,null);
+        Location garden = new Location("garden","happiness",null,kitchen);
+        kitchen.setNext(garden);
+        kitchen.setPrevious(bedroom);
+        bedroom.setPrevious(bathroom);
+        bathroom.setPrevious(toilet);
         locations = new Location[]{kitchen,bedroom,toilet,bathroom,garden};
     }
 
     public static Location[] getLocations(){return locations;}
+
+    private void setNext(Location next) {
+        this.next = next;
+    }
+
+    private void setPrevious(Location previous) {
+        this.previous = previous;
+    }
 
     /**
      * Search for a location by it's name if the default locations are not defined define them

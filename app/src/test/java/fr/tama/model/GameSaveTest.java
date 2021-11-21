@@ -1,4 +1,4 @@
-package fr.tama;
+package fr.tama.model;
 
 import fr.tama.model.*;
 import org.junit.After;

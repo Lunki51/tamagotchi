@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class TamagotchiTest {
 
-    Tamagotchi[] tamas;
+    static Tamagotchi[] tamas;
     static final Status MOOD = Status.VERY_BAD;
     static final Status SHAPE = Status.VERY_BAD;
     static final Current CURRENT = Current.AWAKE;

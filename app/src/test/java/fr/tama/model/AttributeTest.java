@@ -1,11 +1,10 @@
 package fr.tama.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class AttributeTest {
     static Attribute attribut;
@@ -49,7 +48,7 @@ public class AttributeTest {
     @Test
     public void testToString(){
         //toString() should not always return ""
-        throw new AssertionError();
+        fail();
     }
 
     @Test

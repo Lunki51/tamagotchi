@@ -14,7 +14,7 @@ public class GameSaveTest {
     @Before
     public void init(){
         int slot = 0;
-        Tamagotchi tamagotchi = new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Waf");
+        Tamagotchi tamagotchi = new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Waf",Level.EGG);
         Location location = Location.getDefaultLocation();
         save = GameSave.createSave(slot,tamagotchi,location);
     }

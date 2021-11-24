@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        Tamagotchi tamagotchi = new Chien(Status.GOOD,Status.VERY_BAD, Current.AWAKE,true,"michel");
+        Tamagotchi tamagotchi = new Chien(Status.GOOD,Status.VERY_BAD, Current.AWAKE,true,"michel",Level.EGG);
         Location location;
         try{
             location = Location.getLocation("kitchen");

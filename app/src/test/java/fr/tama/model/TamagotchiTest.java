@@ -22,16 +22,17 @@ public class TamagotchiTest {
     static final Current CURRENT = Current.AWAKE;
     static final boolean SEX = true;
     static final String NAME = "PasseParTrou";
+    static final Level LEVEL = Level.EGG;
 
     @Before
     public void init() // Test each kind of Tamagotchi, they should have similar behavior according to their methods
     {
         tamas = new Tamagotchi[]
         { 
-            new Chat( MOOD, SHAPE, CURRENT, SEX, NAME),
-            new Chien(MOOD, SHAPE, CURRENT, SEX, NAME),
-            new Lapin(MOOD, SHAPE, CURRENT, SEX, NAME),
-            new Robot(MOOD, SHAPE, CURRENT, SEX, NAME)
+            new Chat( MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL),
+            new Chien(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL),
+            new Lapin(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL),
+            new Robot(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL)
         };
     }
 

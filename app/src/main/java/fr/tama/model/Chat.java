@@ -1,8 +1,8 @@
 package fr.tama.model;
 
 public class Chat extends Tamagotchi{
-    public Chat(Status mood, Status shape, Current current,boolean sex,String name) {
-        super(mood, shape, current,sex,name);
+    public Chat(Status mood, Status shape, Current current,boolean sex,String name,Level level) {
+        super(mood, shape, current,sex,name,level);
     }
 
     @Override

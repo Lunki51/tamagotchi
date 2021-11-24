@@ -16,11 +16,12 @@ public class RobotTest {
     static final Current CURRENT = Current.AWAKE;
     static final boolean SEX = false;
     static final String NAME = "Bender";
+    static final Level LEVEL = Level.EGG;
 
     @Before
     public void init()
     {
-        robot = new Robot(MOOD, SHAPE, CURRENT, SEX, NAME);
+        robot = new Robot(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL);
     }
 
     @After

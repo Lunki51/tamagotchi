@@ -35,7 +35,7 @@ public class GameSave {
     public void save(){
         if(deleted)return;
         try{
-            String sql = "INSERT INTO save(date,location,mood,shape,current,profile) VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO save(date,location,mood,shape,current,profile,level) VALUES(?,?,?,?,?,?,?)";
 
             PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
             pstmt.setString(1, this.date.format(FORMAT));
@@ -44,6 +44,7 @@ public class GameSave {
             pstmt.setString(4, tamagotchi.getShape().toString());
             pstmt.setString(5, tamagotchi.getCurrent().toString());
             pstmt.setInt(6,slot);
+            pstmt.setInt(7,tamagotchi.getLevel().getValue());
             pstmt.executeUpdate();
 
             ResultSet generatedKeys = pstmt.getGeneratedKeys();
@@ -113,6 +114,7 @@ public class GameSave {
                     boolean sex = rs.getBoolean("sex");
                     date =  LocalDateTime.parse(rs.getString("creationDate"),FORMAT);
                     String type = rs.getString("type");
+                    Level level = Level.getLevel(rs.getInt("level"));
                             ignored = DBConnection.getConnection().prepareStatement(request2);
                             ignored.setInt(1,slot);
                             ResultSet rs2 = ignored.executeQuery();
@@ -124,7 +126,7 @@ public class GameSave {
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
-                                        name);
+                                        name, level);
                                     break;
                                 case "Chat" :
                                     tamagotchi = new Chat(
@@ -132,7 +134,7 @@ public class GameSave {
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
-                                        name);
+                                        name,level);
                                     break;
                                  case "Lapin" :
                                      tamagotchi = new Lapin(
@@ -140,7 +142,7 @@ public class GameSave {
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
-                                        name);
+                                        name,level);
                                      break;
                                  case "Robot" :
                                      tamagotchi = new Robot(
@@ -148,7 +150,7 @@ public class GameSave {
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
-                                        name);
+                                        name,level);
                                      break;
                                  default :
                                      return null;

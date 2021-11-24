@@ -16,11 +16,12 @@ public class ChatTest {
     static final Current CURRENT = Current.AWAKE;
     static final boolean SEX = false;
     static final String NAME = "Nyan-nyan";
+    static final Level LEVEL = Level.EGG;
 
     @Before
     public void init()
     {
-        chat = new Chat(MOOD, SHAPE, CURRENT, SEX, NAME);
+        chat = new Chat(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL);
     }
 
     @After

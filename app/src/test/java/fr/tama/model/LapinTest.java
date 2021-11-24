@@ -15,12 +15,13 @@ public class LapinTest {
     static final Status SHAPE = Status.VERY_GOOD;
     static final Current CURRENT = Current.AWAKE;
     static final boolean SEX = true;
+    static final Level LEVEL = Level.EGG;
     static final String NAME = "Carrot";
 
     @Before
     public void init()
     {
-        lapin = new Lapin(MOOD, SHAPE, CURRENT, SEX, NAME);
+        lapin = new Lapin(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL);
     }
 
     @After

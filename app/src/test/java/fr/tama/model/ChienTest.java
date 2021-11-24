@@ -1,5 +1,6 @@
 package fr.tama.model;
 
+import static fr.tama.model.Level.EGG;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -16,11 +17,12 @@ public class ChienTest {
     static final Current CURRENT = Current.AWAKE;
     static final boolean SEX = false;
     static final String NAME = "Bouboule";
+    static final Level LEVEL = EGG;
 
     @Before
     public void init()
     {
-        chien = new Chien(MOOD, SHAPE, CURRENT, SEX, NAME);
+        chien = new Chien(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL);
     }
 
     @After

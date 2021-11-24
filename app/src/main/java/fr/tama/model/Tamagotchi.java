@@ -16,6 +16,7 @@ public abstract class Tamagotchi {
     private Status mood;
     private Status shape;
     private Current current;
+    private Level level;
     private Attribute[] attributes;
 
     /**
@@ -25,11 +26,12 @@ public abstract class Tamagotchi {
      * @param current the current status of the tamagotchi
      * @param name the name of the tamagotchi
      */
-    public Tamagotchi(Status mood, Status shape, Current current,boolean sex,String name) {
+    public Tamagotchi(Status mood, Status shape, Current current,boolean sex,String name,Level level) {
         this.mood = mood;
         this.shape = shape;
         this.current = current;
         this.name=name;
+        this.level=level;
         this.sex=sex;
         setupDefaultAttributes();
     }
@@ -110,6 +112,14 @@ public abstract class Tamagotchi {
         return current;
     }
 
+    public void levelUp(){
+        this.level = this.level.next();
+    }
+
+    public Level getLevel(){
+        return this.level;
+    }
+
     /**
      * Return the raw array of attributes of the tamagotchi
      * @return the attribute array of tamagotchi
@@ -155,7 +165,7 @@ public abstract class Tamagotchi {
             }
         }
         System.out.println(valid);
-        return sex == that.sex && name.equals(that.name) && mood == that.mood && shape == that.shape && current == that.current && valid;
+        return level == that.level && sex == that.sex && name.equals(that.name) && mood == that.mood && shape == that.shape && current == that.current && valid;
     }
 
     @Override
@@ -166,6 +176,7 @@ public abstract class Tamagotchi {
                 ", mood=" + mood +
                 ", shape=" + shape +
                 ", current=" + current +
+                ", level="+level+
                 ", attributes=" + Arrays.toString(attributes) +
                 '}';
     }

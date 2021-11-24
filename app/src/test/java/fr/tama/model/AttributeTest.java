@@ -77,3 +77,4 @@ public class AttributeTest {
         assertEquals(attribut.getValue(), i);
     }
 }
+

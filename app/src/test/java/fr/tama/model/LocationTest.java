@@ -25,7 +25,6 @@ public class LocationTest {
     @Test
     public void testGetLocations(){
         Location[] locations = Location.getLocations();
-
     }
 
     @Test

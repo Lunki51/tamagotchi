@@ -7,9 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Attr;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -141,6 +139,85 @@ public class TamagotchiTest {
         }
     }
 
+    
+    @Test
+    public void testEat()
+    {
+        for(Tamagotchi t : tamas)
+        {
+            assertNotEquals(t.getCurrent(), Current.DEAD);
+            int stat = t.getAttribute("hunger").getValue();
+            t.eat();
+            assertTrue(stat > t.getAttribute("hunger").getValue());
+        }
+    }
+
+    @Test
+    public void testSleep()
+    {
+        for(Tamagotchi t : tamas)
+        {
+            assertNotEquals(t.getCurrent(), Current.DEAD);
+            int stat = t.getAttribute("tiredness").getValue();
+            t.sleep();
+            assertTrue(stat > t.getAttribute("tiredness").getValue());
+        }
+    }
+
+    @Test
+    public void testPlay()
+    {
+        for(Tamagotchi t : tamas)
+        {
+            assertNotEquals(t.getCurrent(), Current.DEAD);
+            int stat = t.getAttribute("happiness").getValue();
+            t.play();
+            assertTrue(stat < t.getAttribute("happiness").getValue());
+        }
+    }
+
+    @Test
+    public void testToilet()
+    {
+        for(Tamagotchi t : tamas)
+        {
+            assertNotEquals(t.getCurrent(), Current.DEAD);
+            assertNotEquals(t.getCurrent(), Current.DEAD);
+            int stat = t.getAttribute("toilet").getValue();
+            t.toilet();
+            assertTrue(stat < t.getAttribute("toilet").getValue());
+        }
+    }
+
+    @Test
+    public void testWash()
+    {
+        for(Tamagotchi t : tamas)
+        {
+            assertNotEquals(t.getCurrent(), Current.DEAD);
+            assertNotEquals(t.getCurrent(), Current.DEAD);
+            int stat = t.getAttribute("cleanliness").getValue();
+            t.wash();
+            assertTrue(stat < t.getAttribute("cleanliness").getValue());
+        }
+    }
+
+    @Test
+    public void testUpdate()
+    {
+        for(Tamagotchi t: tamas)
+        {
+            Attribute[] attributes = t.getAttributes();
+            Attribute[] oldAttributes = new Attribute[attributes.length];
+            for(int i = 0; i < attributes.length; i++)
+                oldAttributes[i] = new Attribute(attributes[i].getName(), attributes[i].getValue());
+            t.update();
+            
+            for(int i = 0; i < attributes.length; i++)
+                assertTrue(attributes[i].getValue() + 7 == oldAttributes[i].getValue()/* || oldAttributes[i].getValue() < 7*/); //Can an attribute value be negative ? uncomment;
+        }
+    }
+
     //Other methods
     @Test
     public void testSetupDefaultAttributes()
@@ -150,7 +227,7 @@ public class TamagotchiTest {
             t.setupDefaultAttributes();
 
             for(Attribute a: t.getAttributes())
-                assertEquals(a.getValue(), 0);
+                assertEquals(a.getValue(), 0); //Subject to change [2000 for 24h, ...]
         }
     }
 

@@ -53,7 +53,9 @@ public abstract class Tamagotchi {
                 new Attribute("toilet",0),
                 new Attribute("tiredness",0),
                 new Attribute("cleanliness",0),
-                new Attribute("hapiness",0)
+                new Attribute("happiness",0),
+                // NON AFFICHE
+                new Attribute("health",0)
         };
     }
 
@@ -186,5 +188,11 @@ public abstract class Tamagotchi {
     public abstract void play();
     public abstract void toilet();
     public abstract void wash();
-    public abstract void update();
+    public void update(){
+        //LES TRUCS QUE TOUTS LES TAMA FONT
+        //FAIM -= 7;
+
+        //LES TRUC QUE QUE LUI UPDATE
+        //attribute();
+    }
 }

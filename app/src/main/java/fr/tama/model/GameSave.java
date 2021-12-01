@@ -6,6 +6,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -16,13 +17,13 @@ import java.util.Objects;
 public class GameSave {
 
     private boolean deleted = false;
-    private LocalDateTime date;
+    private Date date;
     private int slot;
     private Tamagotchi tamagotchi;
     private Location location;
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private GameSave(LocalDateTime date, Tamagotchi tamagotchi,int slot,Location location){
+    private GameSave(Date date, Tamagotchi tamagotchi,int slot,Location location){
         this.date=date;
         this.slot = slot;
         this.tamagotchi=tamagotchi;
@@ -38,7 +39,7 @@ public class GameSave {
             String sql = "INSERT INTO save(date,location,mood,shape,current,profile,level) VALUES(?,?,?,?,?,?,?)";
 
             PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
-            pstmt.setString(1, this.date.format(FORMAT));
+            pstmt.setLong(1, this.date.getTime());
             pstmt.setString(2,this.location.getName());
             pstmt.setString(3, tamagotchi.getMood().toString());
             pstmt.setString(4, tamagotchi.getShape().toString());
@@ -99,8 +100,7 @@ public class GameSave {
      */
     public static GameSave loadSave(int slot){
         Tamagotchi tamagotchi = null;
-        LocalDateTime.now();
-        LocalDateTime date;
+        Date date = new Date();
         Location location = null;
 
         try{
@@ -112,7 +112,7 @@ public class GameSave {
                 if(rs.next()){
                     String name = rs.getString("name");
                     boolean sex = rs.getBoolean("sex");
-                    date =  LocalDateTime.parse(rs.getString("creationDate"),FORMAT);
+                    date = new Date(rs.getLong("creationDate"));
                     String type = rs.getString("type");
                     Level level = Level.getLevel(rs.getInt("level"));
                             ignored = DBConnection.getConnection().prepareStatement(request2);
@@ -186,7 +186,7 @@ public class GameSave {
      * @return an object that represent the save in the database
      */
     public static GameSave createSave(int slot,Tamagotchi tamagotchi,Location defaultLoc){
-        LocalDateTime date = LocalDateTime.now();
+        Date date = new Date();
 
         try{
 
@@ -198,12 +198,12 @@ public class GameSave {
             pstmt.setString(2, tab[tab.length-1]);
             pstmt.setBoolean(3,tamagotchi.isSex());
             pstmt.setString(4, tamagotchi.getName());
-            pstmt.setString(5, FORMAT.format(date));
+            pstmt.setLong(5, date.getTime());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        GameSave save = new GameSave(date.truncatedTo(ChronoUnit.SECONDS),tamagotchi,slot,defaultLoc);
+        GameSave save = new GameSave(date,tamagotchi,slot,defaultLoc);
         save.save();
         return save;
     }
@@ -212,7 +212,7 @@ public class GameSave {
      * Return the date when the save have been created
      * @return a LocalDateTime that represent the date of the save creation
      */
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 

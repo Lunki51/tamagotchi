@@ -20,7 +20,7 @@ CREATE TABLE profile(
 
 CREATE TABLE save(
 	saveID INTEGER PRIMARY KEY AUTOINCREMENT ,
-	level INT NOT NULL CHECK(level=0 OR level=1 OR level=2 OR level=3 OR level=4),
+	level INTEGER NOT NULL CHECK(level=0 OR level=1 OR level=2 OR level=3 OR level=4),
 	date INTEGER NOT NULL,
 	location TEXT NOT NULL,
 	mood TEXT NOT NULL CHECK(mood ='VERY_BAD' OR mood='BAD' or mood='GOOD' OR mood='VERY_GOOD'),
@@ -89,4 +89,5 @@ BEGIN
 end;
 
 INSERT INTO config VALUES(false,'fr');
+INSERT INTO save VALUES(1,1,1,'BAD','GOOD','GOOD','AWAKE',0);
 

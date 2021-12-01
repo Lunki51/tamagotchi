@@ -114,10 +114,11 @@ public class GameSave {
                     boolean sex = rs.getBoolean("sex");
                     date = new Date(rs.getLong("creationDate"));
                     String type = rs.getString("type");
-                    Level level = Level.getLevel(rs.getInt("level"));
+
                             ignored = DBConnection.getConnection().prepareStatement(request2);
                             ignored.setInt(1,slot);
                             ResultSet rs2 = ignored.executeQuery();
+                    Level level = Level.getLevel(rs2.getInt("level"));
                         if(rs2.next()){
                              switch (type) {
                                 case "Chien" :

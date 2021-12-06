@@ -18,6 +18,8 @@ public abstract class Tamagotchi {
     private Current current;
     private Level level;
     private Attribute[] attributes;
+    private int[] statusCD;
+    private int lifeCD;
 
     /**
      * Create a new tamagotchi object
@@ -33,6 +35,8 @@ public abstract class Tamagotchi {
         this.name=name;
         this.level=level;
         this.sex=sex;
+        this.statusCD = new int[]{144,144};
+        this.lifeCD = 288;
         setupDefaultAttributes();
     }
 
@@ -55,7 +59,7 @@ public abstract class Tamagotchi {
                 new Attribute("cleanliness",0),
                 new Attribute("happiness",0),
                 // NON AFFICHE
-                new Attribute("health",0)
+                new Attribute("health",20)
         };
     }
 
@@ -182,17 +186,53 @@ public abstract class Tamagotchi {
                 ", attributes=" + Arrays.toString(attributes) +
                 '}';
     }
-
     public abstract void eat();
     public abstract void sleep();
     public abstract void play();
     public abstract void toilet();
     public abstract void wash();
     public void update(){
-        //LES TRUCS QUE TOUTS LES TAMA FONT
-        //FAIM -= 7;
+        this.getAttribute("hunger").setValue(this.getAttribute("hunger").getValue()-7);
+        this.getAttribute("toilet").setValue(this.getAttribute("toilet").getValue()-7);
+        if(this.current==Current.AWAKE){
+            this.getAttribute("tiredness").setValue(this.getAttribute("tiredness").getValue()-7);
+        }else if(this.current==Current.ASLEEP){
+            this.getAttribute("tiredness").setValue(this.getAttribute("tiredness").getValue()-7);
+        }
+        this.getAttribute("cleanliness").setValue(this.getAttribute("cleanliness").getValue()-7);
+        this.getAttribute("happiness").setValue(this.getAttribute("happiness").getValue()-7);
+        if(this.statusCD[0]==0||this.statusCD[1]==0){
+            if(this.getAttribute("tiredness").getValue()==0 || this.getAttribute("hunger").getValue()==0
+                    || this.getAttribute("cleanliness").getValue()==0){
+                this.shape = this.shape.getMinus();
+                this.statusCD[0]=144;
+                this.statusCD[1]=144;
+            }
+            if(this.getAttribute("toilet").getValue()==0 || this.getAttribute("happiness").getValue()==0
+                    || this.getAttribute("cleanliness").getValue()==0){
+                this.mood = this.mood.getMinus();
+                this.statusCD[0]=144;
+                this.statusCD[1]=144;
+            }
+        }else{
+            this.statusCD[0]--;
+            this.statusCD[1]--;
+        }
 
-        //LES TRUC QUE QUE LUI UPDATE
-        //attribute();
+        if(this.lifeCD==0){
+            if(this.mood.isGood()){
+                this.getAttribute("health").setValue(this.getAttribute("health").getValue()+1);
+            }else{
+                this.getAttribute("health").setValue(this.getAttribute("health").getValue()-1);
+            }
+            if(this.shape.isGood()){
+                this.getAttribute("health").setValue(this.getAttribute("health").getValue()+1);
+            }else{
+                this.getAttribute("health").setValue(this.getAttribute("health").getValue()-1);
+            }
+            this.lifeCD=288;
+        }else{
+            this.lifeCD--;
+        }
     }
 }

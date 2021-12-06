@@ -6,7 +6,7 @@ package fr.tama.model;
 public class Attribute {
 
     private String name;
-    private int value;
+    private float value;
 
     /**
      * Create a new tamagotchi attribute
@@ -52,7 +52,7 @@ public class Attribute {
      * Return the value of the attribute
      * @return the value of the attribute
      */
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 
@@ -68,7 +68,7 @@ public class Attribute {
      * Change the value of the attribute
      * @param value the new value of the attribute
      */
-    public void setValue(int value) {
+    public void setValue(float value) {
         this.value = value;
     }
 }

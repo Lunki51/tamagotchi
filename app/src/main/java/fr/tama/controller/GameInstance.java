@@ -10,11 +10,15 @@ public class GameInstance implements Runnable{
     Tamagotchi tamagotchi;
     Location location;
     Date started;
+    long delta;
+    Date lastTime;
     boolean alive = true;
 
     GameInstance(Tamagotchi tama, Date lastSeen, Location currentLoc){
         this.tamagotchi = tama;
         this.location = currentLoc;
+        this.delta = 0;
+        this.lastTime = new Date();
         updateSince(lastSeen);
         Thread thread = new Thread(this);
         thread.start();
@@ -35,9 +39,12 @@ public class GameInstance implements Runnable{
     public void run() {
         while(alive){
             Date date = new Date();
-            if((date.getTime()-started.getTime())%300==0){
+            if((delta)%300000==0){
                 this.tamagotchi.update();
+                delta-=300000;
             }
+            delta+= date.getTime()-lastTime.getTime();
+            lastTime = new Date();
         }
     }
 }

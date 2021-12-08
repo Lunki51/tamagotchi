@@ -192,15 +192,15 @@ public abstract class Tamagotchi {
     public abstract void toilet();
     public abstract void wash();
     public void update(){
-        this.getAttribute("hunger").setValue(this.getAttribute("hunger").getValue()-7);
-        this.getAttribute("toilet").setValue(this.getAttribute("toilet").getValue()-7);
+        this.getAttribute("hunger").decrease(7);
+        this.getAttribute("toilet").decrease(7);
         if(this.current==Current.AWAKE){
-            this.getAttribute("tiredness").setValue(this.getAttribute("tiredness").getValue()-7);
+            this.getAttribute("tiredness").decrease(7);
         }else if(this.current==Current.ASLEEP){
-            this.getAttribute("tiredness").setValue(this.getAttribute("tiredness").getValue()-7);
+            this.getAttribute("tiredness").increase(7);
         }
-        this.getAttribute("cleanliness").setValue(this.getAttribute("cleanliness").getValue()-7);
-        this.getAttribute("happiness").setValue(this.getAttribute("happiness").getValue()-7);
+        this.getAttribute("cleanliness").decrease(7);
+        this.getAttribute("happiness").decrease(7);
         if(this.statusCD[0]==0||this.statusCD[1]==0){
             if(this.getAttribute("tiredness").getValue()==0 || this.getAttribute("hunger").getValue()==0
                     || this.getAttribute("cleanliness").getValue()==0){
@@ -221,14 +221,14 @@ public abstract class Tamagotchi {
 
         if(this.lifeCD==0){
             if(this.mood.isGood()){
-                this.getAttribute("health").setValue(this.getAttribute("health").getValue()+1);
+                this.getAttribute("health").increase(1);
             }else{
-                this.getAttribute("health").setValue(this.getAttribute("health").getValue()-1);
+                this.getAttribute("health").decrease(1);
             }
             if(this.shape.isGood()){
-                this.getAttribute("health").setValue(this.getAttribute("health").getValue()+1);
+                this.getAttribute("health").increase(1);
             }else{
-                this.getAttribute("health").setValue(this.getAttribute("health").getValue()-1);
+                this.getAttribute("health").decrease(1);
             }
             this.lifeCD=288;
         }else{

@@ -32,7 +32,7 @@ public class AttributeTest {
     public void testIncrease()
     {
         int i = attribut.getValue();
-        attribut.increase();
+        attribut.increase(1);
         assertTrue(attribut.getValue() > i);
     }
 
@@ -40,7 +40,7 @@ public class AttributeTest {
     public void testDecrease()
     {
         int i = attribut.getValue();
-        attribut.decrease();
+        attribut.decrease(1);
         assertTrue(attribut.getValue() < i);
     }
 

@@ -21,14 +21,14 @@ public class Attribute {
     /**
      * Increase the attribute value
      */
-    public void increase(){
+    public void increase(int value){
 
     }
 
     /**
      * Decrease the attribute value
      */
-    public void decrease(){
+    public void decrease(int value){
 
     }
 

@@ -35,7 +35,7 @@ public class LevelTest {
         assertEquals(EGG.getValue(),0);
         assertEquals(BLOB.getValue(),0);
         assertEquals(HEAD.getValue(),0);
-        assertEquals(BABY.getValue(),0);
+        assertEquals(CHILD.getValue(),0);
         assertEquals(ADULT.getValue(),0);
     }
 
@@ -43,8 +43,8 @@ public class LevelTest {
     public void testNext(){
         assertEquals(EGG.next(),BLOB);
         assertEquals(BLOB.next(),HEAD);
-        assertEquals(HEAD.next(),BABY);
-        assertEquals(BABY.next(),ADULT);
+        assertEquals(HEAD.next(),CHILD);
+        assertEquals(CHILD.next(),ADULT);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class LevelTest {
         assertEquals(getLevel(0),EGG);
         assertEquals(getLevel(1),BLOB);
         assertEquals(getLevel(2),HEAD);
-        assertEquals(getLevel(3),BABY);
+        assertEquals(getLevel(3),CHILD);
         assertEquals(getLevel(4),ADULT);
     }
 

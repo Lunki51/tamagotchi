@@ -1,17 +1,36 @@
 package fr.tama.view;
 
-import javax.swing.*;
-import java.awt.*;
 
-public class GameView extends JFrame {
+import fr.tama.controller.LangFile;
 
-    CardLayout layout = new CardLayout();
+/**
+ * Main View class
+ * with all JFrames
+ */
+public class GameView {
 
-    public GameView() throws HeadlessException {
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setLayout(layout);
-        this.setSize(500,500);
-        this.add(new GamePanel());
-        this.setVisible(true);
+    private GameFrame gameFrame;
+    private LangFile lang;
+
+    public GameView(){
+    }
+
+    /**
+     * Allows to init the JFrames
+     */
+    public void start(){
+
+        if(lang == null) {
+            throw new RuntimeException("Impossible de lancer la vue car l'objet de gestiond es langue n'est pas set");
+        }
+        this.gameFrame = new GameFrame(lang.getString("title"));
+    }
+
+    public GameFrame getGameFrame() {
+        return this.gameFrame;
+    }
+
+    public void setLangFile(LangFile file) {
+        this.lang = file;
     }
 }

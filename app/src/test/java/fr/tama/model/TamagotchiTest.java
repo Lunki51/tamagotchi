@@ -1,16 +1,10 @@
 package fr.tama.model;
 
-import fr.tama.controller.LangFile;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.w3c.dom.Attr;
 
 import static org.junit.Assert.*;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 public class TamagotchiTest {
 
@@ -19,7 +13,7 @@ public class TamagotchiTest {
     static final Status SHAPE = Status.VERY_BAD;
     static final Current CURRENT = Current.AWAKE;
     static final boolean SEX = true;
-    static final String NAME = "PasseParTrou";
+    static final String NAME = "Maïté";
     static final Level LEVEL = Level.EGG;
 
     @Before
@@ -148,7 +142,7 @@ public class TamagotchiTest {
             assertNotEquals(t.getCurrent(), Current.DEAD);
             int stat = t.getAttribute("hunger").getValue();
             t.eat();
-            assertTrue(stat > t.getAttribute("hunger").getValue());
+            assertTrue(stat < t.getAttribute("hunger").getValue());
         }
     }
 
@@ -160,7 +154,7 @@ public class TamagotchiTest {
             assertNotEquals(t.getCurrent(), Current.DEAD);
             int stat = t.getAttribute("tiredness").getValue();
             t.sleep();
-            assertTrue(stat > t.getAttribute("tiredness").getValue());
+            assertTrue(stat < t.getAttribute("tiredness").getValue());
         }
     }
 
@@ -214,7 +208,8 @@ public class TamagotchiTest {
             t.update();
             
             for(int i = 0; i < attributes.length; i++)
-                assertTrue(attributes[i].getValue() + 7 == oldAttributes[i].getValue()/* || oldAttributes[i].getValue() < 7*/); //Can an attribute value be negative ? uncomment;
+                if(!attributes[i].getName().equals("health"))
+                    assertTrue(attributes[i].getValue() + 7 == oldAttributes[i].getValue() || oldAttributes[i].getValue() < 7);
         }
     }
 
@@ -227,7 +222,8 @@ public class TamagotchiTest {
             t.setupDefaultAttributes();
 
             for(Attribute a: t.getAttributes())
-                assertEquals(a.getValue(), 0); //Subject to change [2000 for 24h, ...]
+                if(!a.getName().equals("health"))
+                    assertEquals(a.getValue(), 0); //Subject to change [2000 for 24h, ...]
         }
     }
 

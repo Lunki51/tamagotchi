@@ -69,12 +69,12 @@ public class Location {
         Location bedroom = new Location("bedroom","tiredness",kitchen,null);
         Location bathroom = new Location("bathroom","cleanliness",bedroom,null);
         Location toilet = new Location("toilet","toilet",bathroom,null);
-        Location garden = new Location("garden","happiness",null,kitchen);
-        kitchen.setNext(garden);
+        Location living = new Location("living","happiness",null,kitchen);
+        kitchen.setNext(living);
         kitchen.setPrevious(bedroom);
         bedroom.setPrevious(bathroom);
         bathroom.setPrevious(toilet);
-        locations = new Location[]{kitchen,bedroom,toilet,bathroom,garden};
+        locations = new Location[]{living,bedroom,toilet,bathroom,kitchen};
     }
 
     public static Location[] getLocations(){return locations;}

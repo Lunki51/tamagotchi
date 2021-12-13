@@ -1,18 +1,22 @@
 package fr.tama.view;
 
+import fr.tama.controller.GameInstance;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends JFrame {
-    private final MenuPanel menuPanel;
-    private final GamePanel gamePanel;
+    private MenuPanel menuPanel;
+    private GamePanel gamePanel;
     private JPanel next;
+    private GameInstance gameInstance;
 
-    public GameFrame(String title) throws HeadlessException {
+    public GameFrame(String title, GameInstance gameInstance) throws HeadlessException {
         super(title);
         this.setSize(1280,720);
+        this.gameInstance = gameInstance;
         this.menuPanel = new MenuPanel();
-        this.gamePanel = new GamePanel();
+        this.gamePanel = new GamePanel(gameInstance);
         this.getContentPane().add(this.menuPanel);
         this.next = gamePanel;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +40,9 @@ public class GameFrame extends JFrame {
             this.next = this.gamePanel;
         }
         else {
+
             this.getContentPane().add(this.gamePanel);
+            this.gamePanel.updatePanel();
             this.next = this.menuPanel;
         }
         this.getContentPane().revalidate();

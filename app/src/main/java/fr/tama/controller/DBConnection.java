@@ -16,7 +16,6 @@ public class DBConnection {
             try{
                 File dbfile =new File(".");
                 String url = "jdbc:sqlite:"+dbfile.getAbsolutePath().split("/\\.")[0]+"/tama-db.db";
-                System.out.println(url);
                 connection= DriverManager.getConnection(url);
             }catch(SQLException e){
                 e.printStackTrace();

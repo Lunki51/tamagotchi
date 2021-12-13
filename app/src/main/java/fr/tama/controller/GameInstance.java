@@ -13,15 +13,29 @@ public class GameInstance implements Runnable{
     long delta;
     Date lastTime;
     boolean alive = true;
+    Thread thisThread=null;
+    Date lastSeen;
 
-    GameInstance(Tamagotchi tama, Date lastSeen, Location currentLoc){
+    void setInstance(Tamagotchi tama, Date lastSeen, Location currentLoc){
+        if(this.thisThread!= null)this.thisThread.interrupt();
         this.tamagotchi = tama;
         this.location = currentLoc;
         this.delta = 0;
         this.lastTime = new Date();
-        updateSince(lastSeen);
-        Thread thread = new Thread(this);
-        thread.start();
+        this.thisThread = new Thread(this);
+        this.lastSeen = lastSeen;
+    }
+
+    public Tamagotchi getTamagotchi() {
+        return tamagotchi;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    void start(){
+        this.thisThread.start();
     }
 
     void updateSince(Date date){
@@ -37,6 +51,7 @@ public class GameInstance implements Runnable{
 
     @Override
     public void run() {
+        updateSince(this.lastSeen);
         while(alive){
             Date date = new Date();
             if((delta)%300000==0){
@@ -46,5 +61,9 @@ public class GameInstance implements Runnable{
             delta+= date.getTime()-lastTime.getTime();
             lastTime = new Date();
         }
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

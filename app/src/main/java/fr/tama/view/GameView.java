@@ -1,6 +1,7 @@
 package fr.tama.view;
 
 
+import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
 
 /**
@@ -11,8 +12,10 @@ public class GameView {
 
     private GameFrame gameFrame;
     private LangFile lang;
+    private GameInstance gameInstance;
 
-    public GameView(){
+    public GameView(GameInstance gameInstance){
+        this.gameInstance = gameInstance;
     }
 
     /**
@@ -23,7 +26,7 @@ public class GameView {
         if(lang == null) {
             throw new RuntimeException("Impossible de lancer la vue car l'objet de gestiond es langue n'est pas set");
         }
-        this.gameFrame = new GameFrame(lang.getString("title"));
+        this.gameFrame = new GameFrame(lang.getString("title"),gameInstance);
     }
 
     public GameFrame getGameFrame() {

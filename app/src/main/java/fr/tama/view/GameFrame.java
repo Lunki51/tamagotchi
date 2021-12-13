@@ -6,10 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends JFrame {
-    private MenuPanel menuPanel;
-    private GamePanel gamePanel;
+    private final MenuPanel menuPanel;
+    private final GamePanel gamePanel;
     private JPanel next;
-    private GameInstance gameInstance;
+    private final GameInstance gameInstance;
 
     public GameFrame(String title, GameInstance gameInstance) throws HeadlessException {
         super(title);

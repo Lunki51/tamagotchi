@@ -5,10 +5,10 @@ import java.awt.*;
 
 public class MenuPanel extends JPanel {
 
-    private JPanel buttonPanel;
-    private MenuButton buttonPlay;
-    private MenuButton buttonOption;
-    private MenuButton buttonQuit;
+    private final JPanel buttonPanel;
+    private final MenuButton buttonPlay;
+    private final MenuButton buttonOption;
+    private final MenuButton buttonQuit;
 
     public MenuPanel() {
         this.setLayout(new BorderLayout());

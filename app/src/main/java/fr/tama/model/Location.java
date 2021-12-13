@@ -1,16 +1,12 @@
 package fr.tama.model;
 
-import fr.tama.controller.LangFile;
-
-import java.util.Objects;
-
 /**
  * Represent a location in the tamagotchi game
  */
 public class Location {
 
-    private String name;
-    private String action;
+    private final String name;
+    private final String action;
     private Location next;
     private Location previous;
     private static Location[] locations=null;

@@ -8,35 +8,35 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    private JPanel graphicPanel;
-    private JPanel controlPanel;
+    private final JPanel graphicPanel;
+    private final JPanel controlPanel;
 
-    private JLabel tamaName;
-    private JLabel mStateLabel;
-    private JLabel tamaMState;
-    private JLabel pStateLabel;
-    private JLabel tamaPState;
-    private JLabel hungerGauge;
-    private JLabel hungerLabel;
-    private JLabel hygeneGauge;
-    private JLabel hygeneLabel;
-    private JLabel happinessGauge;
-    private JLabel happinessLabel;
-    private JLabel toiletGauge;
-    private JLabel toiletLabel;
-    private JLabel energyGauge;
-    private JLabel energyLabel;
-    private JLabel locationLabel;
+    private final JLabel tamaName;
+    private final JLabel mStateLabel;
+    private final JLabel tamaMState;
+    private final JLabel pStateLabel;
+    private final JLabel tamaPState;
+    private final JLabel hungerGauge;
+    private final JLabel hungerLabel;
+    private final JLabel hygeneGauge;
+    private final JLabel hygeneLabel;
+    private final JLabel happinessGauge;
+    private final JLabel happinessLabel;
+    private final JLabel toiletGauge;
+    private final JLabel toiletLabel;
+    private final JLabel energyGauge;
+    private final JLabel energyLabel;
+    private final JLabel locationLabel;
 
-    private JButton actionButton;
-    private JButton moveLeftButton;
-    private JButton moveRightButton;
+    private final JButton actionButton;
+    private final JButton moveLeftButton;
+    private final JButton moveRightButton;
 
     private JButton tmp;
 
-    private GameScreen gameScreen;
+    private final GameScreen gameScreen;
 
-    private GameInstance gameInstance;
+    private final GameInstance gameInstance;
 
     public GamePanel(GameInstance gameInstance) {
         this.gameInstance = gameInstance;

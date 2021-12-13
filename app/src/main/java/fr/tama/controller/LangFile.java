@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class LangFile {
 
-    private static HashMap<String,Locale> langs = new HashMap<>();
+    private static final HashMap<String,Locale> langs = new HashMap<>();
     ResourceBundle bundle;
 
     private LangFile(ResourceBundle bundle){

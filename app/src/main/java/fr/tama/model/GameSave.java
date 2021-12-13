@@ -3,11 +3,8 @@ package fr.tama.model;
 import fr.tama.controller.DBConnection;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * GameSave class represent a save inside the database. A save is identified by a slot id. There can be only 3 saves at the same time. When loading or creating a save, use the static
@@ -17,10 +14,10 @@ import java.util.Objects;
 public class GameSave {
 
     private boolean deleted = false;
-    private Date date;
-    private int slot;
-    private Tamagotchi tamagotchi;
-    private Location location;
+    private final Date date;
+    private final int slot;
+    private final Tamagotchi tamagotchi;
+    private final Location location;
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private GameSave(Date date, Tamagotchi tamagotchi,int slot,Location location){
@@ -100,7 +97,7 @@ public class GameSave {
      */
     public static GameSave loadSave(int slot){
         Tamagotchi tamagotchi = null;
-        Date date = new Date();
+        Date date;
         Location location = null;
 
         try{
@@ -247,8 +244,6 @@ public class GameSave {
                 return Status.VERY_BAD;
             case "BAD" :
                 return Status.BAD;
-            case "GOOD" :
-                return Status.GOOD;
             case "VERY_GOOD" :
                 return Status.VERY_GOOD;
             default :
@@ -262,8 +257,6 @@ public class GameSave {
                 return Current.AWAKE;
             case "ASLEEP" :
                 return Current.ASLEEP;
-            case "DEAD" :
-                return Current.DEAD;
             default :
                 return Current.DEAD;
         }

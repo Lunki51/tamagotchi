@@ -12,7 +12,7 @@ public class GameView {
 
     private GameFrame gameFrame;
     private LangFile lang;
-    private GameInstance gameInstance;
+    private final GameInstance gameInstance;
 
     public GameView(GameInstance gameInstance){
         this.gameInstance = gameInstance;

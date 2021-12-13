@@ -8,13 +8,14 @@ import fr.tama.model.Robot;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class GameScreen extends JPanel {
 
-    ImageIcon bathroom = new ImageIcon(this.getClass().getClassLoader().getResource("salle_de_be.png"));
-    ImageIcon living = new ImageIcon(this.getClass().getClassLoader().getResource("living_room.png"));
+    ImageIcon bathroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("salle_de_be.png")));
+    ImageIcon living = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("living_room.png")));
 
-    private GameInstance gameInstance;
+    private final GameInstance gameInstance;
 
     public GameScreen(GameInstance gameInstance) {
         this.gameInstance = gameInstance;

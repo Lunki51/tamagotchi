@@ -1,10 +1,6 @@
 package fr.tama.model;
 
-import fr.tama.controller.LangFile;
-import org.w3c.dom.Attr;
-
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Represent a tamagotchi in the game
@@ -18,7 +14,7 @@ public abstract class Tamagotchi {
     private Current current;
     private Level level;
     private Attribute[] attributes;
-    private int[] statusCD;
+    private final int[] statusCD;
     private int lifeCD;
 
     /**

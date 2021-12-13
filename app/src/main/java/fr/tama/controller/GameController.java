@@ -6,7 +6,7 @@ import fr.tama.model.*;
 import fr.tama.view.GameView;
 
 public class GameController {
-    private GameView gameView;
+    private final GameView gameView;
     public static GameInstance INSTANCE = new GameInstance();
 
     public GameController() {
@@ -53,9 +53,7 @@ public class GameController {
             System.out.println("Les Options :\n");
             System.out.println("1) .");
         });
-        this.gameView.getGameFrame().getMenuPanel().getButtonQuit().addActionListener(e -> {
-            System.exit(0);
-        });
+        this.gameView.getGameFrame().getMenuPanel().getButtonQuit().addActionListener(e -> System.exit(0));
 
         this.gameView.getGameFrame().getGamePanel().getMoveLeftButton().addActionListener(e->{
             if(INSTANCE.getLocation().getNext()!=null)INSTANCE.setLocation(INSTANCE.getLocation().getNext());

@@ -7,29 +7,33 @@ public class Attribute {
 
     private String name;
     private int value;
+    private int max;
 
     /**
      * Create a new tamagotchi attribute
      * @param name the name of the attribute
      * @param value the default value of the attribute
      */
-    public Attribute(String name, int value) {
+    public Attribute(String name, int value,int max) {
         this.name = name;
         this.value = value;
+        this.max = max;
     }
 
     /**
      * Increase the attribute value
      */
     public void increase(int value){
-
+        this.value+=value;
+        if(this.value>max)this.value=max;
     }
 
     /**
      * Decrease the attribute value
      */
     public void decrease(int value){
-
+        this.value-=value;
+        if(this.value<0)this.value=0;
     }
 
     /**
@@ -62,6 +66,10 @@ public class Attribute {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getMax() {
+        return max;
     }
 
     /**

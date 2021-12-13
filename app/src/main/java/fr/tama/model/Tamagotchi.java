@@ -49,13 +49,13 @@ public abstract class Tamagotchi {
      */
     public void setupDefaultAttributes(){
         this.attributes = new Attribute[]{
-                new Attribute("hunger", 0),
-                new Attribute("toilet",0),
-                new Attribute("tiredness",0),
-                new Attribute("cleanliness",0),
-                new Attribute("happiness",0),
+                new Attribute("hunger", 500,2000),
+                new Attribute("toilet",500,2000),
+                new Attribute("tiredness",500,1000),
+                new Attribute("cleanliness",500,4000),
+                new Attribute("happiness",500,2000),
                 // NON AFFICHE
-                new Attribute("health",20)
+                new Attribute("health",20,20)
         };
     }
 

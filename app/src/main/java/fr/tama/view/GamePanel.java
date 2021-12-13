@@ -2,6 +2,7 @@ package fr.tama.view;
 
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
+import fr.tama.model.Tamagotchi;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,15 +17,15 @@ public class GamePanel extends JPanel {
     private final JLabel tamaMState;
     private final JLabel pStateLabel;
     private final JLabel tamaPState;
-    private final JLabel hungerGauge;
+    private final AttribBarComponent hungerGauge;
     private final JLabel hungerLabel;
-    private final JLabel hygeneGauge;
+    private final AttribBarComponent hygeneGauge;
     private final JLabel hygeneLabel;
-    private final JLabel happinessGauge;
+    private final AttribBarComponent happinessGauge;
     private final JLabel happinessLabel;
-    private final JLabel toiletGauge;
+    private final AttribBarComponent toiletGauge;
     private final JLabel toiletLabel;
-    private final JLabel energyGauge;
+    private final AttribBarComponent energyGauge;
     private final JLabel energyLabel;
     private final JLabel locationLabel;
 
@@ -58,38 +59,54 @@ public class GamePanel extends JPanel {
         this.controlPanel.setLayout(new GridLayout(0,1));
 
         this.tamaName = new JLabel("Tamagochoupi <3");
+        this.tamaName.setHorizontalAlignment(JLabel.CENTER);
         this.controlPanel.add(this.tamaName);
 
         JPanel statusPanel = new JPanel();
         statusPanel.setLayout(new GridLayout(0,2));
-        this.mStateLabel = new JLabel("État mental");
+        this.mStateLabel = new JLabel("État mental : ");
+        this.mStateLabel.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.mStateLabel);
         this.tamaMState = new JLabel("Bon");
+        this.tamaMState.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.tamaMState);
-        this.pStateLabel = new JLabel("État physique");
+        this.pStateLabel = new JLabel("État physique : ");
+        this.pStateLabel.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.pStateLabel);
         this.tamaPState = new JLabel("Mauvais");
+        this.tamaPState.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.tamaPState);
-        this.hungerGauge = new JLabel("TMP JAUGE");
-        statusPanel.add(this.hungerGauge);
-        this.hungerLabel = new JLabel("Faim");
+
+        this.hungerLabel = new JLabel("Faim : ");
+        this.hungerLabel.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.hungerLabel);
-        this.hygeneGauge = new JLabel("TMP JAUGE");
-        statusPanel.add(this.hygeneGauge);
-        this.hygeneLabel = new JLabel("Higiène");
+        this.hungerGauge = new AttribBarComponent(Color.DARK_GRAY);
+        statusPanel.add(this.hungerGauge);
+
+        this.hygeneLabel = new JLabel("Hygiène : ");
+        this.hygeneLabel.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.hygeneLabel);
-        this.happinessGauge = new JLabel("TMP JAUGE");
-        statusPanel.add(this.happinessGauge);
-        this.happinessLabel = new JLabel("Bonheur");
+        this.hygeneGauge = new AttribBarComponent(Color.CYAN);
+        statusPanel.add(this.hygeneGauge);
+
+        this.happinessLabel = new JLabel("Bonheur : ");
+        this.happinessLabel.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.happinessLabel);
-        this.toiletGauge = new JLabel("TMP JAUGE");
-        statusPanel.add(this.toiletGauge);
-        this.toiletLabel = new JLabel("Toilettes");
+        this.happinessGauge = new AttribBarComponent(Color.ORANGE);
+        statusPanel.add(this.happinessGauge);
+
+        this.toiletLabel = new JLabel("Toilettes : ");
+        this.toiletLabel.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.toiletLabel);
-        this.energyGauge = new JLabel("TMP JAUGE");
-        statusPanel.add(this.energyGauge);
-        this.energyLabel = new JLabel("Energie");
+        this.toiletGauge = new AttribBarComponent(Color.BLUE);
+        statusPanel.add(this.toiletGauge);
+
+        this.energyLabel = new JLabel("Energie : ");
+        this.energyLabel.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.energyLabel);
+        this.energyGauge =new AttribBarComponent(Color.YELLOW);
+        statusPanel.add(this.energyGauge);
+
         this.controlPanel.add(statusPanel);
 
         this.actionButton = new JButton();
@@ -111,8 +128,14 @@ public class GamePanel extends JPanel {
     }
 
     public void updatePanel(){
+        Tamagotchi tamagotchi = this.gameInstance.getTamagotchi();
         this.actionButton.setText(LangFile.getLangFile().getString("attribute_action_"+this.gameInstance.getLocation().getAction()));
         this.locationLabel.setText(LangFile.getLangFile().getString("location_"+this.gameInstance.getLocation().getName()));
+        this.energyGauge.updateDisplay(tamagotchi.getAttribute("tiredness").getMax(),tamagotchi.getAttribute("tiredness").getValue());
+        this.happinessGauge.updateDisplay(tamagotchi.getAttribute("happiness").getMax(),tamagotchi.getAttribute("happiness").getValue());
+        this.hungerGauge.updateDisplay(tamagotchi.getAttribute("hunger").getMax(),tamagotchi.getAttribute("hunger").getValue());
+        this.hygeneGauge.updateDisplay(tamagotchi.getAttribute("cleanliness").getMax(),tamagotchi.getAttribute("cleanliness").getValue());
+        this.toiletGauge.updateDisplay(tamagotchi.getAttribute("toilet").getMax(),tamagotchi.getAttribute("toilet").getValue());
         this.tamaName.setText(this.gameInstance.getTamagotchi().getName());
         this.tamaMState.setText(this.gameInstance.getTamagotchi().getMood().name());
         this.tamaPState.setText(this.gameInstance.getTamagotchi().getShape().name());
@@ -147,7 +170,7 @@ public class GamePanel extends JPanel {
         return tamaPState;
     }
 
-    public JLabel getHungerGauge() {
+    public AttribBarComponent getHungerGauge() {
         return hungerGauge;
     }
 
@@ -155,7 +178,7 @@ public class GamePanel extends JPanel {
         return hungerLabel;
     }
 
-    public JLabel getHygeneGauge() {
+    public AttribBarComponent getHygeneGauge() {
         return hygeneGauge;
     }
 
@@ -163,7 +186,7 @@ public class GamePanel extends JPanel {
         return hygeneLabel;
     }
 
-    public JLabel getHappinessGauge() {
+    public AttribBarComponent getHappinessGauge() {
         return happinessGauge;
     }
 
@@ -171,7 +194,7 @@ public class GamePanel extends JPanel {
         return happinessLabel;
     }
 
-    public JLabel getToiletGauge() {
+    public AttribBarComponent getToiletGauge() {
         return toiletGauge;
     }
 
@@ -179,7 +202,7 @@ public class GamePanel extends JPanel {
         return toiletLabel;
     }
 
-    public JLabel getEnergyGauge() {
+    public AttribBarComponent getEnergyGauge() {
         return energyGauge;
     }
 

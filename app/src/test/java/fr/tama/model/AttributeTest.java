@@ -12,7 +12,7 @@ public class AttributeTest {
     @Before
     public void init()
     {
-        attribut = new Attribute("test", 13);
+        attribut = new Attribute("test", 13,500);
     }
 
     @After

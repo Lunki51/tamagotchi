@@ -204,7 +204,7 @@ public class TamagotchiTest {
             Attribute[] attributes = t.getAttributes();
             Attribute[] oldAttributes = new Attribute[attributes.length];
             for(int i = 0; i < attributes.length; i++)
-                oldAttributes[i] = new Attribute(attributes[i].getName(), attributes[i].getValue());
+                oldAttributes[i] = new Attribute(attributes[i].getName(), attributes[i].getValue(),500);
             t.update();
             
             for(int i = 0; i < attributes.length; i++)

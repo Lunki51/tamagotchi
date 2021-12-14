@@ -39,7 +39,10 @@ public class GamePanel extends JPanel {
 
     private final GameInstance gameInstance;
 
-    public GamePanel(GameInstance gameInstance) {
+    private LangFile lang;
+
+    public GamePanel(LangFile lang, GameInstance gameInstance) {
+        this.lang = lang;
         this.gameInstance = gameInstance;
         this.setLayout(new GridLayout(1,2));
 

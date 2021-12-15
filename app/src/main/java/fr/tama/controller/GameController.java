@@ -25,11 +25,10 @@ public class GameController {
             if(save==null)save=GameSave.createSave(0,new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Ouai",Level.EGG),Location.getDefaultLocation());
             INSTANCE.setInstance(save.getTamagotchi(),save.getDate(), save.getLocation(),this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel();
+            this.gameView.getGameFrame().switchPanel(2);
         });
         this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> {
-            System.out.println("Les Options :\n");
-            System.out.println("1) .");
+            this.gameView.getGameFrame().switchPanel(3);
         });
         this.gameView.getGameFrame().getMenuPanel().getButtonQuit().addActionListener(e -> System.exit(0));
 
@@ -64,5 +63,18 @@ public class GameController {
                     break;
             }
         });
+
+        this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().addActionListener(e -> {
+            this.gameView.getMusic().mute();
+        });
+
+        this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().addChangeListener(e -> {
+            this.gameView.getMusic().setVolume(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue());
+        });
+        this.gameView.getGameFrame().getOptionsPanel().getReturnButton().addActionListener(e -> {
+            this.gameView.getGameFrame().switchPanel(1);
+            this.gameView.getGameFrame().getMenuPanel().repaint();
+        });
+
     }
 }

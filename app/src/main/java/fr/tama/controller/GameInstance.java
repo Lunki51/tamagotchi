@@ -2,28 +2,32 @@ package fr.tama.controller;
 
 import fr.tama.model.Location;
 import fr.tama.model.Tamagotchi;
+import fr.tama.view.GameFrame;
+import fr.tama.view.GamePanel;
 
+import javax.swing.*;
 import java.util.Date;
 
 public class GameInstance implements Runnable{
 
+    private static final int INTERVAL = 500;
+
     Tamagotchi tamagotchi;
     Location location;
     Date started;
-    long delta;
-    Date lastTime;
     boolean alive = true;
     Thread thisThread=null;
     Date lastSeen;
+    GamePanel gamePanel;
 
-    void setInstance(Tamagotchi tama, Date lastSeen, Location currentLoc){
+
+    void setInstance(Tamagotchi tama, Date lastSeen, Location currentLoc,GameFrame gamePanel){
         if(this.thisThread!= null)this.thisThread.interrupt();
         this.tamagotchi = tama;
         this.location = currentLoc;
-        this.delta = 0;
-        this.lastTime = new Date();
         this.thisThread = new Thread(this);
         this.lastSeen = lastSeen;
+        this.gamePanel = gamePanel.getGamePanel();
     }
 
     public Tamagotchi getTamagotchi() {
@@ -41,7 +45,8 @@ public class GameInstance implements Runnable{
     void updateSince(Date date){
         Date now = new Date();
         long elapsed = now.getTime() - date.getTime();
-        long nbUpdate = elapsed / 300000;
+        long nbUpdate = elapsed / INTERVAL;
+        System.out.println(nbUpdate);
         for(int i=0;i<nbUpdate;i++){
             tamagotchi.update();
         }
@@ -53,13 +58,14 @@ public class GameInstance implements Runnable{
     public void run() {
         updateSince(this.lastSeen);
         while(alive){
-            Date date = new Date();
-            if((delta)%300000==0){
+            try{
                 this.tamagotchi.update();
-                delta-=300000;
+                this.gamePanel.updatePanel();
+                this.gamePanel.repaint();
+                Thread.sleep(INTERVAL);
+            }catch (InterruptedException e){
+
             }
-            delta+= date.getTime()-lastTime.getTime();
-            lastTime = new Date();
         }
     }
 

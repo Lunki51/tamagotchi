@@ -32,6 +32,6 @@ public class Lapin extends Tamagotchi{
 
     @Override
     public void update() {
-
+        super.update();
     }
 }

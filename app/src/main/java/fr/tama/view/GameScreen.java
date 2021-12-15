@@ -14,6 +14,7 @@ public class GameScreen extends JPanel {
 
     ImageIcon bathroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("salle_de_be.png")));
     ImageIcon living = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("living_room.png")));
+    ImageIcon bedroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("dodo.png")));
 
     private final GameInstance gameInstance;
 
@@ -28,16 +29,40 @@ public class GameScreen extends JPanel {
             g.drawImage(bathroom.getImage(),0,0,this.getWidth(),this.getHeight(),null);
         }else if(this.gameInstance.getLocation().getName().equals("living")){
             g.drawImage(living.getImage(),0,0,this.getWidth(),this.getHeight(),null);
+        }else if(this.gameInstance.getLocation().getName().equals("bedroom")){
+            g.drawImage(bedroom.getImage(),0,0,this.getWidth(),this.getHeight(),null);
         }
+        String fileName = "";
+        switch(this.gameInstance.getTamagotchi().getLevel()){
+            case EGG:
+                fileName+="egg";
+                break;
+            case BLOB:
+                fileName+="blob";
+                break;
+            case HEAD:
+                fileName+="head";
+                break;
+            case CHILD:
+                fileName+="child";
+                break;
+            case ADULT:
+                fileName+="adult";
+                break;
+        }
+        fileName+="_";
         if(this.gameInstance.getTamagotchi() instanceof Chien){
-
+            fileName+="chien";
         }else if(this.gameInstance.getTamagotchi() instanceof Chat){
-
+            fileName+="chat";
         }else if(this.gameInstance.getTamagotchi() instanceof Robot){
-
+            fileName+="robot";
         }else if(this.gameInstance.getTamagotchi() instanceof Lapin){
-
+            fileName+="lapin";
         }
+        fileName+=".png";
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource(fileName)));
+        g.drawImage(icon.getImage(),this.getHeight()/3,this.getWidth()/3,this.getHeight()/2,this.getWidth()/2,null);
 
     }
 }

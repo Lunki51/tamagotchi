@@ -32,6 +32,6 @@ public class Chat extends Tamagotchi{
 
     @Override
     public void update() {
-
+        super.update();
     }
 }

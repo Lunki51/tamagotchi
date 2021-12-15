@@ -34,6 +34,6 @@ public class Chien extends Tamagotchi{
 
     @Override
     public void update() {
-
+        super.update();
     }
 }

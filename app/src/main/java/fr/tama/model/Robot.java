@@ -32,6 +32,6 @@ public class Robot extends Tamagotchi{
 
     @Override
     public void update() {
-
+super.update();
     }
 }

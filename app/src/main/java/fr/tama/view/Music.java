@@ -9,7 +9,6 @@ public class Music {
     private FloatControl fc;
 
     public Music(){
-        File file = new File("src/main/resources/main_theme.wav");
         try {
             this.clip = AudioSystem.getClip();
         } catch (Exception e) {
@@ -17,7 +16,7 @@ public class Music {
         }
         AudioInputStream ais = null;
         try {
-            ais = AudioSystem.getAudioInputStream( file );
+            ais = AudioSystem.getAudioInputStream( this.getClass().getClassLoader().getResource("music/main_theme.wav") );
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {

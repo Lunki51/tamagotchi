@@ -65,7 +65,6 @@ public class LangFile {
         if(file.bundle==null){
             System.err.println("Error bundle is null");
         }
-        DBConnection.closeConnection();
         return file;
     }
 

@@ -12,9 +12,9 @@ import java.util.Objects;
 
 public class GameScreen extends JPanel {
 
-    ImageIcon bathroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("salle_de_be.png")));
-    ImageIcon living = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("living_room.png")));
-    ImageIcon bedroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("dodo.png")));
+    ImageIcon bathroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/salle_de_be.png")));
+    ImageIcon living = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/living_room.png")));
+    ImageIcon bedroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/dodo.png")));
 
     private final GameInstance gameInstance;
 
@@ -25,14 +25,18 @@ public class GameScreen extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(this.gameInstance.getLocation().getName().equals("bathroom")){
-            g.drawImage(bathroom.getImage(),0,0,this.getWidth(),this.getHeight(),null);
-        }else if(this.gameInstance.getLocation().getName().equals("living")){
-            g.drawImage(living.getImage(),0,0,this.getWidth(),this.getHeight(),null);
-        }else if(this.gameInstance.getLocation().getName().equals("bedroom")){
-            g.drawImage(bedroom.getImage(),0,0,this.getWidth(),this.getHeight(),null);
+        switch (this.gameInstance.getLocation().getName()) {
+            case "bathroom":
+                g.drawImage(bathroom.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+                break;
+            case "living":
+                g.drawImage(living.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+                break;
+            case "bedroom":
+                g.drawImage(bedroom.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+                break;
         }
-        String fileName = "";
+        String fileName = "sprites/tamagotchi/";
         switch(this.gameInstance.getTamagotchi().getLevel()){
             case EGG:
                 fileName+="egg";

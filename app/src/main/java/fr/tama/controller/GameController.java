@@ -22,7 +22,8 @@ public class GameController {
         
         this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> {
             GameSave save = GameSave.loadSave(0);
-            if(save==null)save=GameSave.createSave(0,new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Ouai",Level.EGG),Location.getDefaultLocation());
+            if(save==null)save=GameSave.createSave(0,new Chat(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Ouai",Level.ADULT
+            ),Location.getDefaultLocation());
             INSTANCE.setInstance(save.getTamagotchi(),save.getDate(), save.getLocation(),this.gameView.getGameFrame());
             INSTANCE.start();
             this.gameView.getGameFrame().switchPanel(2);
@@ -64,13 +65,9 @@ public class GameController {
             }
         });
 
-        this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().addActionListener(e -> {
-            this.gameView.getMusic().mute();
-        });
+        this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().addActionListener(e -> this.gameView.getMusic().mute());
 
-        this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().addChangeListener(e -> {
-            this.gameView.getMusic().setVolume(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue());
-        });
+        this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().addChangeListener(e -> this.gameView.getMusic().setVolume(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue()));
         this.gameView.getGameFrame().getOptionsPanel().getReturnButton().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(1);
             this.gameView.getGameFrame().getMenuPanel().repaint();

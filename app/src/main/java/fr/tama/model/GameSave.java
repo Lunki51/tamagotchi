@@ -73,7 +73,6 @@ public class GameSave {
         }catch(SQLException e){
                 e.printStackTrace();
         }
-        DBConnection.closeConnection();
     }
 
     /**
@@ -89,7 +88,6 @@ public class GameSave {
         }catch(SQLException e){
             e.printStackTrace();
         }
-        DBConnection.closeConnection();
     }
 
     /**
@@ -174,7 +172,6 @@ public class GameSave {
             e.printStackTrace();
             return null;
         }
-        DBConnection.closeConnection();
         return new GameSave(date,tamagotchi,slot,location);
     }
 
@@ -203,7 +200,6 @@ public class GameSave {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        DBConnection.closeConnection();
         GameSave save = new GameSave(date,tamagotchi,slot,defaultLoc);
         save.save();
         return save;

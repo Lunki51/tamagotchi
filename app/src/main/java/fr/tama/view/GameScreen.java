@@ -10,6 +10,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+
+/**
+ * The Graphic Game Screen with background and the sprite of the tamagotchi
+ */
 public class GameScreen extends JPanel {
 
     ImageIcon bathroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/salle_de_be.png")));

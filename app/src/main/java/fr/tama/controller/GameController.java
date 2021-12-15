@@ -22,7 +22,7 @@ public class GameController {
         
         this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> {
             GameSave save = GameSave.loadSave(0);
-            if(save==null)save=GameSave.createSave(0,new Chat(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Ouai",Level.ADULT
+            if(save==null)save=GameSave.createSave(0,new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Default",Level.CHILD
             ),Location.getDefaultLocation());
             INSTANCE.setInstance(save.getTamagotchi(),save.getDate(), save.getLocation(),this.gameView.getGameFrame());
             INSTANCE.start();

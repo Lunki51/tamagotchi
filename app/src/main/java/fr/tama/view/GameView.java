@@ -32,7 +32,7 @@ public class GameView {
         if(lang == null) {
             throw new RuntimeException("Impossible de lancer la vue car l'objet de gestiond es langue n'est pas set");
         }
-        this.gameFrame = new GameFrame(lang,gameInstance);
+        this.gameFrame = new GameFrame(gameInstance);
     }
     public Music getMusic(){
         return this.music;

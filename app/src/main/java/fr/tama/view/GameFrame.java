@@ -6,22 +6,23 @@ import fr.tama.controller.LangFile;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The Main Window / Java Frame
+ */
 public class GameFrame extends JFrame {
     private final MenuPanel menuPanel;
     private final GamePanel gamePanel;
     private final OptionsPanel optionsPanel;
     private JPanel next;
     private final GameInstance gameInstance;
-    private LangFile lang;
 
-    public GameFrame(LangFile lang, GameInstance gameInstance) throws HeadlessException {
-        super(lang.getString("title"));
-        this.lang = lang;
+    public GameFrame(GameInstance gameInstance) throws HeadlessException {
+        super(LangFile.getLangFile().getString("title"));
         this.setSize(1280,720);
         this.gameInstance = gameInstance;
-        this.menuPanel = new MenuPanel(lang);
-        this.optionsPanel = new OptionsPanel(lang);
-        this.gamePanel = new GamePanel(lang,gameInstance);
+        this.menuPanel = new MenuPanel();
+        this.optionsPanel = new OptionsPanel();
+        this.gamePanel = new GamePanel(gameInstance);
         this.getContentPane().add(this.menuPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);

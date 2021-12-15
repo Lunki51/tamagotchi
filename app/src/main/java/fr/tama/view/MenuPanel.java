@@ -12,12 +12,13 @@ public class MenuPanel extends JPanel {
     private final MenuButton buttonOption;
     private final MenuButton buttonQuit;
 
-    private LangFile lang;
+    private final LangFile lang;
 
-    public MenuPanel(LangFile lang) {
+    public MenuPanel() {
 
         super(new BorderLayout());
-        this.lang = lang;
+
+        this.lang = LangFile.getLangFile();
         this.buttonPanel = new JPanel();
         this.buttonPanel.setLayout(new GridLayout(3,1));
         this.add(buttonPanel, BorderLayout.SOUTH);

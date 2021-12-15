@@ -11,6 +11,7 @@ public abstract class Tamagotchi {
     private boolean sex;
     private Status mood;
     private Status shape;
+    private String info;
     private Current current;
     private Level level;
     private Attribute[] attributes;
@@ -31,6 +32,7 @@ public abstract class Tamagotchi {
         this.name=name;
         this.level=level;
         this.sex=sex;
+        this.info = "Dites bonjour à votre nouvel ami !";
         this.statusCD = new int[]{144,144};
         this.lifeCD = 288;
         setupDefaultAttributes();
@@ -89,6 +91,11 @@ public abstract class Tamagotchi {
     public String getName() {
         return name;
     }
+
+    /**
+     * @return the current information about the tamagotchi
+     */
+    public String getInfo() { return info;}
 
     /**
      * Return the current mood of the tamagotchi
@@ -166,7 +173,6 @@ public abstract class Tamagotchi {
                 break;
             }
         }
-        System.out.println(valid);
         return level == that.level && sex == that.sex && name.equals(that.name) && mood == that.mood && shape == that.shape && current == that.current && valid;
     }
 
@@ -201,12 +207,14 @@ public abstract class Tamagotchi {
             if(this.getAttribute("tiredness").getValue()==0 || this.getAttribute("hunger").getValue()==0
                     || this.getAttribute("cleanliness").getValue()==0){
                 this.shape = this.shape.getMinus();
+                this.info = "Son état de santé baisse ...";
                 this.statusCD[0]=144;
                 this.statusCD[1]=144;
             }
             if(this.getAttribute("toilet").getValue()==0 || this.getAttribute("happiness").getValue()==0
                     || this.getAttribute("cleanliness").getValue()==0){
                 this.mood = this.mood.getMinus();
+                this.info = "Son état mental n'est pas au plus haut ...";
                 this.statusCD[0]=144;
                 this.statusCD[1]=144;
             }

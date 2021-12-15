@@ -19,13 +19,13 @@ public class MenuPanel extends JPanel {
     public MenuPanel() {
 
         super(new BorderLayout());
-        super.setBackground(new Color(0,56,92));
+        super.setBackground(new Color(126,206,202));
         this.lang = LangFile.getLangFile();
         ImageIcon background = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/background_menu.png")));
         JLabel backgroundPanel = new JLabel(background);
         this.add(backgroundPanel, BorderLayout.CENTER);
         this.buttonPanel = new JPanel();
-        this.buttonPanel.setBackground(new Color(0,56,92));
+        this.buttonPanel.setBackground(new Color(126,206,202));
         this.buttonPanel.setLayout(new GridLayout(3,3, 12, 12));
         this.add(buttonPanel, BorderLayout.SOUTH);
 

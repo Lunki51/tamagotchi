@@ -10,11 +10,14 @@ public class MenuButton extends JButton {
         super(text);
         this.setHorizontalTextPosition(JButton.CENTER);
         this.setVerticalTextPosition(JButton.CENTER);
-        this.setBorderPainted(true);
-        this.setFocusPainted(false);
-        this.setContentAreaFilled(false);
-        this.setIcon(new ImageIcon("data/button.png"));
+        this.setFocusable(false);
+        this.setForeground(Color.white);
+        this.setBackground(Color.magenta);
+        //this.setBorderPainted(true);
+        //this.setFocusPainted(false);
+        //this.setContentAreaFilled(false);
+        //this.setIcon(new ImageIcon("data/button.png"));
         this.setBorder(BorderFactory.createLineBorder(Color.blue));
-        this.setBounds(800,800,800,80);
+        //this.setBounds(800,800,800,80);
     }
 }

@@ -6,11 +6,9 @@ import fr.tama.controller.LangFile;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * The Main Window / Java Frame
- */
 public class GameFrame extends JFrame {
     private final MenuPanel menuPanel;
+    private final SavesPanel savesPanel;
     private final GamePanel gamePanel;
     private final OptionsPanel optionsPanel;
     private JPanel next;
@@ -21,6 +19,7 @@ public class GameFrame extends JFrame {
         this.setSize(1280,720);
         this.gameInstance = gameInstance;
         this.menuPanel = new MenuPanel();
+        this.savesPanel = new SavesPanel();
         this.optionsPanel = new OptionsPanel();
         this.gamePanel = new GamePanel(gameInstance);
         this.getContentPane().add(this.menuPanel);
@@ -41,6 +40,10 @@ public class GameFrame extends JFrame {
         return optionsPanel;
     }
 
+    public SavesPanel getSavesPanel() {
+        return savesPanel;
+    }
+
     public void switchPanel(int panel) {
         this.getContentPane().removeAll();
         this.getContentPane().invalidate();
@@ -50,10 +53,13 @@ public class GameFrame extends JFrame {
                 this.next = this.gamePanel;
                 break;
             case 2:
+                this.getContentPane().add(this.savesPanel);
+                break;
+            case 3:
                 this.getContentPane().add(this.gamePanel);
                 this.gamePanel.updatePanel();
                 break;
-            case 3:
+            case 4:
                 this.getContentPane().add(this.optionsPanel);
                 break;
         }

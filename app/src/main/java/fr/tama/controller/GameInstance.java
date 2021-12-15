@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class GameInstance implements Runnable{
 
-    private static final int INTERVAL = 300000;
+    private static final int INTERVAL = 500;
 
     Tamagotchi tamagotchi;
     Location location;

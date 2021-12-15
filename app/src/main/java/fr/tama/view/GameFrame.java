@@ -8,20 +8,20 @@ import java.awt.*;
 
 public class GameFrame extends JFrame {
     private final MenuPanel menuPanel;
+    private final SavesPanel savesPanel;
     private final GamePanel gamePanel;
     private final OptionsPanel optionsPanel;
     private JPanel next;
     private final GameInstance gameInstance;
-    private LangFile lang;
 
-    public GameFrame(LangFile lang, GameInstance gameInstance) throws HeadlessException {
-        super(lang.getString("title"));
-        this.lang = lang;
+    public GameFrame(GameInstance gameInstance) throws HeadlessException {
+        super(LangFile.getLangFile().getString("title"));
         this.setSize(1280,720);
         this.gameInstance = gameInstance;
-        this.menuPanel = new MenuPanel(lang);
-        this.optionsPanel = new OptionsPanel(lang);
-        this.gamePanel = new GamePanel(lang,gameInstance);
+        this.menuPanel = new MenuPanel();
+        this.savesPanel = new SavesPanel();
+        this.optionsPanel = new OptionsPanel();
+        this.gamePanel = new GamePanel(gameInstance);
         this.getContentPane().add(this.menuPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -40,6 +40,10 @@ public class GameFrame extends JFrame {
         return optionsPanel;
     }
 
+    public SavesPanel getSavesPanel() {
+        return savesPanel;
+    }
+
     public void switchPanel(int panel) {
         this.getContentPane().removeAll();
         this.getContentPane().invalidate();
@@ -49,10 +53,13 @@ public class GameFrame extends JFrame {
                 this.next = this.gamePanel;
                 break;
             case 2:
+                this.getContentPane().add(this.savesPanel);
+                break;
+            case 3:
                 this.getContentPane().add(this.gamePanel);
                 this.gamePanel.updatePanel();
                 break;
-            case 3:
+            case 4:
                 this.getContentPane().add(this.optionsPanel);
                 break;
         }

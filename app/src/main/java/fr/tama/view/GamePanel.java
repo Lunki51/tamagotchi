@@ -7,6 +7,10 @@ import fr.tama.model.Tamagotchi;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The GamePanel
+ * contains the gamescreen and the controlscreen
+ */
 public class GamePanel extends JPanel {
 
     private final JPanel graphicPanel;
@@ -28,26 +32,22 @@ public class GamePanel extends JPanel {
     private final AttribBarComponent energyGauge;
     private final JLabel energyLabel;
     private final JLabel locationLabel;
+    private final JLabel infoLabel;
 
     private final JButton actionButton;
     private final JButton moveLeftButton;
     private final JButton moveRightButton;
 
-    private JButton tmp;
-
     private final GameScreen gameScreen;
 
     private final GameInstance gameInstance;
 
-    private LangFile lang;
-
-    public GamePanel(LangFile lang, GameInstance gameInstance) {
-        this.lang = lang;
+    public GamePanel(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
         this.setLayout(new GridLayout(1,2));
 
         JSplitPane pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        pane.setResizeWeight(0.7);
+        pane.setResizeWeight(0.9);
         pane.setEnabled(false);
         pane.setDividerSize(0);
 
@@ -65,6 +65,11 @@ public class GamePanel extends JPanel {
         this.tamaName.setHorizontalAlignment(JLabel.CENTER);
         this.controlPanel.add(this.tamaName);
 
+
+        this.infoLabel = new JLabel("Information : ");
+        this.infoLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.controlPanel.add(this.infoLabel);
+
         JPanel statusPanel = new JPanel();
         statusPanel.setLayout(new GridLayout(0,2));
         this.mStateLabel = new JLabel("État mental : ");
@@ -79,6 +84,7 @@ public class GamePanel extends JPanel {
         this.tamaPState = new JLabel("Mauvais");
         this.tamaPState.setHorizontalAlignment(JLabel.CENTER);
         statusPanel.add(this.tamaPState);
+
 
         this.hungerLabel = new JLabel("Faim : ");
         this.hungerLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -229,7 +235,4 @@ public class GamePanel extends JPanel {
         return moveRightButton;
     }
 
-    public JButton getTmp() {
-        return tmp;
-    }
 }

@@ -3,17 +3,16 @@ package fr.tama.view;
 import fr.tama.controller.LangFile;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class OptionsPanel extends JPanel {
 
     private final JSlider musicSlider;
     private final JButton returnButton;
     private JCheckBox musicSwitch;
-    private LangFile lang;
+    private final LangFile lang;
 
-    public OptionsPanel(LangFile lang){
-        this.lang = lang;
+    public OptionsPanel(){
+        this.lang = LangFile.getLangFile();
         this.musicSwitch = new JCheckBox(lang.getString("menu.mute"));
         this.musicSlider = new JSlider(-40,6);
         this.returnButton = new JButton(lang.getString("menu.back"));

@@ -63,6 +63,7 @@ public class GameController {
                     INSTANCE.getTamagotchi().play();
                     break;
             }
+            this.gameView.getGameFrame().getGamePanel().updatePanel();
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().addActionListener(e -> this.gameView.getMusic().mute());

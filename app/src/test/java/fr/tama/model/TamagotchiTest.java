@@ -152,9 +152,9 @@ public class TamagotchiTest {
         for(Tamagotchi t : tamas)
         {
             assertNotEquals(t.getCurrent(), Current.DEAD);
-            int stat = t.getAttribute("tiredness").getValue();
+            Current stat = t.getCurrent();
             t.sleep();
-            assertTrue(stat < t.getAttribute("tiredness").getValue());
+            assertNotEquals(stat,t.getCurrent());
         }
     }
 
@@ -209,7 +209,7 @@ public class TamagotchiTest {
             
             for(int i = 0; i < attributes.length; i++)
                 if(!attributes[i].getName().equals("health"))
-                    assertTrue(attributes[i].getValue() + 7 == oldAttributes[i].getValue() || oldAttributes[i].getValue() < 7);
+                    assertTrue(attributes[i].getValue() < oldAttributes[i].getValue() );
         }
     }
 

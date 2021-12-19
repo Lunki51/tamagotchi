@@ -44,13 +44,6 @@ public class AttributeTest {
         assertTrue(attribut.getValue() < i);
     }
 
-    //NEED MODIFICATION
-    @Test
-    public void testToString(){
-        //toString() should not always return ""
-        fail();
-    }
-
     @Test
     public void testGetName()
     {

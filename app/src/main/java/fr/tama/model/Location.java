@@ -65,7 +65,8 @@ public class Location {
         Location bedroom = new Location("bedroom","tiredness",kitchen,null);
         Location bathroom = new Location("bathroom","cleanliness",bedroom,null);
         Location toilet = new Location("toilet","toilet",bathroom,null);
-        Location living = new Location("living","happiness",null,kitchen);
+        Location living = new Location("living","happiness",toilet,kitchen);
+        toilet.setPrevious(living);
         kitchen.setNext(living);
         kitchen.setPrevious(bedroom);
         bedroom.setPrevious(bathroom);

@@ -32,10 +32,10 @@ public class LevelTest {
     public void testGetValue()
     {
         assertEquals(EGG.getValue(),0);
-        assertEquals(BLOB.getValue(),0);
-        assertEquals(HEAD.getValue(),0);
-        assertEquals(CHILD.getValue(),0);
-        assertEquals(ADULT.getValue(),0);
+        assertEquals(BLOB.getValue(),1);
+        assertEquals(HEAD.getValue(),2);
+        assertEquals(CHILD.getValue(),3);
+        assertEquals(ADULT.getValue(),4);
     }
 
     @Test

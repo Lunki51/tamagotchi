@@ -1,16 +1,12 @@
 package fr.tama.model;
 
-import fr.tama.controller.LangFile;
-
-import java.util.Objects;
-
 /**
  * Represent a location in the tamagotchi game
  */
 public class Location {
 
-    private String name;
-    private String action;
+    private final String name;
+    private final String action;
     private Location next;
     private Location previous;
     private static Location[] locations=null;
@@ -69,12 +65,13 @@ public class Location {
         Location bedroom = new Location("bedroom","tiredness",kitchen,null);
         Location bathroom = new Location("bathroom","cleanliness",bedroom,null);
         Location toilet = new Location("toilet","toilet",bathroom,null);
-        Location garden = new Location("garden","happiness",null,kitchen);
-        kitchen.setNext(garden);
+        Location living = new Location("living","happiness",toilet,kitchen);
+        toilet.setPrevious(living);
+        kitchen.setNext(living);
         kitchen.setPrevious(bedroom);
         bedroom.setPrevious(bathroom);
         bathroom.setPrevious(toilet);
-        locations = new Location[]{kitchen,bedroom,toilet,bathroom,garden};
+        locations = new Location[]{living,bedroom,toilet,bathroom,kitchen};
     }
 
     public static Location[] getLocations(){return locations;}

@@ -7,7 +7,7 @@ public enum Level {
     CHILD(3),
     ADULT(4);
 
-    private int level;
+    private final int level;
 
     Level(int level){
         this.level = level;

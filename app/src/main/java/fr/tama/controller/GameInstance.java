@@ -1,50 +1,76 @@
 package fr.tama.controller;
 
+import fr.tama.model.GameSave;
 import fr.tama.model.Location;
 import fr.tama.model.Tamagotchi;
+import fr.tama.view.GameFrame;
+import fr.tama.view.GamePanel;
 
+import javax.swing.*;
 import java.util.Date;
 
 public class GameInstance implements Runnable{
 
-    Tamagotchi tamagotchi;
-    Location location;
-    Date started;
-    long delta;
-    Date lastTime;
-    boolean alive = true;
+    private static final int INTERVAL = 500;
 
-    GameInstance(Tamagotchi tama, Date lastSeen, Location currentLoc){
-        this.tamagotchi = tama;
-        this.location = currentLoc;
-        this.delta = 0;
-        this.lastTime = new Date();
-        updateSince(lastSeen);
-        Thread thread = new Thread(this);
-        thread.start();
+    GameSave save;
+    boolean alive = true;
+    Thread thisThread=null;
+    Date lastSeen;
+    GamePanel gamePanel;
+
+
+    void setInstance(GameSave save, GameFrame gamePanel){
+        if(this.thisThread!= null)this.thisThread.interrupt();
+        this.save =save;
+        this.thisThread = new Thread(this);
+        this.lastSeen = save.getLastSeen();
+        this.gamePanel = gamePanel.getGamePanel();
+    }
+
+    public Tamagotchi getTamagotchi(){
+        return save.getTamagotchi();
+    }
+
+    public Location getLocation(){
+        return  save.getLocation();
+    }
+
+    public GameSave getSave() {
+        return save;
+    }
+
+    void start(){
+        this.thisThread.start();
     }
 
     void updateSince(Date date){
         Date now = new Date();
         long elapsed = now.getTime() - date.getTime();
-        long nbUpdate = elapsed / 300000;
+        long nbUpdate = elapsed / INTERVAL;
         for(int i=0;i<nbUpdate;i++){
-            tamagotchi.update();
+            save.getTamagotchi().update();
         }
-        started = now;
-
     }
 
     @Override
     public void run() {
+        updateSince(this.lastSeen);
         while(alive){
-            Date date = new Date();
-            if((delta)%300000==0){
-                this.tamagotchi.update();
-                delta-=300000;
+            try{
+                this.getTamagotchi().update();
+                this.gamePanel.updatePanel();
+                this.gamePanel.repaint();
+                this.save.save();
+                //noinspection BusyWait
+                Thread.sleep(INTERVAL);
+            }catch (InterruptedException e){
+                e.printStackTrace();
             }
-            delta+= date.getTime()-lastTime.getTime();
-            lastTime = new Date();
         }
+    }
+
+    public void setLocation(Location location) {
+        this.save.setLocation(location);
     }
 }

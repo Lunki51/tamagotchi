@@ -3,11 +3,8 @@ package fr.tama.model;
 import fr.tama.controller.DBConnection;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * GameSave class represent a save inside the database. A save is identified by a slot id. There can be only 3 saves at the same time. When loading or creating a save, use the static
@@ -17,14 +14,16 @@ import java.util.Objects;
 public class GameSave {
 
     private boolean deleted = false;
-    private Date date;
-    private int slot;
-    private Tamagotchi tamagotchi;
+    private final Date creationDate;
+    private Date lastSeen;
+    private final int slot;
+    private final Tamagotchi tamagotchi;
     private Location location;
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private GameSave(Date date, Tamagotchi tamagotchi,int slot,Location location){
-        this.date=date;
+    private GameSave(Date creationDate,Date lastSeen, Tamagotchi tamagotchi,int slot,Location location){
+        this.creationDate=creationDate;
+        this.lastSeen=lastSeen;
         this.slot = slot;
         this.tamagotchi=tamagotchi;
         this.location = location;
@@ -35,11 +34,12 @@ public class GameSave {
      */
     public void save(){
         if(deleted)return;
+        Date now = new Date();
         try{
             String sql = "INSERT INTO save(date,location,mood,shape,current,profile,level) VALUES(?,?,?,?,?,?,?)";
 
             PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
-            pstmt.setLong(1, this.date.getTime());
+            pstmt.setLong(1, now.getTime());
             pstmt.setString(2,this.location.getName());
             pstmt.setString(3, tamagotchi.getMood().toString());
             pstmt.setString(4, tamagotchi.getShape().toString());
@@ -76,6 +76,7 @@ public class GameSave {
         }catch(SQLException e){
                 e.printStackTrace();
         }
+        this.lastSeen=now;
     }
 
     /**
@@ -100,7 +101,8 @@ public class GameSave {
      */
     public static GameSave loadSave(int slot){
         Tamagotchi tamagotchi = null;
-        Date date = new Date();
+        Date creationDate;
+        Date lastSeen= new Date();
         Location location = null;
 
         try{
@@ -112,7 +114,7 @@ public class GameSave {
                 if(rs.next()){
                     String name = rs.getString("name");
                     boolean sex = rs.getBoolean("sex");
-                    date = new Date(rs.getLong("creationDate"));
+                    creationDate = new Date(rs.getLong("creationDate"));
                     String type = rs.getString("type");
 
                             ignored = DBConnection.getConnection().prepareStatement(request2);
@@ -120,6 +122,7 @@ public class GameSave {
                             ResultSet rs2 = ignored.executeQuery();
                     Level level = Level.getLevel(rs2.getInt("level"));
                         if(rs2.next()){
+                            lastSeen = new Date(rs2.getLong("date"));
                              switch (type) {
                                 case "Chien" :
                                     tamagotchi = new Chien(
@@ -175,8 +178,7 @@ public class GameSave {
             e.printStackTrace();
             return null;
         }
-
-        return new GameSave(date,tamagotchi,slot,location);
+        return new GameSave(creationDate,lastSeen,tamagotchi,slot,location);
     }
 
     /**
@@ -204,7 +206,7 @@ public class GameSave {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        GameSave save = new GameSave(date,tamagotchi,slot,defaultLoc);
+        GameSave save = new GameSave(date,date,tamagotchi,slot,defaultLoc);
         save.save();
         return save;
     }
@@ -213,8 +215,12 @@ public class GameSave {
      * Return the date when the save have been created
      * @return a LocalDateTime that represent the date of the save creation
      */
-    public Date getDate() {
-        return date;
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public Date getLastSeen() {
+        return lastSeen;
     }
 
     /**
@@ -241,14 +247,16 @@ public class GameSave {
         return location;
     }
 
+    public void setLocation(Location location){
+        this.location=location;
+    }
+
     private static Status statusFromString(String status){
         switch (status) {
             case "VERY_BAD":
                 return Status.VERY_BAD;
             case "BAD" :
                 return Status.BAD;
-            case "GOOD" :
-                return Status.GOOD;
             case "VERY_GOOD" :
                 return Status.VERY_GOOD;
             default :
@@ -262,8 +270,6 @@ public class GameSave {
                 return Current.AWAKE;
             case "ASLEEP" :
                 return Current.ASLEEP;
-            case "DEAD" :
-                return Current.DEAD;
             default :
                 return Current.DEAD;
         }
@@ -274,17 +280,19 @@ public class GameSave {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GameSave save = (GameSave) o;
-        return deleted == save.deleted && slot == save.slot && date.equals(save.date) && tamagotchi.equals(save.tamagotchi) && location.equals(save.location);
+        return deleted == save.deleted && slot == save.slot && creationDate.equals(save.creationDate) && tamagotchi.equals(save.tamagotchi) && location.equals(save.location) && lastSeen.equals(save.lastSeen);
     }
 
     @Override
     public String toString() {
         return "GameSave{" +
                 "deleted=" + deleted +
-                ", date=" + date +
+                ", creationDate=" + creationDate +
+                ", lastSeen=" + lastSeen +
                 ", slot=" + slot +
                 ", tamagotchi=" + tamagotchi +
                 ", location=" + location +
                 '}';
     }
+
 }

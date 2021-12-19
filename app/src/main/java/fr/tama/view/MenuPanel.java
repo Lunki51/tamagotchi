@@ -1,29 +1,46 @@
 package fr.tama.view;
 
+import fr.tama.controller.LangFile;
+
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
+import java.util.Objects;
 
 public class MenuPanel extends JPanel {
 
-    private JPanel buttonPanel;
-    private MenuButton buttonPlay;
-    private MenuButton buttonOption;
-    private MenuButton buttonQuit;
+    private final JPanel buttonPanel;
+    private final MenuButton buttonPlay;
+    private final MenuButton buttonOption;
+    private final MenuButton buttonQuit;
+
+    private final LangFile lang;
 
     public MenuPanel() {
-        this.setLayout(new BorderLayout());
+
+        super(new BorderLayout());
+        super.setBackground(new Color(126,206,202));
+        this.lang = LangFile.getLangFile();
+        ImageIcon background = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/background_menu.png")));
+        JLabel backgroundPanel = new JLabel(background);
+        this.add(backgroundPanel, BorderLayout.CENTER);
         this.buttonPanel = new JPanel();
-        this.buttonPanel.setLayout(new GridLayout(3,1));
+        this.buttonPanel.setBackground(new Color(126,206,202));
+        this.buttonPanel.setLayout(new GridLayout(3,3, 12, 12));
         this.add(buttonPanel, BorderLayout.SOUTH);
 
-        this.buttonPlay = new MenuButton("Jouer");
+        this.buttonPlay = new MenuButton(lang.getString("menu.play"));
+        this.buttonPanel.add(new JLabel());
         this.buttonPanel.add(this.buttonPlay);
-
-        this.buttonOption = new MenuButton("Option");
+        this.buttonPanel.add(new JLabel());
+        this.buttonPanel.add(new JLabel());
+        this.buttonOption = new MenuButton(lang.getString("menu.options"));
         this.buttonPanel.add(this.buttonOption);
-
-        this.buttonQuit = new MenuButton("Quitter");
+        this.buttonPanel.add(new JLabel());
+        this.buttonPanel.add(new JLabel());
+        this.buttonQuit = new MenuButton(lang.getString("menu.quit"));
         this.buttonPanel.add(this.buttonQuit);
+        this.buttonPanel.add(new JLabel());
     }
 
     public MenuButton getButtonPlay() {

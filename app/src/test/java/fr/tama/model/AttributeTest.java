@@ -12,7 +12,7 @@ public class AttributeTest {
     @Before
     public void init()
     {
-        attribut = new Attribute("test", 13);
+        attribut = new Attribute("test", 13,500);
     }
 
     @After
@@ -42,13 +42,6 @@ public class AttributeTest {
         int i = attribut.getValue();
         attribut.decrease(1);
         assertTrue(attribut.getValue() < i);
-    }
-
-    //NEED MODIFICATION
-    @Test
-    public void testToString(){
-        //toString() should not always return ""
-        fail();
     }
 
     @Test

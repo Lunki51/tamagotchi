@@ -20,19 +20,15 @@ public class GameController {
         this.gameView.setLangFile(file);
         this.gameView.start();
         
-        this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(2);
-        });
+        this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(2));
         this.gameView.getGameFrame().getSavesPanel().getTmpButton().addActionListener(e -> {
             GameSave save = GameSave.loadSave(0);
             if(save==null)save=GameSave.createSave(0,new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Default",Level.CHILD),Location.getDefaultLocation());
-            INSTANCE.setInstance(save.getTamagotchi(),save.getDate(), save.getLocation(),this.gameView.getGameFrame());
+            INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
             this.gameView.getGameFrame().switchPanel(3);
         });
-        this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(4);
-        });
+        this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> this.gameView.getGameFrame().switchPanel(4));
         this.gameView.getGameFrame().getMenuPanel().getButtonQuit().addActionListener(e -> System.exit(0));
 
         this.gameView.getGameFrame().getGamePanel().getMoveLeftButton().addActionListener(e->{
@@ -65,6 +61,7 @@ public class GameController {
                     INSTANCE.getTamagotchi().play();
                     break;
             }
+            INSTANCE.getSave().save();
             this.gameView.getGameFrame().getGamePanel().updatePanel();
         });
 

@@ -70,7 +70,7 @@ public class GameScreen extends JPanel {
         }
         fileName+=".png";
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource(fileName)));
-        g.drawImage(icon.getImage(),this.getHeight()/3,this.getWidth()/3,this.getHeight()/2,this.getWidth()/2,null);
+        g.drawImage(icon.getImage(),this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2-this.getHeight()/6,(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
 
     }
 }

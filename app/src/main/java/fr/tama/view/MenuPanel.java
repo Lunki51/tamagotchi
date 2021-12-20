@@ -41,7 +41,6 @@ public class MenuPanel extends JPanel {
         this.buttonQuit = new MenuButton(lang.getString("menu.quit"));
         this.buttonPanel.add(this.buttonQuit);
         this.buttonPanel.add(new JLabel());
-
     }
 
     public MenuButton getButtonPlay() {

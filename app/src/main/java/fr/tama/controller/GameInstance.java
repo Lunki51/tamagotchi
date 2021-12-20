@@ -1,5 +1,6 @@
 package fr.tama.controller;
 
+import fr.tama.model.GameSave;
 import fr.tama.model.Location;
 import fr.tama.model.Tamagotchi;
 import fr.tama.view.GameFrame;
@@ -12,30 +13,31 @@ public class GameInstance implements Runnable{
 
     private static final int INTERVAL = 500;
 
-    Tamagotchi tamagotchi;
-    Location location;
-    Date started;
+    GameSave save;
     boolean alive = true;
     Thread thisThread=null;
     Date lastSeen;
     GamePanel gamePanel;
 
 
-    void setInstance(Tamagotchi tama, Date lastSeen, Location currentLoc,GameFrame gamePanel){
+    void setInstance(GameSave save, GameFrame gamePanel){
         if(this.thisThread!= null)this.thisThread.interrupt();
-        this.tamagotchi = tama;
-        this.location = currentLoc;
+        this.save =save;
         this.thisThread = new Thread(this);
-        this.lastSeen = lastSeen;
+        this.lastSeen = save.getLastSeen();
         this.gamePanel = gamePanel.getGamePanel();
     }
 
-    public Tamagotchi getTamagotchi() {
-        return tamagotchi;
+    public Tamagotchi getTamagotchi(){
+        return save.getTamagotchi();
     }
 
-    public Location getLocation() {
-        return location;
+    public Location getLocation(){
+        return  save.getLocation();
+    }
+
+    public GameSave getSave() {
+        return save;
     }
 
     void start(){
@@ -46,12 +48,9 @@ public class GameInstance implements Runnable{
         Date now = new Date();
         long elapsed = now.getTime() - date.getTime();
         long nbUpdate = elapsed / INTERVAL;
-        System.out.println(nbUpdate);
         for(int i=0;i<nbUpdate;i++){
-            tamagotchi.update();
+            save.getTamagotchi().update();
         }
-        started = now;
-
     }
 
     @Override
@@ -59,9 +58,11 @@ public class GameInstance implements Runnable{
         updateSince(this.lastSeen);
         while(alive){
             try{
-                this.tamagotchi.update();
+                this.getTamagotchi().update();
                 this.gamePanel.updatePanel();
                 this.gamePanel.repaint();
+                this.save.save();
+                //noinspection BusyWait
                 Thread.sleep(INTERVAL);
             }catch (InterruptedException e){
                 e.printStackTrace();
@@ -70,6 +71,6 @@ public class GameInstance implements Runnable{
     }
 
     public void setLocation(Location location) {
-        this.location = location;
+        this.save.setLocation(location);
     }
 }

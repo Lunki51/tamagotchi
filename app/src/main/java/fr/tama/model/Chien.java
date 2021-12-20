@@ -7,6 +7,8 @@ public class Chien extends Tamagotchi{
         super(mood, shape, current,sex,name,level);
     }
 
+    //TODO COOLDOWN
+
     @Override
     public void eat() {
         this.getAttribute("hungry").increase(1250);
@@ -14,8 +16,12 @@ public class Chien extends Tamagotchi{
 
     @Override
     public void sleep() {
-        if(this.getCurrent() == Current.AWAKE)
+        if(this.getCurrent() == Current.AWAKE){
             this.setCurrent(Current.ASLEEP);
+        }else{
+            this.setCurrent(Current.AWAKE);
+        }
+
     }
 
     @Override
@@ -34,7 +40,6 @@ public class Chien extends Tamagotchi{
     @Override
     public void wash() {
         this.getAttribute("cleanliness").increase(2000);
-        //TODO CoolDown
     }
 
     @Override

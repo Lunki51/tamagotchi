@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5f7cb4f-8d51-4dde-9011-ec91c31084ec" name="Changes" comment="Fix de la langue">
+    <list default="true" id="d5f7cb4f-8d51-4dde-9011-ec91c31084ec" name="Changes" comment="aled">
+      <change afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_34_0.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tama-db.db" beforeDir="false" afterPath="$PROJECT_DIR$/tama-db.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +24,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -94,7 +97,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640192828187</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="aled">
+      <created>1640205778994</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1640205778994</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -111,6 +121,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Update Options panel" />
     <MESSAGE value="Fix de la langue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix de la langue" />
+    <MESSAGE value="aled" />
+    <option name="LAST_COMMIT_MESSAGE" value="aled" />
   </component>
 </project>

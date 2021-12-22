@@ -27,7 +27,7 @@ public class Chien extends Tamagotchi{
     @Override
     public void play() {
         this.getAttribute("tiredness").decrease(50);
-        this.getAttribute("toilet").decrease(50);
+        this.getAttribute("cleanliness").decrease(50);
         this.getAttribute("happiness").increase(1000);
     }
 

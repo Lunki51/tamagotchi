@@ -7,7 +7,7 @@ import fr.tama.view.GameView;
 
 public class GameController {
     private final GameView gameView;
-    public static GameInstance INSTANCE = new GameInstance();
+    private final static GameInstance INSTANCE = new GameInstance();
 
     public GameController() {
         this.gameView = new GameView(INSTANCE);
@@ -15,7 +15,7 @@ public class GameController {
 
     public void startGame() {
         LangFile file = LangFile.getLangFile();
-        LangFile.setLang("en");
+        LangFile.setLang("fr");
 
         this.gameView.setLangFile(file);
         this.gameView.start();
@@ -28,7 +28,10 @@ public class GameController {
             INSTANCE.start();
             this.gameView.getGameFrame().switchPanel(3);
         });
-        this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> this.gameView.getGameFrame().switchPanel(4));
+        this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> {
+            this.gameView.getGameFrame().switchPanel(4);
+            this.gameView.getGameFrame().repaint();
+        });
         this.gameView.getGameFrame().getMenuPanel().getButtonQuit().addActionListener(e -> System.exit(0));
 
         this.gameView.getGameFrame().getGamePanel().getMoveLeftButton().addActionListener(e->{
@@ -71,6 +74,10 @@ public class GameController {
         this.gameView.getGameFrame().getOptionsPanel().getReturnButton().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(1);
             this.gameView.getGameFrame().getMenuPanel().repaint();
+        });
+
+        this.gameView.getGameFrame().getOptionsPanel().getLangFRBtn().addItemListener(e -> {
+            LangFile.switchLang();
         });
 
     }

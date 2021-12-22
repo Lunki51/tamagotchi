@@ -21,16 +21,14 @@ public class LangFile {
 
     private static final HashMap<String,Locale> langs = new HashMap<>();
     ResourceBundle bundle;
+    public static boolean lang;
 
     private LangFile(ResourceBundle bundle){
         this.bundle = bundle;
     }
 
-    public String getString (String string) {
-        return bundle.getString(string);
-    }
+    public static void setLang(String name) {
 
-    public static void setLang(String name){
         try{
             String sql = "UPDATE config SET lang=? WHERE TRUE";
             PreparedStatement pstm = DBConnection.getConnection().prepareStatement(sql);
@@ -39,6 +37,23 @@ public class LangFile {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public String getString (String string) {
+        return bundle.getString(string);
+    }
+
+    public static void switchLang(){
+        String name;
+        if(!lang) {
+            name = "fr";
+            lang = true;
+        }
+        else {
+            name = "en";
+            lang = false;
+        }
+        setLang(name);
     }
 
     public static void addLang(String name,Locale locale){
@@ -67,6 +82,5 @@ public class LangFile {
         }
         return file;
     }
-
 
 }

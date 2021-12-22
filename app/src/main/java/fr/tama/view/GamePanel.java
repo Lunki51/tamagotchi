@@ -41,10 +41,13 @@ public class GamePanel extends JPanel {
     private final GameScreen gameScreen;
 
     private final GameInstance gameInstance;
+    private final LangFile lang;
 
     public GamePanel(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
         this.setLayout(new GridLayout(1,2));
+
+        this.lang = LangFile.getLangFile();
 
         JSplitPane pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         pane.setResizeWeight(0.9);
@@ -146,8 +149,8 @@ public class GamePanel extends JPanel {
         this.hygeneGauge.updateDisplay(tamagotchi.getAttribute("cleanliness").getMax(),tamagotchi.getAttribute("cleanliness").getValue());
         this.toiletGauge.updateDisplay(tamagotchi.getAttribute("toilet").getMax(),tamagotchi.getAttribute("toilet").getValue());
         this.tamaName.setText(this.gameInstance.getTamagotchi().getName());
-        this.tamaMState.setText(this.gameInstance.getTamagotchi().getMood().name());
-        this.tamaPState.setText(this.gameInstance.getTamagotchi().getShape().name());
+        this.tamaMState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getMood().name()));
+        this.tamaPState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getShape().name()));
         this.gameScreen.repaint();
     }
 

@@ -7,7 +7,7 @@ import fr.tama.view.GameView;
 
 public class GameController {
     private final GameView gameView;
-    public static GameInstance INSTANCE = new GameInstance();
+    private final static GameInstance INSTANCE = new GameInstance();
 
     public GameController() {
         this.gameView = new GameView(INSTANCE);
@@ -15,7 +15,7 @@ public class GameController {
 
     public void startGame() {
         LangFile file = LangFile.getLangFile();
-        LangFile.setLang("en");
+        LangFile.setLang("fr");
 
         this.gameView.setLangFile(file);
         this.gameView.start();

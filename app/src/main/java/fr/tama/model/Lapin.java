@@ -10,7 +10,7 @@ public class Lapin extends Tamagotchi{
 
     @Override
     public void eat() {
-        this.getAttribute("hungry").increase(1250);
+        this.getAttribute("hungry").increase(1400);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Lapin extends Tamagotchi{
     public void play() {
         this.getAttribute("tiredness").decrease(50);
         this.getAttribute("toilet").decrease(50);
-        this.getAttribute("happiness").increase(1000);
+        this.getAttribute("happiness").increase(500);
     }
 
     @Override
@@ -45,5 +45,6 @@ public class Lapin extends Tamagotchi{
     @Override
     public void update() {
         super.update();
+        this.getAttribute("hungry").decrease(5);
     }
 }

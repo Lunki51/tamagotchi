@@ -25,24 +25,28 @@ public class Chat extends Tamagotchi{
 
     @Override
     public void play() {
-        this.getAttribute("tiredness").decrease(50);
+        this.getAttribute("tiredness").decrease(100);
         this.getAttribute("toilet").decrease(50);
-        this.getAttribute("happiness").increase(1000);
+        this.getAttribute("happiness").increase(500);
     }
 
     @Override
     public void toilet() {
-        this.getAttribute("toilet").increase(1100);
+        this.getAttribute("toilet").increase(1200);
 
     }
 
     @Override
     public void wash() {
         this.getAttribute("cleanliness").increase(2000);
+        this.getAttribute("happiness").increase(100);
     }
 
     @Override
     public void update() {
         super.update();
+        this.getAttribute("tiredness").decrease(2);
+        this.getAttribute("toilet").decrease(2);
+        this.getAttribute("happiness").decrease(2);
     }
 }

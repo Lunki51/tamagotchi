@@ -1,6 +1,7 @@
 package fr.tama.view;
 
 import fr.tama.controller.LangFile;
+import fr.tama.model.Constants;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -19,13 +20,13 @@ public class MenuPanel extends JPanel {
     public MenuPanel() {
 
         super(new BorderLayout());
-        super.setBackground(new Color(126,206,202));
+        super.setBackground(Constants.BLUE);
         this.lang = LangFile.getLangFile();
         ImageIcon background = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/background_menu.png")));
         JLabel backgroundPanel = new JLabel(background);
         this.add(backgroundPanel, BorderLayout.CENTER);
         this.buttonPanel = new JPanel();
-        this.buttonPanel.setBackground(new Color(126,206,202));
+        this.buttonPanel.setBackground(Constants.BLUE);
         this.buttonPanel.setLayout(new GridLayout(3,3, 12, 12));
         this.add(buttonPanel, BorderLayout.SOUTH);
 

@@ -1,9 +1,7 @@
 package fr.tama.view;
 
 import fr.tama.controller.GameInstance;
-import fr.tama.model.Chat;
-import fr.tama.model.Chien;
-import fr.tama.model.Lapin;
+import fr.tama.model.*;
 import fr.tama.model.Robot;
 
 import javax.swing.*;
@@ -18,7 +16,8 @@ public class GameScreen extends JPanel {
 
     ImageIcon bathroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/salle_de_be.png")));
     ImageIcon living = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/living_room.png")));
-    ImageIcon bedroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/dodo.png")));
+    ImageIcon bedroom1 = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/dodo.png")));
+    Animation bedroomSleep= new Animation(new String[]{"sprites/background/dodo_anim1.png","sprites/background/dodo_anim2.png"},1000);
 
     private final GameInstance gameInstance;
 
@@ -37,8 +36,12 @@ public class GameScreen extends JPanel {
                 g.drawImage(living.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
                 break;
             case "bedroom":
-                g.drawImage(bedroom.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
-                break;
+                if(this.gameInstance.getTamagotchi().getCurrent()== Current.AWAKE){
+                    g.drawImage(bedroom1.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+                }else{
+                    g.drawImage(bedroomSleep.getCurrentImage().getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+                }
+                return;
         }
         String fileName = "sprites/tamagotchi/";
         switch(this.gameInstance.getTamagotchi().getLevel()){

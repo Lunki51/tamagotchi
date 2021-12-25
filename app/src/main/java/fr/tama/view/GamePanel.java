@@ -2,6 +2,7 @@ package fr.tama.view;
 
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
+import fr.tama.model.Current;
 import fr.tama.model.Tamagotchi;
 
 import javax.swing.*;
@@ -141,7 +142,7 @@ public class GamePanel extends JPanel {
 
     public void updatePanel(){
         Tamagotchi tamagotchi = this.gameInstance.getTamagotchi();
-        this.actionButton.setText(LangFile.getLangFile().getString("attribute_action_"+this.gameInstance.getLocation().getAction()));
+        this.actionButton.setText(LangFile.getLangFile().getString("attribute_action_"+this.gameInstance.getLocation().getAction()+"_"+(this.gameInstance.getTamagotchi().getCurrent()== Current.ASLEEP?"off":"on")));
         this.locationLabel.setText(LangFile.getLangFile().getString("location_"+this.gameInstance.getLocation().getName()));
         this.energyGauge.updateDisplay(tamagotchi.getAttribute("tiredness").getMax(),tamagotchi.getAttribute("tiredness").getValue());
         this.happinessGauge.updateDisplay(tamagotchi.getAttribute("happiness").getMax(),tamagotchi.getAttribute("happiness").getValue());

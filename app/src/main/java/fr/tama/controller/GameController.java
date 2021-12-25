@@ -5,6 +5,8 @@ import fr.tama.controller.LangFile;
 import fr.tama.model.*;
 import fr.tama.view.GameView;
 
+import java.util.Objects;
+
 public class GameController {
     private final GameView gameView;
     private final static GameInstance INSTANCE = new GameInstance();
@@ -47,6 +49,8 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getGamePanel().getActionButton().addActionListener(e->{
+            if(INSTANCE.getTamagotchi().getLevel()==Level.EGG)return;
+            if(INSTANCE.getTamagotchi().getCurrent()==Current.ASLEEP && !Objects.equals(INSTANCE.getLocation().getAction(), "tiredness"))return;
             switch(INSTANCE.getLocation().getAction()){
                 case "hunger":
                     INSTANCE.getTamagotchi().eat();
@@ -64,6 +68,7 @@ public class GameController {
                     INSTANCE.getTamagotchi().play();
                     break;
             }
+
             INSTANCE.getSave().save();
             this.gameView.getGameFrame().getGamePanel().updatePanel();
         });
@@ -76,9 +81,7 @@ public class GameController {
             this.gameView.getGameFrame().getMenuPanel().repaint();
         });
 
-        this.gameView.getGameFrame().getOptionsPanel().getLangFRBtn().addItemListener(e -> {
-            LangFile.switchLang();
-        });
+        this.gameView.getGameFrame().getOptionsPanel().getLangFRBtn().addItemListener(e -> LangFile.switchLang());
 
     }
 }

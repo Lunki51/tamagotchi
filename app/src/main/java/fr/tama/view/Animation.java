@@ -1,9 +1,6 @@
 package fr.tama.view;
 
-import fr.tama.controller.GameInstance;
-
 import javax.swing.*;
-import java.awt.*;
 
 public class Animation implements Runnable{
 

@@ -45,9 +45,9 @@ public class Music {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.clip.loop(Clip.LOOP_CONTINUOUSLY);
         this.fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         this.setVolume(-14);
+        start();
     }
 
     public void initSleepMusic() {
@@ -73,8 +73,8 @@ public class Music {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            this.clip.loop(Clip.LOOP_CONTINUOUSLY);
             this.fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            start();
             isSleepingmusic = true;
         }
     }
@@ -89,11 +89,15 @@ public class Music {
         else
         {
             fc.setValue(volume);
-            if(!this.clip.isActive())
-                this.clip.start();
+            start();
         }
     }
 
+    public void start()
+    {
+        if(!this.clip.isActive())
+            this.clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
     /**
      * Allows to start or stop the music
      */

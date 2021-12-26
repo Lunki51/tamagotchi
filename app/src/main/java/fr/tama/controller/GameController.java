@@ -7,6 +7,9 @@ import fr.tama.view.GameView;
 
 import java.util.Objects;
 
+/**
+*   Class ensuring View's initialization
+*/
 public class GameController {
     private final GameView gameView;
     private final static GameInstance INSTANCE = new GameInstance();
@@ -15,15 +18,19 @@ public class GameController {
         this.gameView = new GameView(INSTANCE);
     }
 
+    /**
+    *   Method that initializes controls event
+    */
     public void startGame() {
+        //Language initialization before initializating controls
         LangFile file = LangFile.getLangFile();
-        LangFile.setLang("fr");
-
+        LangFile.setLang("fr"); //TODO: Requête SQL pour obtenir la langue dernièrement utilisée SINON langue par défaut qui devrait être directement en dur dans le code de la BDD
         this.gameView.setLangFile(file);
         this.gameView.start();
         
+        //Menu control events
         this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(2));
-        this.gameView.getGameFrame().getSavesPanel().getTmpButton().addActionListener(e -> {
+        this.gameView.getGameFrame().getSavesPanel().getTmpButton().addActionListener(e -> {    //TODO: Drogue dure, ah non c'est un event codé à la dur
             GameSave save = GameSave.loadSave(0);
             if(save==null)save=GameSave.createSave(0,new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Default",Level.CHILD),Location.getDefaultLocation());
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
@@ -36,6 +43,7 @@ public class GameController {
         });
         this.gameView.getGameFrame().getMenuPanel().getButtonQuit().addActionListener(e -> System.exit(0));
 
+        //In-game control events
         this.gameView.getGameFrame().getGamePanel().getMoveLeftButton().addActionListener(e->{
             if(INSTANCE.getLocation().getNext()!=null)INSTANCE.setLocation(INSTANCE.getLocation().getNext());
             this.gameView.getGameFrame().getGamePanel().updatePanel();
@@ -73,6 +81,7 @@ public class GameController {
             this.gameView.getGameFrame().getGamePanel().updatePanel();
         });
 
+        //Settings control events
         this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().addActionListener(e -> this.gameView.getMusic().mute());
 
         this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().addChangeListener(e -> this.gameView.getMusic().setVolume(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue()));

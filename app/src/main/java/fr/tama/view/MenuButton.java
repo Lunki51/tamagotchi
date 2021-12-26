@@ -14,7 +14,7 @@ public class MenuButton extends JButton {
         this.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
         this.setForeground(Color.white);
         this.setBackground(Constants.PURPLE);
-        this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Constants.PURPLE, 0), BorderFactory.createLineBorder(Constants.PURPLE, 20)));
+        this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Constants.BLUE, 10), BorderFactory.createLineBorder(Constants.PURPLE, 10)));
 
     }
 }

@@ -29,7 +29,9 @@ public class GameController {
         this.gameView.start();
         
         //Menu control events
-        this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(2));
+        this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> {
+            this.gameView.getGameFrame().switchPanel(2);
+        });
         this.gameView.getGameFrame().getSavesPanel().getTmpButton().addActionListener(e -> {    //TODO: Drogue dure, ah non c'est un event codé à la dur
             GameSave save = GameSave.loadSave(0);
             if(save==null)save=GameSave.createSave(0,new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Default",Level.CHILD),Location.getDefaultLocation());

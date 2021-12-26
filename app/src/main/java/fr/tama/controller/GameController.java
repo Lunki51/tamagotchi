@@ -65,6 +65,8 @@ public class GameController {
                     break;
                 case "tiredness":
                     INSTANCE.getTamagotchi().sleep();
+                    if(INSTANCE.getTamagotchi().getCurrent() == Current.ASLEEP)this.gameView.getMusic().initSleepMusic();
+                    else this.gameView.getMusic().initGameMusic();
                     break;
                 case "cleanliness":
                     INSTANCE.getTamagotchi().wash();

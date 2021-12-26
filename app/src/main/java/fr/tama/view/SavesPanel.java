@@ -21,9 +21,9 @@ public class SavesPanel extends JPanel {
         this.backButton = new MenuButton("<-  " + LangFile.getLangFile().getString("menu.back"));
         this.add(backButton);
 
-        this.s1 = new SaveButton();
-        this.s2 = new SaveButton();
-        this.s3 = new SaveButton();
+        this.s1 = new SaveButton("Save 1");
+        this.s2 = new SaveButton("");
+        this.s3 = new SaveButton("");
 
         JLabel title = new JLabel(LangFile.getLangFile().getString("menu.saves"));
         title.setHorizontalAlignment(JLabel.CENTER);
@@ -39,6 +39,6 @@ public class SavesPanel extends JPanel {
     }
 
     public JButton getTmpButton() {
-        return backButton;
+        return s1;
     }
 }

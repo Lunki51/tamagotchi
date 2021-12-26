@@ -6,16 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class SaveButton extends JPanel {
+public class SaveButton extends JButton {
 
     private JLabel egg;
 
-    public SaveButton(){
-        super(new BorderLayout());
+    public SaveButton(String text){
+        super(text);
         setBackground(Constants.PURPLE);
         this.egg = new JLabel();
         this.egg.setIcon(new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/tamagotchi/egg_lapin.png"))));
-        this.add(egg, BorderLayout.CENTER);
+        this.add(egg);
         this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Constants.BLUE, 0), BorderFactory.createLineBorder(Constants.BLUE, 20)));
     }
 }

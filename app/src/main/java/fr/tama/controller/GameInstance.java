@@ -9,9 +9,13 @@ import fr.tama.view.GamePanel;
 import javax.swing.*;
 import java.util.Date;
 
+/**
+*   Class handling logical steps to run the game
+*/
 public class GameInstance implements Runnable{
 
-    private static final int INTERVAL = 500;
+    private static final int INTERVAL = 500; // In milliseconds
+    //private static final int INTERVAL = 300000;
 
     GameSave save;
     boolean alive = true;
@@ -33,7 +37,7 @@ public class GameInstance implements Runnable{
     }
 
     public Location getLocation(){
-        return  save.getLocation();
+        return save.getLocation();
     }
 
     public GameSave getSave() {
@@ -44,13 +48,19 @@ public class GameInstance implements Runnable{
         this.thisThread.start();
     }
 
+    /**
+    *   Calculate time elapsed from last use and update tamagotchi appropriately
+    */
     void updateSince(Date date){
         Date now = new Date();
         long elapsed = now.getTime() - date.getTime();
-        long nbUpdate = elapsed / INTERVAL;
-        for(int i=0;i<nbUpdate;i++){
-            save.getTamagotchi().update();
-        }
+        long nbUpdate = elapsed * 1000 / INTERVAL;
+
+        if(nbUpdate > 2016) //If the tamagotchi has been abandoned for more than a week => dead
+            save.getTamagotchi().setAttribute("health") = 0;
+        else
+            for(long i=0;i<nbUpdate;i++)
+                save.getTamagotchi().update();
     }
 
     @Override

@@ -67,7 +67,10 @@ public abstract class Tamagotchi {
      */
     public void setAttribute(String name,int value){
         for(Attribute attr : this.attributes){
-            if(attr.getName().equals(name))attr.setValue(value);
+            if(attr.getName().equals(name)){
+                attr.setValue(value);
+                break;
+            }
         }
     }
 
@@ -80,7 +83,7 @@ public abstract class Tamagotchi {
         for(Attribute attr : this.attributes){
             if(attr.getName().equals(name))return attr;
         }
-        return this.attributes[0];
+        return this.attributes[0]; //SHOULD REALLY THROW AN EXCEPTION INSTEAD OF RETURNING FIRST ATTRIBUTE
     }
 
     /**

@@ -57,7 +57,7 @@ public class GameInstance implements Runnable{
         long nbUpdate = elapsed * 1000 / INTERVAL;
 
         if(nbUpdate > 2016) //If the tamagotchi has been abandoned for more than a week => dead
-            save.getTamagotchi().setAttribute("health") = 0;
+            save.getTamagotchi().setAttribute("health").setValue(0);
         else
             for(long i=0;i<nbUpdate;i++)
                 save.getTamagotchi().update();

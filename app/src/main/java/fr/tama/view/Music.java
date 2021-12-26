@@ -84,14 +84,25 @@ public class Music {
     }
 
     public void setVolume(float volume) {
-        fc.setValue(volume);
+        if(volume == -40) //Beurk
+            mute();
+        else
+        {
+            fc.setValue(volume);
+            if(!this.clip.isActive())
+                this.clip.start();
+        }
     }
 
     /**
      * Allows to start or stop the music
      */
     public void mute(){
-        if(this.clip.isActive())this.clip.stop();
-        else this.clip.start();
+        this.clip.stop();
+    }
+
+    public boolean isMuted()
+    {
+        return !this.clip.isActive();
     }
 }

@@ -84,9 +84,30 @@ public class GameController {
         });
 
         //Settings control events
-        this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().addActionListener(e -> this.gameView.getMusic().mute());
+        this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().addActionListener(e -> {
+            if(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected())
+            {
+                this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(-40); //Beurk
+                this.gameView.getMusic().mute();
+            }
+            else
+                this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue((int)this.gameView.getMusic().getVolume());
 
-        this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().addChangeListener(e -> this.gameView.getMusic().setVolume(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue()));
+        });
+
+        this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().addChangeListener(e -> {
+            if(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue() == -40) //Beurk
+            {
+                this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(true);
+                this.gameView.getMusic().mute();
+            }   
+            else
+            {
+                this.gameView.getMusic().setVolume(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue());
+                if(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected())
+                    this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(false);
+            }
+        });
         this.gameView.getGameFrame().getOptionsPanel().getReturnButton().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(1);
             this.gameView.getGameFrame().getMenuPanel().repaint();

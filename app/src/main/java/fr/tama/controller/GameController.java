@@ -90,7 +90,7 @@ public class GameController {
             if(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected())
             {
                 this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(-40); //Beurk
-                this.gameView.getMusic().mute();
+                this.gameView.getMusic().stop();
             }
             else
                 this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue((int)this.gameView.getMusic().getVolume());
@@ -101,15 +101,17 @@ public class GameController {
             if(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue() == -40) //Beurk
             {
                 this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(true);
-                this.gameView.getMusic().mute();
+                this.gameView.getMusic().stop();
             }   
             else
             {
                 this.gameView.getMusic().setVolume(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue());
+                this.gameView.getMusic().start();
                 if(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected())
                     this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(false);
             }
         });
+        
         this.gameView.getGameFrame().getOptionsPanel().getReturnButton().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(1);
             this.gameView.getGameFrame().getMenuPanel().repaint();

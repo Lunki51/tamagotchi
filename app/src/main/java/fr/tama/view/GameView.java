@@ -4,10 +4,6 @@ package fr.tama.view;
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
 
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
-
 /**
  * Main View class
  */

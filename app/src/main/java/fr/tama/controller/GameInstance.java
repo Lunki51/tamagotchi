@@ -6,7 +6,6 @@ import fr.tama.model.Tamagotchi;
 import fr.tama.view.GameFrame;
 import fr.tama.view.GamePanel;
 
-import javax.swing.*;
 import java.util.Date;
 
 /**

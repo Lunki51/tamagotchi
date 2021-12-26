@@ -1,7 +1,5 @@
 package fr.tama.controller;
 
-import fr.tama.controller.DBConnection;
-import fr.tama.controller.LangFile;
 import fr.tama.model.*;
 import fr.tama.view.GameView;
 
@@ -89,7 +87,7 @@ public class GameController {
         this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().addActionListener(e -> {
             if(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected())
             {
-                this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(-40); //Beurk
+                this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(-40);
                 this.gameView.getMusic().stop();
             }
             else
@@ -98,7 +96,7 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().addChangeListener(e -> {
-            if(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue() == -40) //Beurk
+            if(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue() == -40)
             {
                 this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(true);
                 this.gameView.getMusic().stop();
@@ -111,7 +109,7 @@ public class GameController {
                     this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(false);
             }
         });
-        
+
         this.gameView.getGameFrame().getOptionsPanel().getReturnButton().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(1);
             this.gameView.getGameFrame().getMenuPanel().repaint();

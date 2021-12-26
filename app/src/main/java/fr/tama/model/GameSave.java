@@ -3,7 +3,7 @@ package fr.tama.model;
 import fr.tama.controller.DBConnection;
 
 import java.sql.*;
-import java.time.format.DateTimeFormatter;
+//import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -19,7 +19,7 @@ public class GameSave {
     private final int slot;
     private final Tamagotchi tamagotchi;
     private Location location;
-    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    //private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private GameSave(Date creationDate,Date lastSeen, Tamagotchi tamagotchi,int slot,Location location){
         this.creationDate=creationDate;

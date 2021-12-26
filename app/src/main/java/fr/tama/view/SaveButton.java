@@ -3,7 +3,6 @@ package fr.tama.view;
 import fr.tama.model.Constants;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Objects;
 
 public class SaveButton extends JButton {

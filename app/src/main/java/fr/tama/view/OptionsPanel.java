@@ -11,7 +11,6 @@ public class OptionsPanel extends JPanel {
     private final JSlider musicSlider;
     private final JButton returnButton;
     private JCheckBox musicSwitch;
-    private ButtonGroup langSwitch;
     private final LangFile lang;
     private JRadioButton langFRBtn;
 

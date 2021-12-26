@@ -1,14 +1,5 @@
 package fr.tama.controller;
 
-import fr.tama.model.AttributeNotFoundException;
-import org.xml.sax.SAXException;
-
-import org.w3c.dom.Document;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

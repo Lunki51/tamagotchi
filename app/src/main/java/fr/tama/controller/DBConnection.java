@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+*   Class that ensures that only one connection is opened with the database
+*/
 public class DBConnection {
 
     private static Connection connection = null;

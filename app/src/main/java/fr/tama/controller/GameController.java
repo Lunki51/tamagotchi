@@ -94,7 +94,7 @@ public class GameController {
         this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().addActionListener(e -> {
             if(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected())
             {
-                this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(-40);
+                this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getMinimum());
                 this.gameView.getMusic().stop();
             }
             else
@@ -103,7 +103,7 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().addChangeListener(e -> {
-            if(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue() == -40)
+            if(this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getValue() == this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getMinimum())
             {
                 this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(true);
                 this.gameView.getMusic().stop();

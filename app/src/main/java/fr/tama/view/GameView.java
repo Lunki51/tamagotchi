@@ -1,9 +1,7 @@
 package fr.tama.view;
 
-
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
-
 /**
  * Main View class
  */
@@ -19,14 +17,13 @@ public class GameView {
         this.music = new Music();
     }
 
-
     /**
      * Allows to init the GameFrame
      */
     public void start(){
 
         if(lang == null) {
-            throw new RuntimeException("Impossible de lancer la vue car l'objet de gestiond es langue n'est pas set");
+            throw new RuntimeException("Impossible de lancer la vue car l'objet de gestion des langues n'est pas défini");
         }
         this.gameFrame = new GameFrame(gameInstance);
     }

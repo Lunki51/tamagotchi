@@ -7,25 +7,31 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends JFrame {
-    private final MenuPanel menuPanel;
-    private final SavesPanel savesPanel;
-    private final GamePanel gamePanel;
-    private final OptionsPanel optionsPanel;
+    private MenuPanel menuPanel;
+    private SavesPanel savesPanel;
+    private GamePanel gamePanel;
+    private OptionsPanel optionsPanel;
     private JPanel next;
-    private final GameInstance gameInstance;
+    private GameInstance gameInstance;
 
     public GameFrame(GameInstance gameInstance) throws HeadlessException {
         super(LangFile.getLangFile().getString("title"));
         this.setSize(1280,720);
         this.gameInstance = gameInstance;
-        this.menuPanel = new MenuPanel();
-        this.savesPanel = new SavesPanel();
-        this.optionsPanel = new OptionsPanel();
-        this.gamePanel = new GamePanel(gameInstance);
+        refreshPanels(1);
         this.getContentPane().add(this.menuPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+
+    //panel -> panel to show after update
+    public void refreshPanels(int panel){
+        this.menuPanel = new MenuPanel();
+        this.savesPanel = new SavesPanel();
+        this.optionsPanel = new OptionsPanel(this.optionsPanel);
+        this.gamePanel = new GamePanel(gameInstance);
+        switchPanel(panel);
     }
 
     public MenuPanel getMenuPanel() {

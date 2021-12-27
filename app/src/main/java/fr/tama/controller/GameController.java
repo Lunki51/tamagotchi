@@ -3,7 +3,11 @@ package fr.tama.controller;
 import fr.tama.model.*;
 import fr.tama.view.GameView;
 
+import java.util.Enumeration;
 import java.util.Objects;
+
+import javax.swing.AbstractButton;
+import javax.swing.JRadioButton;
 
 /**
 *   Class ensuring View's initialization
@@ -22,10 +26,14 @@ public class GameController {
     public void startGame() {
         //Language initialization before initializating controls
         LangFile file = LangFile.getLangFile();
-        LangFile.setLang("fr"); //TODO: Requête SQL pour obtenir la langue dernièrement utilisée SINON langue par défaut qui devrait être directement en dur dans le code de la BDD
+        LangFile.setLang("fr");
         this.gameView.setLangFile(file);
         this.gameView.start();
-        
+        this.applyListeners();
+    }
+
+    public void applyListeners()
+    {
         //Menu control events
         this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(2);
@@ -115,7 +123,20 @@ public class GameController {
             this.gameView.getGameFrame().getMenuPanel().repaint();
         });
 
-        this.gameView.getGameFrame().getOptionsPanel().getLangFRBtn().addItemListener(e -> LangFile.switchLang());
-
+        Enumeration<AbstractButton> buttons = this.gameView.getGameFrame().getOptionsPanel().getRadioButtons();
+        while(buttons.hasMoreElements())
+        {
+            JRadioButton b = (JRadioButton)buttons.nextElement();
+            if(b.getItemListeners().length == 0)
+            {
+                b.addItemListener(e -> {
+                    LangFile.switchLang(b.getText());
+                    this.gameView.getGameFrame().refreshPanels(4);
+                    this.applyListeners();
+                });
+            }
+            else //Listeners already defined for all RadioButtons
+                break;
+        }
     }
 }

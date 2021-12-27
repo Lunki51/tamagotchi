@@ -10,9 +10,9 @@ import java.util.ResourceBundle;
 
 public class LangFile {
 
-    private static final HashMap<String,Locale> langs = new HashMap<>();
+    private static final HashMap<String,LangTuple> langs = new HashMap<>();
     ResourceBundle bundle;
-    public static boolean lang;
+    public static String lang;
 
     private LangFile(ResourceBundle bundle){
         this.bundle = bundle;
@@ -34,36 +34,54 @@ public class LangFile {
         return bundle.getString(string);
     }
 
-    public static void switchLang(){
-        String name;
-        if(!lang) {
-            name = "fr";
-            lang = true;
-        }
-        else {
-            name = "en";
-            lang = false;
-        }
-        setLang(name);
+    public static String getName(String sigle)
+    {
+        if(langs.containsKey(sigle))
+            return langs.get(sigle).getName();
+        throw new RuntimeException("Requested language undefined: " + sigle);
     }
 
-    public static void addLang(String name,Locale locale){
-        langs.put(name,locale);
+    public static void switchLang(String l){
+        if(langs.containsKey(l))
+            setLang(l);
+        else
+        {
+            for(String s : langs.keySet())
+                if(l.equals(langs.get(s).getName()))
+                {
+                    setLang(s);
+                    return;
+                }
+        }
+        throw new RuntimeException("Requested language undefined: " + l);
     }
 
-    public static LangFile getLangFile(){
-        if(langs.size()!=2){
-            langs.clear();
-            langs.put("fr",Locale.FRENCH);
-            langs.put("en",Locale.ENGLISH);
+    public static HashMap<String, LangTuple> getLangs()
+    {
+        return langs;
+    }
+
+    public static void addLang(String sigle, String name,Locale locale){
+        langs.put(sigle,new LangTuple(name, locale));
+    }
+
+    public static LangFile getLangFile(){ //TODO: Automatization from database entries
+
+        //-----------LANGUAGES-----------
+        if(langs.size() == 0)
+        {
+            langs.put("fr", new LangTuple("Français", Locale.FRENCH));
+            langs.put("en", new LangTuple("English", Locale.ENGLISH));
         }
+        //-------------------------------
+
         String sql = "SELECT * FROM config";
         LangFile file = new LangFile(null);
         try{
             Statement stm = DBConnection.getConnection().createStatement();
             ResultSet st = stm.executeQuery(sql);
             if(st.next()){
-                file.bundle = ResourceBundle.getBundle("lang",langs.get(st.getString("lang")));
+                file.bundle = ResourceBundle.getBundle("lang",langs.get(st.getString("lang")).getLocale());
             }
         }catch(SQLException e){
             e.printStackTrace();

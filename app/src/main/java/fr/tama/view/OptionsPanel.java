@@ -80,6 +80,8 @@ public class OptionsPanel extends JPanel {
             for(String s : LangFile.getLangs().keySet())
             {
                 JRadioButton b = new JRadioButton(LangFile.getLangs().get(s).getName());
+                if(s.equals(LangFile.lang))
+                    b.setSelected(true);
                 b.setBackground(Constants.BLUE);
                 langButtons.add(b);
             }

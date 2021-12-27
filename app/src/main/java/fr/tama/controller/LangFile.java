@@ -25,6 +25,7 @@ public class LangFile {
             PreparedStatement pstm = DBConnection.getConnection().prepareStatement(sql);
             pstm.setString(1,name);
             pstm.executeUpdate();
+            lang = name;
         }catch(SQLException e){
             e.printStackTrace();
         }

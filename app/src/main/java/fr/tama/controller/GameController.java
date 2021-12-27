@@ -26,7 +26,6 @@ public class GameController {
     public void startGame() {
         //Language initialization before initializating controls
         LangFile file = LangFile.getLangFile();
-        LangFile.setLang("fr");
         this.gameView.setLangFile(file);
         this.gameView.start();
         this.applyListeners();

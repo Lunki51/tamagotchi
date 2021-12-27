@@ -15,6 +15,7 @@ import java.util.Objects;
 public class GameScreen extends JPanel {
 
     ImageIcon bathroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/salle_de_be.png")));
+    ImageIcon kitchen = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/kitchen.png")));
     ImageIcon living = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/living_room.png")));
     ImageIcon bedroom1 = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/dodo.png")));
     Animation bedroomSleep= new Animation(new String[]{"sprites/background/dodo_anim1.png","sprites/background/dodo_anim2.png"},1000);
@@ -31,6 +32,9 @@ public class GameScreen extends JPanel {
         switch (this.gameInstance.getLocation().getName()) {
             case "bathroom":
                 g.drawImage(bathroom.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+                break;
+            case "kitchen":
+                g.drawImage(kitchen.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
                 break;
             case "living":
                 g.drawImage(living.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
@@ -73,7 +77,7 @@ public class GameScreen extends JPanel {
         }
         fileName+=".png";
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource(fileName)));
-        g.drawImage(icon.getImage(),this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2-this.getHeight()/6,(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
+        g.drawImage(icon.getImage(),this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2,(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
 
     }
 }

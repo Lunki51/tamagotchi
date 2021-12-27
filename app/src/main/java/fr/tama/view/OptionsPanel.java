@@ -1,6 +1,7 @@
 package fr.tama.view;
 
 import fr.tama.controller.LangFile;
+import fr.tama.controller.DBConfig;
 import fr.tama.model.Constants;
 import javax.swing.*;
 import java.awt.*;
@@ -25,18 +26,10 @@ public class OptionsPanel extends JPanel {
         super(new GridLayout(4,3));
         super.setBackground(Constants.BLUE);
         this.lang = LangFile.getLangFile();
-        
-        if(from != null)
-        {
-            initComponents(from.langButtons);
-            musicSlider.setValue(from.musicSlider.getValue());
-            musicSwitch.setSelected(from.musicSwitch.isSelected());
-        }
-        else
-            initComponents(null);
+        initComponents(from);
     }
 
-    public void initComponents(ButtonGroup buttonGroup)
+    public void initComponents(OptionsPanel from)
     {
         this.musicSwitch = new JCheckBox(lang.getString("menu.mute"));
         this.musicSwitch.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
@@ -45,6 +38,7 @@ public class OptionsPanel extends JPanel {
         musicSwitch.setBackground(Constants.BLUE);
         musicSwitch.setFont(Constants.BASIC_FONT);
         musicSlider.setBackground(Constants.BLUE);
+    
         this.returnButton = new MenuButton("<-     " + lang.getString("menu.back"));
         JLabel title = new JLabel(lang.getString("menu.options"));
         title.setHorizontalAlignment(JLabel.CENTER);
@@ -74,8 +68,11 @@ public class OptionsPanel extends JPanel {
         langPanel.add(radioLangPanel, BorderLayout.CENTER);
         
         //RadioButtons aren't initialized if they were already initialized in a former OptionsPanel instance
-        if(buttonGroup == null)
+        if(from == null)
         {
+            musicSwitch.setSelected(DBConfig.getBoolean("mute"));
+            musicSlider.setValue(musicSwitch.isSelected() ? -40 : DBConfig.getInt("volume"));
+
             langButtons = new ButtonGroup();
             for(String s : LangFile.getLangs().keySet())
             {
@@ -87,7 +84,11 @@ public class OptionsPanel extends JPanel {
             }
         }
         else
-            langButtons = buttonGroup;
+        {
+            musicSwitch.setSelected(from.musicSwitch.isSelected());
+            musicSlider.setValue(from.musicSlider.getValue());
+            langButtons = from.langButtons;
+        }
 
         Enumeration<AbstractButton> e = langButtons.getElements();
         while(e.hasMoreElements())

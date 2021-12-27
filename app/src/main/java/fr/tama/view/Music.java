@@ -1,4 +1,5 @@
 package fr.tama.view;
+import fr.tama.controller.DBConfig;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
@@ -8,11 +9,12 @@ public class Music {
     private FloatControl fc;
     private boolean isSleepingmusic;
 
-    public Music(){
+    public Music() {
         initGameMusic();
     }
 
-    public void initGameMusic(){
+    public void initGameMusic()
+    {
 
         try{
             if(isSleepingmusic) {
@@ -45,8 +47,10 @@ public class Music {
             e.printStackTrace();
         }
         this.fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        this.setVolume(-14);
-        start();
+
+        this.setVolume(DBConfig.getInt("volume"));
+        if(!DBConfig.getBoolean("mute"))
+            start();
     }
 
     public void initSleepMusic() {
@@ -84,6 +88,16 @@ public class Music {
 
     public void setVolume(float volume) {
         fc.setValue(volume);
+    }
+
+    public void saveVolume()
+    {
+        DBConfig.setInt("volume",(int)fc.getValue());
+    }
+
+    public void saveMute()
+    {   
+        DBConfig.setBoolean("mute", !this.clip.isActive());
     }
 
     public void start()

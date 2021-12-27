@@ -120,6 +120,8 @@ public class GameController {
         this.gameView.getGameFrame().getOptionsPanel().getReturnButton().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(1);
             this.gameView.getGameFrame().getMenuPanel().repaint();
+            this.gameView.getMusic().saveVolume(); //Save to DB volume
+            this.gameView.getMusic().saveMute(); //Save Mute boolean to DB
         });
 
         this.gameView.getGameFrame().getSavesPanel().getReturnButton().addActionListener(e -> {

@@ -1,9 +1,5 @@
 package fr.tama.controller;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -18,17 +14,8 @@ public class LangFile {
         this.bundle = bundle;
     }
 
-    public static void setLang(String name) {
-
-        try{
-            String sql = "UPDATE config SET lang=? WHERE TRUE";
-            PreparedStatement pstm = DBConnection.getConnection().prepareStatement(sql);
-            pstm.setString(1,name);
-            pstm.executeUpdate();
-            lang = name;
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+    public static void setLang(String name){
+        DBConfig.setString("lang", lang = name);
     }
 
     public String getString (String string) {
@@ -66,8 +53,8 @@ public class LangFile {
         langs.put(sigle,new LangTuple(name, locale));
     }
 
-    public static LangFile getLangFile(){ //TODO: Automatization from database entries
-
+    public static LangFile getLangFile()
+    {
         //-----------LANGUAGES-----------
         if(langs.size() == 0)
         {
@@ -76,20 +63,15 @@ public class LangFile {
         }
         //-------------------------------
 
-        String sql = "SELECT * FROM config";
+        if(lang == null)
+            lang = DBConfig.getString("lang");
+            
         LangFile file = new LangFile(null);
-        try{
-            Statement stm = DBConnection.getConnection().createStatement();
-            ResultSet st = stm.executeQuery(sql);
-            if(st.next()){
-                file.bundle = ResourceBundle.getBundle("lang",langs.get(st.getString("lang")).getLocale());
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        if(file.bundle==null){
+        file.bundle = ResourceBundle.getBundle("lang",langs.get(lang).getLocale());
+
+        if(file.bundle==null)
             System.err.println("Error bundle is null");
-        }
+
         return file;
     }
 

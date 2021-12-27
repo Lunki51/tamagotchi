@@ -14,6 +14,8 @@ import java.awt.*;
  */
 public class GamePanel extends JPanel {
 
+    private final MenuButton returnButton;
+
     private final JPanel graphicPanel;
     private final JPanel controlPanel;
 
@@ -64,6 +66,9 @@ public class GamePanel extends JPanel {
 
         this.controlPanel = new JPanel();
         this.controlPanel.setLayout(new GridLayout(0,1));
+
+        this.returnButton = new MenuButton("<-  " + LangFile.getLangFile().getString("menu.back"));
+        this.controlPanel.add(this.returnButton);
 
         this.tamaName = new JLabel("Tamagochoupi <3");
         this.tamaName.setHorizontalAlignment(JLabel.CENTER);
@@ -154,6 +159,8 @@ public class GamePanel extends JPanel {
         this.tamaPState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getShape().name()));
         this.gameScreen.repaint();
     }
+
+    public JButton getReturnButton() { return this.returnButton; }
 
     public JPanel getGraphicPanel() {
         return graphicPanel;

@@ -123,6 +123,16 @@ public class GameController {
             this.gameView.getGameFrame().getMenuPanel().repaint();
         });
 
+        this.gameView.getGameFrame().getSavesPanel().getReturnButton().addActionListener(e -> {
+            this.gameView.getGameFrame().switchPanel(1);
+            this.gameView.getGameFrame().getMenuPanel().repaint();
+        });
+
+        this.gameView.getGameFrame().getGamePanel().getReturnButton().addActionListener(e -> {
+            this.gameView.getGameFrame().switchPanel(1);
+            this.gameView.getGameFrame().getMenuPanel().repaint();
+        });
+
         Enumeration<AbstractButton> buttons = this.gameView.getGameFrame().getOptionsPanel().getRadioButtons();
         while(buttons.hasMoreElements())
         {

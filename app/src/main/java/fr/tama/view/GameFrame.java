@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends JFrame {
+
+    ImageIcon icon = new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/adult_chat.png"));
+
     private MenuPanel menuPanel;
     private SavesPanel savesPanel;
     private GamePanel gamePanel;
@@ -19,6 +22,7 @@ public class GameFrame extends JFrame {
         this.setSize(1280,720);
         this.gameInstance = gameInstance;
         refreshPanels(1);
+        this.setIconImage(icon.getImage());
         this.getContentPane().add(this.menuPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);

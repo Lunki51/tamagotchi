@@ -3,6 +3,7 @@ package fr.tama.view;
 import fr.tama.model.Constants;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,19 +13,16 @@ import java.awt.geom.Rectangle2D;
 
 public class TamaCheckBox extends JCheckBox{
 
-    private String text;
-    private Color font;
-    private Color buttonFont;
-    private Color button;
-    private JLabel label;
+    private final Color font;
+    private final Color buttonFont;
+    private final Color button;
+    private final JLabel label;
 
     public TamaCheckBox(String text,Color font,Color buttonFont,Color button) {
-        super(text);
-        this.text = text;
         this.font=font;
         this.button=button;
-
         this.buttonFont=buttonFont;
+        this.setBackground(font);
         this.label = new JLabel(text);
         this.setLayout(null);
         this.label.setBounds(this.getHeight(),0,this.getHeight(),this.getHeight());
@@ -40,7 +38,7 @@ public class TamaCheckBox extends JCheckBox{
     @Override
     protected void paintComponent(Graphics g) {
         g.setColor(this.font);
-        g.fillRect(0,0,this.getWidth(),this.getHeight());
+        g.fillRect(0,0,g.getClipBounds().width,g.getClipBounds().height);
 
         g.setColor(this.buttonFont);
         g.setFont(this.getFont());

@@ -5,14 +5,12 @@ import java.awt.*;
 
 public class TamaRadioButton extends JRadioButton {
 
-    private String text;
-    private Color buttonFont;
-    private Color button;
-    private JLabel label;
+    private final Color buttonFont;
+    private final Color button;
+    private final JLabel label;
 
     public TamaRadioButton(String text,Color buttonFont,Color button) {
         super(text);
-        this.text = text;
         this.button=button;
         this.buttonFont=buttonFont;
         this.label = new JLabel(text);
@@ -29,10 +27,10 @@ public class TamaRadioButton extends JRadioButton {
     protected void paintComponent(Graphics g) {
         g.setColor(this.buttonFont);
         g.setFont(this.getFont());
-        Point start = new Point((int)(this.getWidth()*this.getAlignmentX())- (int)(((this.getHeight()*2)+10)*this.getAlignmentX()),0);
+        Point start = new Point((int)(this.getWidth()*this.getAlignmentX())- (int)(((this.getHeight()*2))*this.getAlignmentX()),0);
         g.fillRect(start.x ,start.y,this.getHeight(),this.getHeight());
 
-        this.label.setBounds(start.x+this.getHeight()+10,0,this.getHeight(),this.getHeight());
+        this.label.setBounds(start.x+this.getHeight(),0,this.getHeight(),this.getHeight());
 
         g.setColor(this.button);
         if(this.isSelected()){

@@ -196,6 +196,7 @@ public abstract class Tamagotchi {
     public abstract void toilet();
     public abstract void wash();
     public void update(){
+        System.out.println(this.level);
         if(this.level == Level.EGG){
             this.levelUp();
             return;

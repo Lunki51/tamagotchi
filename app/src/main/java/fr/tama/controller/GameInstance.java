@@ -13,7 +13,7 @@ import java.util.Date;
 */
 public class GameInstance implements Runnable{
 
-    private static final int INTERVAL = 500; // In milliseconds
+    private static final int INTERVAL = 5000; // In milliseconds
     //private static final int INTERVAL = 300000;
 
     GameSave save;
@@ -26,7 +26,7 @@ public class GameInstance implements Runnable{
     void setInstance(GameSave save, GameFrame gamePanel){
         if(this.thisThread!= null)this.thisThread.interrupt();
         this.save =save;
-        this.thisThread = new Thread(this);
+        this.thisThread = new Thread(this,new Date().toString());
         this.lastSeen = save.getLastSeen();
         this.gamePanel = gamePanel.getGamePanel();
     }
@@ -50,31 +50,35 @@ public class GameInstance implements Runnable{
     /**
     *   Calculate time elapsed from last use and update tamagotchi appropriately
     */
-    void updateSince(Date date){
+    long updateSince(Date date){
         Date now = new Date();
         long elapsed = now.getTime() - date.getTime();
-        long nbUpdate = elapsed * 1000 / INTERVAL;
-
+        long nbUpdate = (elapsed ) / INTERVAL;
+        System.out.println(nbUpdate);
         if(nbUpdate > 2016) //If the tamagotchi has been abandoned for more than a week => dead
             save.getTamagotchi().getAttribute("health").setValue(0);
         else
             for(long i=0;i<nbUpdate;i++)
                 save.getTamagotchi().update();
+        return elapsed%INTERVAL;
     }
 
     @Override
     public void run() {
-        updateSince(this.lastSeen);
+        long skipped = updateSince(this.lastSeen);
         while(alive){
             try{
+                System.out.println(thisThread.getName());
+                Thread.sleep(INTERVAL-skipped);
+                skipped=0;
                 this.getTamagotchi().update();
                 this.gamePanel.updatePanel();
                 this.gamePanel.repaint();
+                this.save.updateLastSeen();
                 this.save.save();
-                //noinspection BusyWait
-                Thread.sleep(INTERVAL);
             }catch (InterruptedException e){
-                e.printStackTrace();
+                System.out.println("Thread stopped");
+                thisThread.interrupt();
             }
         }
     }

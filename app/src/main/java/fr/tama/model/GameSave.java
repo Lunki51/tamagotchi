@@ -29,17 +29,20 @@ public class GameSave {
         this.location = location;
     }
 
+    public void updateLastSeen(){
+        this.lastSeen = new Date();
+    }
+
     /**
      * Save the GameSave object into the database.Create a new save from the profil wich this GameSave correspond.
      */
     public void save(){
         if(deleted)return;
-        Date now = new Date();
         try{
             String sql = "INSERT INTO save(date,location,mood,shape,current,profile,level) VALUES(?,?,?,?,?,?,?)";
 
             PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
-            pstmt.setLong(1, now.getTime());
+            pstmt.setLong(1, lastSeen.getTime());
             pstmt.setString(2,this.location.getName());
             pstmt.setString(3, tamagotchi.getMood().toString());
             pstmt.setString(4, tamagotchi.getShape().toString());
@@ -76,7 +79,6 @@ public class GameSave {
         }catch(SQLException e){
                 e.printStackTrace();
         }
-        this.lastSeen=now;
     }
 
     /**

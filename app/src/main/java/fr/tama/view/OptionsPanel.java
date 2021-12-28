@@ -88,8 +88,14 @@ public class OptionsPanel extends JPanel {
         }
 
         Enumeration<AbstractButton> e = langButtons.getElements();
-        while(e.hasMoreElements())
+        while(e.hasMoreElements()){
+            JPanel panel = new JPanel();
+            panel.setBackground(Constants.BLUE);
+
             radioLangPanel.add(e.nextElement());
+            if(e.hasMoreElements())radioLangPanel.add(panel);
+        }
+
 
         JLabel langTitle = new JLabel(lang.getString("menu.lang"));
         langTitle.setFont(Constants.BASIC_FONT);

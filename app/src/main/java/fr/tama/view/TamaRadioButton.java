@@ -41,12 +41,12 @@ public class TamaRadioButton extends JRadioButton {
         
         //Radio Button
         g.setColor(buttonColor);
-        g.fillRect(0, 0, getHeight(), getHeight());
+        g.fillOval(0, 0, getHeight(), getHeight());
 
         if(this.isSelected())
         {
             g.setColor(buttonSelectedColor);
-            g.fillRect(getHeight()/6, getHeight()/6, 2*getHeight()/3, 2*getHeight()/3);
+            g.fillOval(getHeight()/6, getHeight()/6, 2*getHeight()/3, 2*getHeight()/3);
         }
     }
 }

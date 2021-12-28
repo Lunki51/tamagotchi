@@ -13,7 +13,7 @@ public class TamaRadioButton extends JRadioButton {
         super(text);
         this.button=button;
         this.buttonFont=buttonFont;
-        this.label = new JLabel(text);
+        this.label = new JLabel("          "+text);
         this.add(label);
     }
 
@@ -30,7 +30,7 @@ public class TamaRadioButton extends JRadioButton {
         Point start = new Point((int)(this.getWidth()*this.getAlignmentX())- (int)(((this.getHeight()*2))*this.getAlignmentX()),0);
         g.fillRect(start.x ,start.y,this.getHeight(),this.getHeight());
 
-        this.label.setBounds(start.x+this.getHeight(),0,this.getHeight(),this.getHeight());
+        //this.label.setBounds(start.x+this.getHeight(),0,this.getHeight(),this.getHeight());
 
         g.setColor(this.button);
         if(this.isSelected()){

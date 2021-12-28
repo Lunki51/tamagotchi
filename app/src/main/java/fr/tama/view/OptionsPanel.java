@@ -55,6 +55,7 @@ public class OptionsPanel extends JPanel {
        
         innerMusic.add(musicSlider);
         innerMusic.add(musicSwitch);
+        innerMusic.setBackground(Constants.BLUE);
         musicPanel.add(innerMusic,BorderLayout.CENTER);
         
         //Language panels
@@ -98,7 +99,7 @@ public class OptionsPanel extends JPanel {
         this.add(new JLabel()); // 0 0
         this.add(title);        // 0 1
         this.add(new JLabel()); // 0 2
-        this.add(new JLabel()); // 1 0
+        this.add(new JLabel()); // 1 0;
         this.add(musicPanel);   // 1 1
         this.add(new JLabel()); // 1 2
         this.add(new JLabel()); // 2 0

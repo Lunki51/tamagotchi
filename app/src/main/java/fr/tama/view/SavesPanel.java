@@ -49,7 +49,7 @@ public class SavesPanel extends JPanel implements UpdatablePanel {
         if(save==null){
             this.saveCardPanel1 = new SaveCardPanel();
         }else{
-            this.saveCardPanel1 = new SaveCardPanel(save.getTamagotchi().getName(), save.getTamagotchi().toString());
+            this.saveCardPanel1 = new SaveCardPanel(save.getTamagotchi().getName(), save.getTamagotchi().toString(),save.getTamagotchi().getLevel().name());
         }
 
         c.gridx=0;
@@ -60,7 +60,7 @@ public class SavesPanel extends JPanel implements UpdatablePanel {
         if(save==null){
             this.saveCardPanel2 = new SaveCardPanel();
         }else{
-            this.saveCardPanel2 = new SaveCardPanel(save.getTamagotchi().getName(), save.getTamagotchi().toString());
+            this.saveCardPanel2 = new SaveCardPanel(save.getTamagotchi().getName(), save.getTamagotchi().toString(),save.getTamagotchi().getLevel().name());
         }
 
         c.gridx=1;
@@ -73,7 +73,7 @@ public class SavesPanel extends JPanel implements UpdatablePanel {
         if(save==null){
             this.saveCardPanel3 = new SaveCardPanel();
         }else{
-            this.saveCardPanel3 = new SaveCardPanel(save.getTamagotchi().getName(), save.getTamagotchi().toString());
+            this.saveCardPanel3 = new SaveCardPanel(save.getTamagotchi().getName(), save.getTamagotchi().toString(),save.getTamagotchi().getLevel().name());
         }
 
         c.anchor=GridBagConstraints.PAGE_END;

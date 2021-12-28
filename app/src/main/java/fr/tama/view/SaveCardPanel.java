@@ -41,10 +41,10 @@ public class SaveCardPanel extends JPanel implements UpdatablePanel {
         this.setBackground(Constants.PURPLE);
     }
 
-    public SaveCardPanel(String name,String type){
+    public SaveCardPanel(String name,String type,String level){
         this();
         this.changePanel(2);
-        this.createdSavePanel.setup(name,type);
+        this.createdSavePanel.setup(name,type,level);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class SaveCardPanel extends JPanel implements UpdatablePanel {
     public void addCreateSaveListener(ActionListener l){
         this.saveCreationPanel.getValidation().addActionListener(e->{
             this.changePanel(2);
-            this.createdSavePanel.setup(this.saveCreationPanel.getName(),this.saveCreationPanel.getTamagotchi());
+            this.createdSavePanel.setup(this.saveCreationPanel.getName(),this.saveCreationPanel.getTamagotchi(),"egg");
         });
         this.saveCreationPanel.getValidation().addActionListener(l);
     }
@@ -121,6 +121,7 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
 
     private String name;
     private String type;
+    private String level;
     private final JLabel label;
     private final EmptySavePanel image;
     private final EmptySavePanel bin;
@@ -129,6 +130,7 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
         super();
         this.name = "Name";
         this.type="Chien";
+        this.level="egg";
         this.image = new EmptySavePanel(new ImageIcon("/sprites/tamagotchi/big_egg_chat.png"));
         this.label =new JLabel(this.name);
 
@@ -178,9 +180,10 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
         this.add(pane,BorderLayout.CENTER);
     }
 
-    public void setup(String name, String type){
+    public void setup(String name, String type,String level){
         this.name = name;
         this.type=type;
+        this.level=level;
         this.updatePanel();
     }
 
@@ -197,7 +200,7 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
     @Override
     public void updatePanel() {
         this.label.setText(this.name);
-        this.image.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_"+this.type.toLowerCase()+".png")));
+        this.image.setIcon(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/"+this.level.toLowerCase()+"_"+this.type.toLowerCase()+".png")));
         this.image.updatePanel();
         this.repaint();
     }

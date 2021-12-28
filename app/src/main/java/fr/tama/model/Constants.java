@@ -11,12 +11,17 @@ public class Constants {
 
     public static Color ColorShift(Color c, int shift)
     {
-        float[] v = Color.RGBtoHSB(c.getRed(), c.getGreen(), c.getBlue(), null);
-        v[2] += shift/255f;
-        if(v[2] < 0)
-            v[2] = 0;
-        else if(v[2] > 1)
-            v[2] = 1;
-        return new Color(Color.HSBtoRGB(v[0], v[1], v[2]));
+        int[] cv = new int[]{c.getRed(), c.getGreen(), c.getBlue()};
+        
+        for(int i = 0; i < cv.length; i++)
+        {
+            cv[i] += shift;
+            if(cv[i] > 255)
+                cv[i] = 255;
+            else if(cv[i] < 0)
+                cv[i] = 0;
+        }
+
+        return new Color(cv[0], cv[1], cv[2]);
     }
 }

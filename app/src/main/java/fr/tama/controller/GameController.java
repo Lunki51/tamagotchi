@@ -195,6 +195,20 @@ public class GameController {
             this.gameView.getGameFrame().switchPanel(3);
         });
 
+        this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1().addDeleteSaveListener(e->{
+            GameSave save = GameSave.loadSave(0);
+            save.delete();
+        });
+
+        this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2().addDeleteSaveListener(e->{
+            GameSave save = GameSave.loadSave(1);
+            save.delete();
+        });
+
+        this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3().addDeleteSaveListener(e->{
+            GameSave save = GameSave.loadSave(2);
+            save.delete();
+        });
 
         Enumeration<AbstractButton> buttons = this.gameView.getGameFrame().getOptionsPanel().getRadioButtons();
         while(buttons.hasMoreElements())

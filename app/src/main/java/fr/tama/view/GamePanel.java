@@ -2,11 +2,13 @@ package fr.tama.view;
 
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
+import fr.tama.model.Constants;
 import fr.tama.model.Current;
 import fr.tama.model.Tamagotchi;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * The GamePanel
@@ -65,77 +67,97 @@ public class GamePanel extends JPanel implements UpdatablePanel {
 
         this.controlPanel = new JPanel();
         this.controlPanel.setLayout(new GridLayout(0,1));
+        this.controlPanel.setBackground(Constants.BLUE);
 
-        this.returnButton = new MenuButton("<-  " + LangFile.getLangFile().getString("menu.back"));
+        this.returnButton = new MenuButton(LangFile.getLangFile().getString("menu.back"));
         this.controlPanel.add(this.returnButton);
 
-        this.tamaName = new JLabel("Tamagochoupi <3");
+        this.tamaName = new JLabel();
         this.tamaName.setHorizontalAlignment(JLabel.CENTER);
+        this.tamaName.setForeground(Color.WHITE);
+        this.tamaName.setFont(new Font("Arial", Font.BOLD, 30));
         this.controlPanel.add(this.tamaName);
 
 
         JLabel infoLabel = new JLabel("Information : ");
         infoLabel.setHorizontalAlignment(JLabel.CENTER);
+        infoLabel.setForeground(Color.WHITE);
+        infoLabel.setFont(new Font("Arial", Font.BOLD, 20));
+
         this.controlPanel.add(infoLabel);
 
         JPanel statusPanel = new JPanel();
         statusPanel.setLayout(new GridLayout(0,2));
+        statusPanel.setBackground(Constants.BLUE);
         this.mStateLabel = new JLabel("État mental : ");
         this.mStateLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.mStateLabel.setForeground(Color.WHITE);
         statusPanel.add(this.mStateLabel);
         this.tamaMState = new JLabel("Bon");
         this.tamaMState.setHorizontalAlignment(JLabel.CENTER);
+        this.tamaMState.setForeground(Color.WHITE);
         statusPanel.add(this.tamaMState);
         this.pStateLabel = new JLabel("État physique : ");
         this.pStateLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.pStateLabel.setForeground(Color.WHITE);
         statusPanel.add(this.pStateLabel);
         this.tamaPState = new JLabel("Mauvais");
         this.tamaPState.setHorizontalAlignment(JLabel.CENTER);
+        this.tamaPState.setForeground(Color.WHITE);
         statusPanel.add(this.tamaPState);
 
 
         this.hungerLabel = new JLabel("Faim : ");
         this.hungerLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.hungerLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hungerLabel);
         this.hungerGauge = new AttribBarComponent(Color.DARK_GRAY);
         statusPanel.add(this.hungerGauge);
 
         this.hygeneLabel = new JLabel("Hygiène : ");
         this.hygeneLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.hygeneLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hygeneLabel);
         this.hygeneGauge = new AttribBarComponent(Color.CYAN);
         statusPanel.add(this.hygeneGauge);
 
         this.happinessLabel = new JLabel("Bonheur : ");
         this.happinessLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.happinessLabel.setForeground(Color.WHITE);
         statusPanel.add(this.happinessLabel);
         this.happinessGauge = new AttribBarComponent(Color.ORANGE);
         statusPanel.add(this.happinessGauge);
 
         this.toiletLabel = new JLabel("Toilettes : ");
         this.toiletLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.toiletLabel.setForeground(Color.WHITE);
         statusPanel.add(this.toiletLabel);
         this.toiletGauge = new AttribBarComponent(Color.BLUE);
         statusPanel.add(this.toiletGauge);
 
         this.energyLabel = new JLabel("Energie : ");
         this.energyLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.energyLabel.setForeground(Color.WHITE);
         statusPanel.add(this.energyLabel);
         this.energyGauge =new AttribBarComponent(Color.YELLOW);
         statusPanel.add(this.energyGauge);
 
         this.controlPanel.add(statusPanel);
 
-        this.actionButton = new JButton();
+        this.actionButton = new GameButton(""); // Le text est rajouté à chaque update du panel
         controlPanel.add(this.actionButton);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0,3));
-        this.moveLeftButton = new JButton("<");
+        buttonPanel.setBackground(Constants.BLUE);
+        this.moveLeftButton = new GameButton("<");
         buttonPanel.add(this.moveLeftButton);
         this.locationLabel = new JLabel();
+        this.locationLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.locationLabel.setForeground(Color.WHITE);
+        this.locationLabel.setFont(new Font("Arial", Font.BOLD, 20));
         buttonPanel.add(this.locationLabel);
-        this.moveRightButton = new JButton(">");
+        this.moveRightButton = new GameButton(">");
         buttonPanel.add(this.moveRightButton);
         this.controlPanel.add(buttonPanel);
 

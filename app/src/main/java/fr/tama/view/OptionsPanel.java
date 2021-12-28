@@ -6,13 +6,12 @@ import fr.tama.model.Constants;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
-import javax.swing.AbstractButton;
-import javax.swing.JRadioButton;
 
 public class OptionsPanel extends JPanel {
 
     private JSlider musicSlider;
-    private JButton returnButton;
+    private JButton cancelButton;
+    private JButton saveButton;
     private ButtonGroup langButtons;
     private TamaCheckBox musicSwitch;
     private final LangFile lang;
@@ -40,18 +39,12 @@ public class OptionsPanel extends JPanel {
         musicSwitch.setFont(Constants.BASIC_FONT);
         musicSlider.setBackground(Constants.BLUE);
     
-        this.returnButton = new MenuButton("<-     " + lang.getString("menu.back"));
+        this.cancelButton = new MenuButton(lang.getString("option.cancel"));
+        this.saveButton = new MenuButton(lang.getString("option.save"));
         JLabel title = new JLabel(lang.getString("menu.options"));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalTextPosition(JLabel.CENTER);
         title.setFont(Constants.TITLE_FONT);
-        JLabel placeholder2 = new JLabel();
-        JLabel placeholder3 = new JLabel();
-        JLabel placeholder4 = new JLabel();
-        JLabel placeholder5 = new JLabel();
-        JLabel placeholder6 = new JLabel();
-        JLabel placeholder7 = new JLabel();
-        JLabel placeholder8 = new JLabel();
         JPanel musicPanel = new JPanel(new BorderLayout());
         musicPanel.setBackground(Constants.BLUE);
         JLabel musicTitle = new JLabel("Volume");
@@ -76,22 +69,21 @@ public class OptionsPanel extends JPanel {
         {
             musicSwitch.setSelected(DBConfig.getBoolean("mute"));
             musicSlider.setValue(musicSwitch.isSelected() ? musicSlider.getMinimum() : DBConfig.getInt("volume"));
-
-            langButtons = new ButtonGroup();
-            for(String s : LangFile.getLangs().keySet())
-            {
-                TamaRadioButton b = new TamaRadioButton(LangFile.getLangs().get(s).getName(),Constants.PURPLE,Constants.DARK_PURPLE);
-                if(s.equals(LangFile.lang))
-                    b.setSelected(true);
-                b.setBackground(Constants.BLUE);
-                langButtons.add(b);
-            }
         }
         else
         {
             musicSwitch.setSelected(from.musicSwitch.isSelected());
             musicSlider.setValue(from.musicSlider.getValue());
-            langButtons = from.langButtons;
+        }
+
+        langButtons = new ButtonGroup();
+        for(String s : LangFile.getLangs().keySet())
+        {
+            TamaRadioButton b = new TamaRadioButton(LangFile.getLangs().get(s).getName(),Constants.PURPLE,Constants.DARK_PURPLE);
+            if(s.equals(LangFile.lang))
+                b.setSelected(true);
+            b.setBackground(Constants.BLUE);
+            langButtons.add(b);
         }
 
         Enumeration<AbstractButton> e = langButtons.getElements();
@@ -103,17 +95,18 @@ public class OptionsPanel extends JPanel {
         langTitle.setHorizontalAlignment(JLabel.CENTER);
         langPanel.add(langTitle, BorderLayout.NORTH);
 
-        this.add(returnButton);
-        this.add(title);
-        this.add(placeholder2);
-        this.add(placeholder3);
-        this.add(musicPanel);
-        this.add(placeholder5);
-        this.add(placeholder6);
-        this.add(langPanel);
-        this.add(placeholder7);
-        this.add(placeholder8);
-        this.add(placeholder4);
+        this.add(new JLabel()); // 0 0
+        this.add(title);        // 0 1
+        this.add(new JLabel()); // 0 2
+        this.add(new JLabel()); // 1 0
+        this.add(musicPanel);   // 1 1
+        this.add(new JLabel()); // 1 2
+        this.add(new JLabel()); // 2 0
+        this.add(langPanel);    // 2 1
+        this.add(new JLabel()); // 2 2
+        this.add(cancelButton); // 3 0
+        this.add(new JLabel()); // 3 1
+        this.add(saveButton);   // 3 2
     }
 
     public TamaCheckBox getMusicSwitch() {
@@ -124,8 +117,12 @@ public class OptionsPanel extends JPanel {
         return this.musicSlider;
     }
 
-    public JButton getReturnButton() {
-        return returnButton;
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JButton getSaveButton() {
+        return saveButton;
     }
 
     public Enumeration<AbstractButton> getRadioButtons()

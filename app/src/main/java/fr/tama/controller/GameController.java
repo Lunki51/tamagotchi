@@ -115,11 +115,33 @@ public class GameController {
             }
         });
 
-        this.gameView.getGameFrame().getOptionsPanel().getReturnButton().addActionListener(e -> {
+        this.gameView.getGameFrame().getOptionsPanel().getSaveButton().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(1);
             this.gameView.getGameFrame().getMenuPanel().repaint();
-            this.gameView.getMusic().saveVolume(); //Save to DB volume
-            this.gameView.getMusic().saveMute(); //Save Mute boolean to DB
+            this.gameView.getMusic().saveVolume();
+            this.gameView.getMusic().saveMute();
+            LangFile.saveLang();
+        });
+
+        this.gameView.getGameFrame().getOptionsPanel().getCancelButton().addActionListener(e -> {
+            if(DBConfig.getString("lang").equals(LangFile.lang))
+            {
+                this.gameView.getGameFrame().switchPanel(1);
+                this.gameView.getGameFrame().getMenuPanel().repaint();
+            }
+            else
+            {
+                LangFile.switchLang(DBConfig.getString("lang"));
+                this.gameView.getGameFrame().refreshPanels(1);
+                this.applyListeners();
+            }
+
+            this.gameView.getMusic().setVolume(DBConfig.getInt("volume"));
+
+            if(DBConfig.getBoolean("mute"))
+                this.gameView.getMusic().stop();
+            else if(this.gameView.getMusic().isStopped())
+                this.gameView.getMusic().start();
         });
 
         this.gameView.getGameFrame().getSavesPanel().getReturnButton().addActionListener(e -> {
@@ -136,16 +158,11 @@ public class GameController {
         while(buttons.hasMoreElements())
         {
             JRadioButton b = (JRadioButton)buttons.nextElement();
-            if(b.getItemListeners().length == 0)
-            {
-                b.addItemListener(e -> {
-                    LangFile.switchLang(b.getText());
-                    this.gameView.getGameFrame().refreshPanels(4);
-                    this.applyListeners();
-                });
-            }
-            else //Listeners already defined for all RadioButtons
-                break;
+            b.addItemListener(e -> {
+                LangFile.switchLang(b.getText());
+                this.gameView.getGameFrame().refreshPanels(4);
+                this.applyListeners();
+            });
         }
     }
 }

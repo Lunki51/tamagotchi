@@ -14,8 +14,9 @@ public class LangFile {
         this.bundle = bundle;
     }
 
-    public static void setLang(String name){
-        DBConfig.setString("lang", lang = name);
+    public static void saveLang()
+    {
+        DBConfig.setString("lang", lang);
     }
 
     public String getString (String string) {
@@ -26,22 +27,22 @@ public class LangFile {
     {
         if(langs.containsKey(sigle))
             return langs.get(sigle).getName();
-        throw new RuntimeException("Requested language undefined: " + sigle);
+        throw new RuntimeException("Requested language undefined: '" + sigle + "'");
     }
 
     public static void switchLang(String l){
         if(langs.containsKey(l))
-            setLang(l);
+            lang = l;
         else
         {
             for(String s : langs.keySet())
                 if(l.equals(langs.get(s).getName()))
                 {
-                    setLang(s);
+                    lang = s;
                     return;
                 }
+            throw new RuntimeException("Requested language undefined: '" + l + "'");
         }
-        throw new RuntimeException("Requested language undefined: " + l);
     }
 
     public static HashMap<String, LangTuple> getLangs()

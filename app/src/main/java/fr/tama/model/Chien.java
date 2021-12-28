@@ -71,4 +71,13 @@ public class Chien extends Tamagotchi{
         this.getAttribute("toilet").decrease(1);
         this.getAttribute("happiness").decrease(5);
     }
+
+    @Override
+    public String toString() {
+        return "Chien";
+    }
+
+    public boolean is(String name){
+        return name.equals("Chien");
+    }
 }

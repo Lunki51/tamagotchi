@@ -14,8 +14,7 @@ public class GameFrame extends JFrame {
     private SavesPanel savesPanel;
     private GamePanel gamePanel;
     private OptionsPanel optionsPanel;
-    private JPanel next;
-    private GameInstance gameInstance;
+    private final GameInstance gameInstance;
 
     public GameFrame(GameInstance gameInstance) throws HeadlessException {
         super(LangFile.getLangFile().getString("title"));
@@ -35,6 +34,7 @@ public class GameFrame extends JFrame {
         this.savesPanel = new SavesPanel();
         this.optionsPanel = new OptionsPanel(this.optionsPanel);
         this.gamePanel = new GamePanel(gameInstance);
+
         switchPanel(panel);
     }
 
@@ -60,10 +60,10 @@ public class GameFrame extends JFrame {
         switch(panel) {
             case 1:
                 this.getContentPane().add(this.menuPanel);
-                this.next = this.gamePanel;
                 break;
             case 2:
                 this.getContentPane().add(this.savesPanel);
+                ((UpdatablePanel)this.savesPanel).updatePanel();
                 break;
             case 3:
                 this.getContentPane().add(this.gamePanel);
@@ -74,6 +74,7 @@ public class GameFrame extends JFrame {
                 break;
         }
         this.getContentPane().revalidate();
+        this.repaint();
     }
 
 

@@ -12,7 +12,7 @@ import java.awt.*;
  * The GamePanel
  * contains the gamescreen and the controlscreen
  */
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements UpdatablePanel {
 
     private final MenuButton returnButton;
 
@@ -35,7 +35,6 @@ public class GamePanel extends JPanel {
     private final AttribBarComponent energyGauge;
     private final JLabel energyLabel;
     private final JLabel locationLabel;
-    private final JLabel infoLabel;
 
     private final JButton actionButton;
     private final JButton moveLeftButton;
@@ -75,9 +74,9 @@ public class GamePanel extends JPanel {
         this.controlPanel.add(this.tamaName);
 
 
-        this.infoLabel = new JLabel("Information : ");
-        this.infoLabel.setHorizontalAlignment(JLabel.CENTER);
-        this.controlPanel.add(this.infoLabel);
+        JLabel infoLabel = new JLabel("Information : ");
+        infoLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.controlPanel.add(infoLabel);
 
         JPanel statusPanel = new JPanel();
         statusPanel.setLayout(new GridLayout(0,2));

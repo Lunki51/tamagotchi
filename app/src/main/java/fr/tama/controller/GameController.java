@@ -2,6 +2,7 @@ package fr.tama.controller;
 
 import fr.tama.model.*;
 import fr.tama.view.GameView;
+import fr.tama.view.SaveCardPanel;
 
 import java.util.Enumeration;
 import java.util.Objects;
@@ -35,13 +36,6 @@ public class GameController {
     {
         //Menu control events
         this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(2));
-        this.gameView.getGameFrame().getSavesPanel().getTmpButton().addActionListener(e -> {    //TODO: Drogue dure, ah non c'est un event codé à la dur
-            GameSave save = GameSave.loadSave(0);
-            if(save==null)save=GameSave.createSave(0,new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,true,"Default",Level.EGG),Location.getDefaultLocation());
-            INSTANCE.setInstance(save,this.gameView.getGameFrame());
-            INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
-        });
         this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(4);
             this.gameView.getGameFrame().repaint();
@@ -124,7 +118,7 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getCancelButton().addActionListener(e -> {
-            Boolean b = DBConfig.getBoolean("mute");
+            boolean b = DBConfig.getBoolean("mute");
             this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(b);
             this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(b ? this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getMinimum() : DBConfig.getInt("volume"));
         
@@ -158,6 +152,50 @@ public class GameController {
             this.gameView.getGameFrame().getMenuPanel().repaint();
         });
 
+        this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1().addCreateSaveListener(e->{
+            GameSave save=GameSave.createSave(0,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1()),Location.getDefaultLocation());
+            INSTANCE.setInstance(save,this.gameView.getGameFrame());
+            INSTANCE.start();
+            this.gameView.getGameFrame().switchPanel(3);
+        });
+
+        this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2().addCreateSaveListener(e->{
+            GameSave save=GameSave.createSave(1,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2()),Location.getDefaultLocation());
+            INSTANCE.setInstance(save,this.gameView.getGameFrame());
+            INSTANCE.start();
+            this.gameView.getGameFrame().switchPanel(3);
+        });
+
+        this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3().addCreateSaveListener(e->{
+            GameSave save=GameSave.createSave(2,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3()),Location.getDefaultLocation());
+            INSTANCE.setInstance(save,this.gameView.getGameFrame());
+            INSTANCE.start();
+            this.gameView.getGameFrame().switchPanel(3);
+        });
+
+        this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1().addLoadSaveListener(e->{
+            GameSave save = GameSave.loadSave(0);
+            INSTANCE.setInstance(save,this.gameView.getGameFrame());
+            INSTANCE.start();
+            this.gameView.getGameFrame().switchPanel(3);
+        });
+
+        this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2().addLoadSaveListener(e->{
+            GameSave save = GameSave.loadSave(1);
+            INSTANCE.setInstance(save,this.gameView.getGameFrame());
+            INSTANCE.start();
+            this.gameView.getGameFrame().switchPanel(3);
+        });
+
+
+        this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3().addLoadSaveListener(e->{
+            GameSave save = GameSave.loadSave(2);
+            INSTANCE.setInstance(save,this.gameView.getGameFrame());
+            INSTANCE.start();
+            this.gameView.getGameFrame().switchPanel(3);
+        });
+
+
         Enumeration<AbstractButton> buttons = this.gameView.getGameFrame().getOptionsPanel().getRadioButtons();
         while(buttons.hasMoreElements())
         {
@@ -168,5 +206,28 @@ public class GameController {
                 this.applyListeners();
             });
         }
+    }
+
+    private Tamagotchi getCorrespondingTama(SaveCardPanel panel){
+        Tamagotchi tamagotchi;
+        switch (panel.getTamagotchi()){
+            case "Chien":
+                tamagotchi = new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
+                        panel.getName(),Level.EGG);
+                break;
+            case "Chat":
+                tamagotchi = new Chat(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
+                        panel.getName(),Level.EGG);
+                break;
+            case "Lapin":
+                tamagotchi = new Lapin(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
+                        panel.getName(),Level.EGG);
+                break;
+            default:
+                tamagotchi = new Robot(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
+                        panel.getName(),Level.EGG);
+                break;
+        }
+        return tamagotchi;
     }
 }

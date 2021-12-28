@@ -68,4 +68,13 @@ public class Robot extends Tamagotchi{
     public void update() {
 super.update();
     }
+
+    @Override
+    public String toString() {
+        return "Robot";
+    }
+
+    public boolean is(String name){
+        return name.equals("Robot");
+    }
 }

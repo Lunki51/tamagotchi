@@ -68,4 +68,13 @@ public class Chat extends Tamagotchi{
     public void update() {
         super.update();
     }
+
+    @Override
+    public String toString() {
+        return "Chat";
+    }
+
+    public boolean is(String name){
+        return name.equals("Chat");
+    }
 }

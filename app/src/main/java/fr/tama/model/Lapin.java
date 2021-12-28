@@ -68,4 +68,13 @@ public class Lapin extends Tamagotchi{
     public void update() {
         super.update();
     }
+
+    @Override
+    public String toString() {
+        return "Lapin";
+    }
+
+    public boolean is(String name){
+        return name.equals("Lapin");
+    }
 }

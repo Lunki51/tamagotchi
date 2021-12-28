@@ -13,7 +13,7 @@ import java.util.Date;
 */
 public class GameInstance implements Runnable{
 
-    private static final int INTERVAL = 5000; // In milliseconds
+    private static final int INTERVAL = 100000; // In milliseconds
     //private static final int INTERVAL = 300000;
 
     GameSave save;
@@ -71,7 +71,6 @@ public class GameInstance implements Runnable{
 
         while(alive){
             try{
-                System.out.println(thisThread.getName());
                 Thread.sleep(INTERVAL-skipped);
                 skipped=0;
                 this.getTamagotchi().update();

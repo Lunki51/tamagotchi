@@ -60,12 +60,15 @@ public class GameInstance implements Runnable{
         else
             for(long i=0;i<nbUpdate;i++)
                 save.getTamagotchi().update();
+        save.setLastSeen(date.getTime()+(nbUpdate*INTERVAL));
+        save.save();
         return elapsed%INTERVAL;
     }
 
     @Override
     public void run() {
         long skipped = updateSince(this.lastSeen);
+
         while(alive){
             try{
                 System.out.println(thisThread.getName());

@@ -75,7 +75,7 @@ public class OptionsPanel extends JPanel {
         if(from == null)
         {
             musicSwitch.setSelected(DBConfig.getBoolean("mute"));
-            musicSlider.setValue(musicSwitch.isSelected() ? -40 : DBConfig.getInt("volume"));
+            musicSlider.setValue(musicSwitch.isSelected() ? musicSlider.getMinimum() : DBConfig.getInt("volume"));
 
             langButtons = new ButtonGroup();
             for(String s : LangFile.getLangs().keySet())

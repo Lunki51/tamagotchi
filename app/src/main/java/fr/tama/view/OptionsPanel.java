@@ -124,7 +124,7 @@ public class OptionsPanel extends JPanel {
     public JButton getSaveButton() {
         return saveButton;
     }
-
+    
     public Enumeration<AbstractButton> getRadioButtons()
     {
         return langButtons.getElements();

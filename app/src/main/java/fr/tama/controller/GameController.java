@@ -124,6 +124,10 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getCancelButton().addActionListener(e -> {
+            Boolean b = DBConfig.getBoolean("mute");
+            this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(b);
+            this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(b ? this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getMinimum() : DBConfig.getInt("volume"));
+        
             if(DBConfig.getString("lang").equals(LangFile.lang))
             {
                 this.gameView.getGameFrame().switchPanel(1);

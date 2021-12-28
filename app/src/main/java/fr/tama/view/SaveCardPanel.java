@@ -284,7 +284,7 @@ class SaveCreationPanel extends JPanel implements UpdatablePanel{
     ImageIcon[] images = new ImageIcon[]{new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_chien.png")),
             new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_chat.png")),
             new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_lapin.png"))
-            // ,new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_robot.png"))
+             ,new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_robot.png"))
     };
 
     private int currentEgg = 0;

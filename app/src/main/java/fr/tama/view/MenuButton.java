@@ -24,7 +24,7 @@ public class MenuButton extends JButton {
     {
         if(getModel().isPressed() || getModel().isRollover())
         {
-            g.setColor(Constants.DARKPURPLE);
+            g.setColor(Constants.DARK_PURPLE);
             g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(getForeground());
 

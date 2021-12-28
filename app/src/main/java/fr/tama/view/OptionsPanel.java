@@ -31,7 +31,7 @@ public class OptionsPanel extends JPanel {
 
     public void initComponents(OptionsPanel from)
     {
-        this.musicSwitch = new TamaCheckBox(lang.getString("menu.mute"),Constants.BLUE,Constants.PURPLE,Constants.BLACK_PURPLE);
+        this.musicSwitch = new TamaCheckBox(lang.getString("menu.mute"),Constants.BLUE,Constants.PURPLE,Constants.DARK_PURPLE);
         this.musicSwitch.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
 
         this.musicSlider = new JSlider(-40,6);

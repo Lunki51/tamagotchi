@@ -1,33 +1,21 @@
 package fr.tama.view;
 
-import fr.tama.model.Constants;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 
-public class TamaCheckBox extends JCheckBox{
+public class TamaRadioButton extends JRadioButton {
 
     private String text;
-    private Color font;
     private Color buttonFont;
     private Color button;
     private JLabel label;
 
-    public TamaCheckBox(String text,Color font,Color buttonFont,Color button) {
+    public TamaRadioButton(String text,Color buttonFont,Color button) {
         super(text);
         this.text = text;
-        this.font=font;
         this.button=button;
-
         this.buttonFont=buttonFont;
         this.label = new JLabel(text);
-        this.setLayout(null);
-        this.label.setBounds(this.getHeight(),0,this.getHeight(),this.getHeight());
         this.add(label);
     }
 
@@ -39,9 +27,6 @@ public class TamaCheckBox extends JCheckBox{
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.setColor(this.font);
-        g.fillRect(0,0,this.getWidth(),this.getHeight());
-
         g.setColor(this.buttonFont);
         g.setFont(this.getFont());
         Point start = new Point((int)(this.getWidth()*this.getAlignmentX())- (int)(((this.getHeight()*2)+10)*this.getAlignmentX()),0);
@@ -55,4 +40,5 @@ public class TamaCheckBox extends JCheckBox{
                     this.getHeight() - 2*(this.getHeight()/6));
         }
     }
+
 }

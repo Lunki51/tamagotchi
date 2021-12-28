@@ -80,7 +80,7 @@ public class OptionsPanel extends JPanel {
         langButtons = new ButtonGroup();
         for(String s : LangFile.getLangs().keySet())
         {
-            TamaRadioButton b = new TamaRadioButton(LangFile.getLangs().get(s).getName(),Constants.PURPLE,Constants.DARK_PURPLE);
+            TamaRadioButton b = new TamaRadioButton(LangFile.getLangs().get(s).getName(), Constants.PURPLE, Constants.DARK_PURPLE, Color.BLACK, Constants.BLUE);
             if(s.equals(LangFile.lang))
                 b.setSelected(true);
             b.setBackground(Constants.BLUE);

@@ -54,6 +54,8 @@ public class Music {
     }
 
     public void initSleepMusic() {
+        float oldVolume = getVolume();
+        boolean isstopped = isStopped();
         if (!isSleepingmusic) {
             this.clip.stop();
             try {
@@ -79,6 +81,9 @@ public class Music {
             this.fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             start();
             isSleepingmusic = true;
+            setVolume(oldVolume);
+            if(isstopped) stop();
+
         }
     }
 
@@ -100,8 +105,7 @@ public class Music {
         DBConfig.setBoolean("mute", !this.clip.isActive());
     }
 
-    public void start()
-    {
+    public void start()  {
         if(!this.clip.isActive())
             this.clip.loop(Clip.LOOP_CONTINUOUSLY);
     }

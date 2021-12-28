@@ -14,12 +14,16 @@ public class TamaRadioButton extends JRadioButton {
         setBackground(bgColor);
         this.buttonColor=buttonColor;
         this.buttonSelectedColor=buttonSelectedColor;
-        this.setSize(this.getFontMetrics(this.getFont()).stringWidth(getText()) + this.getHeight() + 10, this.getHeight());
     }
 
     @Override
-    public void setFont(Font font) {
-        super.setFont(font);
+    public void setSize(int width, int height) {
+        super.setSize(this.getFontMetrics(this.getFont()).stringWidth(getText()) + height + 10, height);
+    }
+
+    @Override
+    public void setSize(Dimension d) {
+        this.setSize(this.getFontMetrics(this.getFont()).stringWidth(getText()) + d.height + 10, d.height);
     }
 
     @Override

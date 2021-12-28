@@ -14,7 +14,7 @@ public class OptionsPanel extends JPanel {
     private JSlider musicSlider;
     private JButton returnButton;
     private ButtonGroup langButtons;
-    private JCheckBox musicSwitch;
+    private TamaCheckBox musicSwitch;
     private final LangFile lang;
     
     public OptionsPanel()
@@ -31,11 +31,12 @@ public class OptionsPanel extends JPanel {
 
     public void initComponents(OptionsPanel from)
     {
-        this.musicSwitch = new JCheckBox(lang.getString("menu.mute"));
+        this.musicSwitch = new TamaCheckBox(lang.getString("menu.mute"),Constants.BLUE,Constants.PURPLE,Constants.BLACK_PURPLE);
         this.musicSwitch.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
 
         this.musicSlider = new JSlider(-40,6);
-        musicSwitch.setBackground(Constants.BLUE);
+        musicSwitch.setAlignmentX(CENTER_ALIGNMENT);
+        musicSwitch.setBackground(Constants.PURPLE);
         musicSwitch.setFont(Constants.BASIC_FONT);
         musicSlider.setBackground(Constants.BLUE);
     
@@ -57,8 +58,11 @@ public class OptionsPanel extends JPanel {
         musicTitle.setHorizontalAlignment(JLabel.CENTER);
         musicTitle.setFont(Constants.BASIC_FONT);
         musicPanel.add(musicTitle, BorderLayout.NORTH);
-        musicPanel.add(musicSwitch, BorderLayout.CENTER);
-        musicPanel.add(musicSlider, BorderLayout.EAST);
+        JPanel innerMusic = new JPanel(new GridLayout(2,1));
+       
+        innerMusic.add(musicSlider);
+        innerMusic.add(musicSwitch);
+        musicPanel.add(innerMusic,BorderLayout.CENTER);
         
         //Language panels
         JPanel langPanel = new JPanel(new BorderLayout());
@@ -112,7 +116,7 @@ public class OptionsPanel extends JPanel {
         this.add(placeholder4);
     }
 
-    public JCheckBox getMusicSwitch() {
+    public TamaCheckBox getMusicSwitch() {
         return musicSwitch;
     }
 

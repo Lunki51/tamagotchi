@@ -72,6 +72,10 @@ public class Attribute {
         return max;
     }
 
+    public boolean isMax(){
+        return this.value==this.max;
+    }
+
     /**
      * Change the value of the attribute
      * @param value the new value of the attribute

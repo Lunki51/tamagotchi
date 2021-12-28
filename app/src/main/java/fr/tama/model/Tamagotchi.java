@@ -15,8 +15,8 @@ public abstract class Tamagotchi {
     private Current current;
     private Level level;
     private Attribute[] attributes;
-    private final int[] statusCD;
-    private int lifeCD;
+    protected final int[] statusCD;
+    protected int lifeCD;
     /**
      * Create a new tamagotchi object
      * @param mood the mood of the tamagotchi
@@ -211,6 +211,13 @@ public abstract class Tamagotchi {
             this.getAttribute("tiredness").increase(7);
         }
         //
+
+        if(this.getAttribute("tiredness").isMax()){
+            if(this.statusCD[0]==0){
+                this.shape = this.shape.getPlus();
+                this.statusCD[0]=144;
+            }
+        }
 
         //STATUS DECREASE
         if(this.statusCD[0]==0 ){

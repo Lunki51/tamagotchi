@@ -105,6 +105,13 @@ public class SaveCardPanel extends JPanel implements UpdatablePanel {
         this.saveCreationPanel.getValidation().addActionListener(l);
     }
 
+    public void addDeleteSaveListener(ActionListener l){
+        this.createdSavePanel.getBin().addActionListener(e->{
+            this.changePanel(0);
+        });
+        this.createdSavePanel.getBin().addActionListener(l);
+    }
+
     public void addLoadSaveListener(ActionListener l) {
         this.createdSavePanel.addActionListener(l);
     }
@@ -116,20 +123,26 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
     private String type;
     private final JLabel label;
     private final EmptySavePanel image;
+    private final EmptySavePanel bin;
 
     public CreatedSavePanel() {
         super();
-        this.setLayout(new GridBagLayout());
-        this.setBackground(Constants.PURPLE);
-        this.setBorder(null);
-        GridBagConstraints c = new GridBagConstraints();
-
         this.name = "Name";
         this.type="Chien";
-
         this.image = new EmptySavePanel(new ImageIcon("/sprites/tamagotchi/big_egg_chat.png"));
         this.label =new JLabel(this.name);
 
+        this.setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        JLayeredPane pane = new JLayeredPane();
+        SpringLayout layout = new SpringLayout();
+        pane.setLayout(layout);
+        //pane.setLayout(new FlowLayout());
+        JPanel inner = new JPanel();
+        inner.setLayout(new GridBagLayout());
+        inner.setBackground(Constants.PURPLE);
+        inner.setBorder(null);
+        GridBagConstraints c = new GridBagConstraints();
 
         c.fill = GridBagConstraints.BOTH;
         c.gridheight=1;
@@ -141,17 +154,38 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
         label.setFont(Constants.BASIC_FONT);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setForeground(Color.WHITE);
-        this.add(label,c);
+        inner.add(label,c);
         c.gridy=1;
         c.weighty=0.75;
         c.weightx=1;
-        this.add(this.image,c);
+        inner.add(this.image,c);
+        inner.setFocusable(false);
+        inner.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        pane.add(inner, Integer.valueOf(1));
+        layout.putConstraint(SpringLayout.EAST, inner, 0, SpringLayout.EAST, pane);
+        layout.putConstraint(SpringLayout.WEST, inner, 0, SpringLayout.WEST, pane);
+        layout.putConstraint(SpringLayout.NORTH, inner, 0, SpringLayout.NORTH, pane);
+        layout.putConstraint(SpringLayout.SOUTH, inner, 0, SpringLayout.SOUTH, pane);
+        bin = new EmptySavePanel(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/background/trash.png")));
+        bin.setHasBackground(false);
+        pane.add(bin,Integer.valueOf(2));
+        layout.putConstraint(SpringLayout.NORTH,bin,50,SpringLayout.HORIZONTAL_CENTER,pane);
+        layout.putConstraint(SpringLayout.WEST,bin,50,SpringLayout.VERTICAL_CENTER,pane);
+        layout.putConstraint(SpringLayout.EAST,bin,0,SpringLayout.EAST,pane);
+        layout.putConstraint(SpringLayout.SOUTH,bin,0,SpringLayout.SOUTH,pane);
+
+        pane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.add(pane,BorderLayout.CENTER);
     }
 
     public void setup(String name, String type){
         this.name = name;
         this.type=type;
         this.updatePanel();
+    }
+
+    public EmptySavePanel getBin() {
+        return bin;
     }
 
     @Override
@@ -172,18 +206,26 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
 class EmptySavePanel extends JButton implements UpdatablePanel{
 
     private ImageIcon icon;
+    private boolean hasBackground;
 
     public EmptySavePanel(ImageIcon icon) {
         this.setBackground(Constants.PURPLE);
         this.icon=icon;
-
+        this.hasBackground=true;
         this.setBorder(null);
+    }
+
+    public void setHasBackground(boolean hasBackground) {
+        this.hasBackground = hasBackground;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.setColor(this.getBackground());
-        g.fillRect(0,0,this.getWidth(),this.getHeight());
+        if(this.hasBackground){
+            g.setColor(this.getBackground());
+            g.fillRect(0,0,this.getWidth(),this.getHeight());
+        }
+
         if(this.getWidth()<this.getHeight()){
             float size = ((this.getWidth()*icon.getIconHeight())/(float)icon.getIconWidth());
             g.drawImage(icon.getImage(),0,(int)((this.getHeight()-size)/2),this.getWidth(),(int)size,null);

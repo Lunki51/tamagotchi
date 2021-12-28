@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GameFrame extends JFrame {
 
-    ImageIcon icon = new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/adult_chat.png"));
+    ImageIcon icon = new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/baby_chat.png"));
 
     private MenuPanel menuPanel;
     private SavesPanel savesPanel;

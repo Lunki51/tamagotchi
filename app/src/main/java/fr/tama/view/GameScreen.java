@@ -16,6 +16,7 @@ public class GameScreen extends JPanel {
 
     ImageIcon bathroom = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/salle_de_be.png")));
     ImageIcon kitchen = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/kitchen.png")));
+    ImageIcon toilets = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/toilets.png")));
     ImageIcon living = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/living_room.png")));
     ImageIcon bedroom1 = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/dodo.png")));
     Animation bedroomSleep= new Animation(new String[]{"sprites/background/dodo_anim1.png","sprites/background/dodo_anim2.png"},1000);
@@ -35,6 +36,9 @@ public class GameScreen extends JPanel {
                 break;
             case "kitchen":
                 g.drawImage(kitchen.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+                break;
+            case "toilet":
+                g.drawImage(toilets.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
                 break;
             case "living":
                 g.drawImage(living.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);

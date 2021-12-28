@@ -33,6 +33,10 @@ public class GameSave {
         this.lastSeen = new Date();
     }
 
+    public void setLastSeen(long time){
+        this.lastSeen = new Date(time);
+    }
+
     /**
      * Save the GameSave object into the database.Create a new save from the profil wich this GameSave correspond.
      */

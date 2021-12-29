@@ -4,7 +4,7 @@ import fr.tama.model.GameSave;
 import fr.tama.model.Location;
 import fr.tama.model.Tamagotchi;
 import fr.tama.view.GameFrame;
-import fr.tama.view.GamePanel;
+import fr.tama.view.panels.Game;
 
 import java.util.Date;
 
@@ -13,14 +13,14 @@ import java.util.Date;
 */
 public class GameInstance implements Runnable{
 
-    private static final int INTERVAL = 500; // In milliseconds
+    private static final int INTERVAL = 300000; // In milliseconds
     //private static final int INTERVAL = 300000;
 
     GameSave save;
     boolean alive = true;
     Thread thisThread=null;
     Date lastSeen;
-    GamePanel gamePanel;
+    Game gamePanel;
 
 
     void setInstance(GameSave save, GameFrame gamePanel){

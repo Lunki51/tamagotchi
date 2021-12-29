@@ -1,4 +1,4 @@
-package fr.tama.view;
+package fr.tama.view.components;
 
 import javax.swing.*;
 import java.awt.*;

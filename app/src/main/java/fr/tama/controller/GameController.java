@@ -1,8 +1,9 @@
 package fr.tama.controller;
 
 import fr.tama.model.*;
+import fr.tama.view.utils.Animation;
 import fr.tama.view.GameView;
-import fr.tama.view.SaveCardPanel;
+import fr.tama.view.components.TamaSaveCard;
 
 import java.util.Enumeration;
 import java.util.Objects;
@@ -132,7 +133,7 @@ public class GameController {
             else
             {
                 LangFile.switchLang(DBConfig.getString("lang"));
-                this.gameView.getGameFrame().refreshPanels(1);
+                this.gameView.getGameFrame().switchPanel(1);
                 this.applyListeners();
             }
 
@@ -212,19 +213,26 @@ public class GameController {
             save.delete();
         });
 
+        Animation[] anims = this.gameView.getGameFrame().getGamePanel().getGameScreen().getAnimations();
+        for(Animation anim : anims){
+            anim.addUpdateListener(e->{
+                if(this.gameView.getGameFrame().getCurrentPanel()==3)this.gameView.updatePanel();
+            });
+        }
+
         Enumeration<AbstractButton> buttons = this.gameView.getGameFrame().getOptionsPanel().getRadioButtons();
         while(buttons.hasMoreElements())
         {
             JRadioButton b = (JRadioButton)buttons.nextElement();
             b.addItemListener(e -> {
                 LangFile.switchLang(b.getText());
-                this.gameView.getGameFrame().refreshPanels(4);
-                this.applyListeners();
+                this.gameView.updatePanel();
+                //this.applyListeners();
             });
         }
     }
 
-    private Tamagotchi getCorrespondingTama(SaveCardPanel panel){
+    private Tamagotchi getCorrespondingTama(TamaSaveCard panel){
         Tamagotchi tamagotchi;
         switch (panel.getTamagotchi()){
             case "Chien":

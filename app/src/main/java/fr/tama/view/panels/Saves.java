@@ -1,21 +1,23 @@
-package fr.tama.view;
+package fr.tama.view.panels;
 
 import fr.tama.model.Constants;
 import fr.tama.model.GameSave;
-import fr.tama.model.Tamagotchi;
+import fr.tama.view.components.TamaButton;
+import fr.tama.view.components.TamaSaveCard;
+import fr.tama.view.utils.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SavesPanel extends JPanel implements UpdatablePanel {
+public class Saves extends JPanel implements Updatable {
 
 
-    private final SaveCardPanel saveCardPanel1;
-    private final SaveCardPanel saveCardPanel2;
-    private final SaveCardPanel saveCardPanel3;
-    private final MenuButton returnButton;
+    private final TamaSaveCard saveCardPanel1;
+    private final TamaSaveCard saveCardPanel2;
+    private final TamaSaveCard saveCardPanel3;
+    private final TamaButton returnButton;
 
-    public SavesPanel() {
+    public Saves() {
         super(new GridBagLayout());
         this.setBackground(Constants.BLUE);
         GridBagConstraints mainC = new GridBagConstraints();
@@ -47,9 +49,9 @@ public class SavesPanel extends JPanel implements UpdatablePanel {
 
         GameSave save = GameSave.loadSave(0);
         if(save==null){
-            this.saveCardPanel1 = new SaveCardPanel();
+            this.saveCardPanel1 = new TamaSaveCard();
         }else{
-            this.saveCardPanel1 = new SaveCardPanel(save.getTamagotchi().getName(), save.getTamagotchi().toString(),save.getTamagotchi().getLevel().name());
+            this.saveCardPanel1 = new TamaSaveCard(save.getTamagotchi().getName(), save.getTamagotchi().toString(),save.getTamagotchi().getLevel().name());
         }
 
         c.gridx=0;
@@ -58,9 +60,9 @@ public class SavesPanel extends JPanel implements UpdatablePanel {
 
         save = GameSave.loadSave(1);
         if(save==null){
-            this.saveCardPanel2 = new SaveCardPanel();
+            this.saveCardPanel2 = new TamaSaveCard();
         }else{
-            this.saveCardPanel2 = new SaveCardPanel(save.getTamagotchi().getName(), save.getTamagotchi().toString(),save.getTamagotchi().getLevel().name());
+            this.saveCardPanel2 = new TamaSaveCard(save.getTamagotchi().getName(), save.getTamagotchi().toString(),save.getTamagotchi().getLevel().name());
         }
 
         c.gridx=1;
@@ -71,9 +73,9 @@ public class SavesPanel extends JPanel implements UpdatablePanel {
 
         save = GameSave.loadSave(2);
         if(save==null){
-            this.saveCardPanel3 = new SaveCardPanel();
+            this.saveCardPanel3 = new TamaSaveCard();
         }else{
-            this.saveCardPanel3 = new SaveCardPanel(save.getTamagotchi().getName(), save.getTamagotchi().toString(),save.getTamagotchi().getLevel().name());
+            this.saveCardPanel3 = new TamaSaveCard(save.getTamagotchi().getName(), save.getTamagotchi().toString(),save.getTamagotchi().getLevel().name());
         }
 
         c.anchor=GridBagConstraints.PAGE_END;
@@ -105,7 +107,7 @@ public class SavesPanel extends JPanel implements UpdatablePanel {
         fill.setBackground(Constants.BLUE);
         buttonsPanel.add(fill,c3);
         c3.gridy=1;
-        this.returnButton = new MenuButton("Retour");
+        this.returnButton = new TamaButton("Retour");
         buttonsPanel.add(this.returnButton,c3);
         c3.gridx=1;
         c3.weightx=1;
@@ -120,21 +122,22 @@ public class SavesPanel extends JPanel implements UpdatablePanel {
 
     @Override
     public void updatePanel() {
-        this.repaint();
+
         this.saveCardPanel1.updatePanel();
         this.saveCardPanel2.updatePanel();
         this.saveCardPanel3.updatePanel();
+        this.repaint();
     }
 
-    public SaveCardPanel getSaveCardPanel1() {
+    public TamaSaveCard getSaveCardPanel1() {
         return saveCardPanel1;
     }
 
-    public SaveCardPanel getSaveCardPanel2() {
+    public TamaSaveCard getSaveCardPanel2() {
         return saveCardPanel2;
     }
 
-    public SaveCardPanel getSaveCardPanel3() {
+    public TamaSaveCard getSaveCardPanel3() {
         return saveCardPanel3;
     }
 

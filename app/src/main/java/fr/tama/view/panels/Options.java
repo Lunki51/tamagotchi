@@ -1,36 +1,42 @@
-package fr.tama.view;
+package fr.tama.view.panels;
 
 import fr.tama.controller.LangFile;
 import fr.tama.controller.DBConfig;
 import fr.tama.model.Constants;
+import fr.tama.view.components.TamaButton;
+import fr.tama.view.utils.Updatable;
+import fr.tama.view.components.TamaCheckBox;
+import fr.tama.view.components.TamaRadioButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
 
-public class OptionsPanel extends JPanel {
+public class Options extends JPanel implements Updatable {
 
     private JSlider musicSlider;
     private JButton cancelButton;
     private JButton saveButton;
     private ButtonGroup langButtons;
+    private JLabel title;
     private TamaCheckBox musicSwitch;
-    private final LangFile lang;
-    
-    public OptionsPanel()
+    private JLabel musicTitle;
+    private JLabel langTitle;
+
+    public Options()
     {
         this(null);
     }
 
-    public OptionsPanel(OptionsPanel from){
+    public Options(Options from){
         super(new GridLayout(4,3));
         super.setBackground(Constants.BLUE);
-        this.lang = LangFile.getLangFile();
         initComponents(from);
     }
 
-    public void initComponents(OptionsPanel from)
+    public void initComponents(Options from)
     {
-        this.musicSwitch = new TamaCheckBox(lang.getString("menu.mute"),Constants.BLUE,Constants.PURPLE,Constants.DARK_PURPLE);
+        this.musicSwitch = new TamaCheckBox(LangFile.getLangFile().getString("menu.mute"),Constants.BLUE,Constants.PURPLE,Constants.DARK_PURPLE);
         this.musicSwitch.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
 
         this.musicSlider = new JSlider(-40,6);
@@ -39,15 +45,15 @@ public class OptionsPanel extends JPanel {
         musicSwitch.setFont(Constants.BASIC_FONT);
         musicSlider.setBackground(Constants.BLUE);
     
-        this.cancelButton = new MenuButton(lang.getString("option.cancel"));
-        this.saveButton = new MenuButton(lang.getString("option.save"));
-        JLabel title = new JLabel(lang.getString("menu.options"));
+        this.cancelButton = new TamaButton(LangFile.getLangFile().getString("option.cancel"));
+        this.saveButton = new TamaButton(LangFile.getLangFile().getString("option.save"));
+        title = new JLabel(LangFile.getLangFile().getString("menu.options"));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalTextPosition(JLabel.CENTER);
         title.setFont(Constants.TITLE_FONT);
         JPanel musicPanel = new JPanel(new BorderLayout());
         musicPanel.setBackground(Constants.BLUE);
-        JLabel musicTitle = new JLabel("Volume");
+        musicTitle = new JLabel("Volume");
         musicTitle.setHorizontalAlignment(JLabel.CENTER);
         musicTitle.setFont(Constants.BASIC_FONT);
         musicPanel.add(musicTitle, BorderLayout.NORTH);
@@ -97,7 +103,7 @@ public class OptionsPanel extends JPanel {
         }
 
 
-        JLabel langTitle = new JLabel(lang.getString("menu.lang"));
+         langTitle = new JLabel(LangFile.getLangFile().getString("menu.lang"));
         langTitle.setFont(Constants.BASIC_FONT);
         langTitle.setHorizontalAlignment(JLabel.CENTER);
         langPanel.add(langTitle, BorderLayout.NORTH);
@@ -135,5 +141,16 @@ public class OptionsPanel extends JPanel {
     public Enumeration<AbstractButton> getRadioButtons()
     {
         return langButtons.getElements();
+    }
+
+    @Override
+    public void updatePanel() {
+        this.musicSwitch.setText(LangFile.getLangFile().getString("menu.mute"));
+        this.cancelButton.setText(LangFile.getLangFile().getString("option.cancel"));
+        this.saveButton.setText(LangFile.getLangFile().getString("option.save"));
+        this.title.setText(LangFile.getLangFile().getString("menu.options"));
+        this.musicTitle.setText(LangFile.getLangFile().getString("option.volume"));
+        this.langTitle.setText(LangFile.getLangFile().getString("menu.lang"));
+        this.repaint();
     }
 }

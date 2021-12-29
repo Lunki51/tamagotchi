@@ -1,7 +1,7 @@
-package fr.tama.view;
+package fr.tama.view.components;
 
 import fr.tama.model.Constants;
-import fr.tama.model.Lapin;
+import fr.tama.view.utils.Updatable;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -11,18 +11,18 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class SaveCardPanel extends JPanel implements UpdatablePanel {
+public class TamaSaveCard extends JPanel implements Updatable {
 
     private int currentPanel=0;
-    private final EmptySavePanel emptySavePanel;
-    private final SaveCreationPanel saveCreationPanel;
-    private final CreatedSavePanel createdSavePanel;
+    private final EmptySave emptySavePanel;
+    private final SaveCreation saveCreationPanel;
+    private final CreatedSave createdSavePanel;
 
-    public SaveCardPanel() {
+    public TamaSaveCard() {
         this.setLayout(new CardLayout());
-        emptySavePanel = new EmptySavePanel(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_chien.png")));
-        saveCreationPanel = new SaveCreationPanel();
-        createdSavePanel = new CreatedSavePanel();
+        emptySavePanel = new EmptySave(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_chien.png")));
+        saveCreationPanel = new SaveCreation();
+        createdSavePanel = new CreatedSave();
         this.add(emptySavePanel,"0");
         emptySavePanel.addActionListener(e-> this.changePanel(1));
         this.add(saveCreationPanel,"1");
@@ -41,7 +41,7 @@ public class SaveCardPanel extends JPanel implements UpdatablePanel {
         this.setBackground(Constants.PURPLE);
     }
 
-    public SaveCardPanel(String name,String type,String level){
+    public TamaSaveCard(String name, String type, String level){
         this();
         this.changePanel(2);
         this.createdSavePanel.setup(name,type,level);
@@ -77,13 +77,13 @@ public class SaveCardPanel extends JPanel implements UpdatablePanel {
     public void updatePanel() {
         switch (currentPanel){
             case 0:
-                ((UpdatablePanel)this.emptySavePanel).updatePanel();
+                ((Updatable)this.emptySavePanel).updatePanel();
                 break;
             case 1:
-                ((UpdatablePanel)this.saveCreationPanel).updatePanel();
+                ((Updatable)this.saveCreationPanel).updatePanel();
                 break;
             case 2:
-                ((UpdatablePanel)this.createdSavePanel).updatePanel();
+                ((Updatable)this.createdSavePanel).updatePanel();
                 break;
         }
         this.repaint();
@@ -106,9 +106,7 @@ public class SaveCardPanel extends JPanel implements UpdatablePanel {
     }
 
     public void addDeleteSaveListener(ActionListener l){
-        this.createdSavePanel.getBin().addActionListener(e->{
-            this.changePanel(0);
-        });
+        this.createdSavePanel.getBin().addActionListener(e-> this.changePanel(0));
         this.createdSavePanel.getBin().addActionListener(l);
     }
 
@@ -117,21 +115,21 @@ public class SaveCardPanel extends JPanel implements UpdatablePanel {
     }
 }
 
-class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
+class CreatedSave extends AbstractButton implements Updatable {
 
     private String name;
     private String type;
     private String level;
     private final JLabel label;
-    private final EmptySavePanel image;
-    private final EmptySavePanel bin;
+    private final EmptySave image;
+    private final EmptySave bin;
 
-    public CreatedSavePanel() {
+    public CreatedSave() {
         super();
         this.name = "Name";
         this.type="Chien";
         this.level="egg";
-        this.image = new EmptySavePanel(new ImageIcon("/sprites/tamagotchi/big_egg_chat.png"));
+        this.image = new EmptySave(new ImageIcon("/sprites/tamagotchi/big_egg_chat.png"));
         this.label =new JLabel(this.name);
 
         this.setLayout(new BorderLayout());
@@ -168,7 +166,7 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
         layout.putConstraint(SpringLayout.WEST, inner, 0, SpringLayout.WEST, pane);
         layout.putConstraint(SpringLayout.NORTH, inner, 0, SpringLayout.NORTH, pane);
         layout.putConstraint(SpringLayout.SOUTH, inner, 0, SpringLayout.SOUTH, pane);
-        bin = new EmptySavePanel(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/background/trash.png")));
+        bin = new EmptySave(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/background/trash.png")));
         bin.setHasBackground(false);
         pane.add(bin,Integer.valueOf(2));
         layout.putConstraint(SpringLayout.NORTH,bin,50,SpringLayout.HORIZONTAL_CENTER,pane);
@@ -187,7 +185,7 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
         this.updatePanel();
     }
 
-    public EmptySavePanel getBin() {
+    public EmptySave getBin() {
         return bin;
     }
 
@@ -206,12 +204,12 @@ class CreatedSavePanel extends AbstractButton implements UpdatablePanel{
     }
 }
 
-class EmptySavePanel extends JButton implements UpdatablePanel{
+class EmptySave extends JButton implements Updatable {
 
     private ImageIcon icon;
     private boolean hasBackground;
 
-    public EmptySavePanel(ImageIcon icon) {
+    public EmptySave(ImageIcon icon) {
         this.setBackground(Constants.PURPLE);
         this.icon=icon;
         this.hasBackground=true;
@@ -282,7 +280,7 @@ class ArrowButton extends JButton{
     }
 }
 
-class SaveCreationPanel extends JPanel implements UpdatablePanel{
+class SaveCreation extends JPanel implements Updatable {
 
     ImageIcon[] images = new ImageIcon[]{new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_chien.png")),
             new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_chat.png")),
@@ -292,11 +290,11 @@ class SaveCreationPanel extends JPanel implements UpdatablePanel{
 
     private int currentEgg = 0;
 
-    private final EmptySavePanel image;
+    private final EmptySave image;
     private final JButton validation;
     private final JTextField jTextField;
 
-    public SaveCreationPanel() {
+    public SaveCreation() {
         this.setLayout(new GridBagLayout());
         this.setBackground(Constants.PURPLE);
         GridBagConstraints c = new GridBagConstraints();
@@ -342,7 +340,7 @@ class SaveCreationPanel extends JPanel implements UpdatablePanel{
         });
         arrowLeft.setBackground(Color.BLACK);
         arrowRight.setBackground(Color.BLACK);
-        image = new EmptySavePanel(images[currentEgg]);
+        image = new EmptySave(images[currentEgg]);
 
         c.gridheight=1;
         c.gridx=0;

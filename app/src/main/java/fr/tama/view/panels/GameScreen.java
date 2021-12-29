@@ -1,8 +1,9 @@
-package fr.tama.view;
+package fr.tama.view.panels;
 
 import fr.tama.controller.GameInstance;
 import fr.tama.model.*;
 import fr.tama.model.Robot;
+import fr.tama.view.utils.Animation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,10 @@ public class GameScreen extends JPanel {
 
     public GameScreen(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
+    }
+
+    public Animation[] getAnimations() {
+        return new Animation[]{bedroomSleep};
     }
 
     @Override

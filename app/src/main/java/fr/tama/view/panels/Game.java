@@ -1,22 +1,24 @@
-package fr.tama.view;
+package fr.tama.view.panels;
 
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
 import fr.tama.model.Constants;
 import fr.tama.model.Current;
 import fr.tama.model.Tamagotchi;
+import fr.tama.view.utils.Updatable;
+import fr.tama.view.components.TamaAttribBarComponent;
+import fr.tama.view.components.TamaButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 /**
  * The GamePanel
  * contains the gamescreen and the controlscreen
  */
-public class GamePanel extends JPanel implements UpdatablePanel {
+public class Game extends JPanel implements Updatable {
 
-    private final MenuButton returnButton;
+    private final TamaButton returnButton;
 
     private final JPanel graphicPanel;
     private final JPanel controlPanel;
@@ -26,15 +28,15 @@ public class GamePanel extends JPanel implements UpdatablePanel {
     private final JLabel tamaMState;
     private final JLabel pStateLabel;
     private final JLabel tamaPState;
-    private final AttribBarComponent hungerGauge;
+    private final TamaAttribBarComponent hungerGauge;
     private final JLabel hungerLabel;
-    private final AttribBarComponent hygeneGauge;
+    private final TamaAttribBarComponent hygeneGauge;
     private final JLabel hygeneLabel;
-    private final AttribBarComponent happinessGauge;
+    private final TamaAttribBarComponent happinessGauge;
     private final JLabel happinessLabel;
-    private final AttribBarComponent toiletGauge;
+    private final TamaAttribBarComponent toiletGauge;
     private final JLabel toiletLabel;
-    private final AttribBarComponent energyGauge;
+    private final TamaAttribBarComponent energyGauge;
     private final JLabel energyLabel;
     private final JLabel locationLabel;
 
@@ -47,7 +49,7 @@ public class GamePanel extends JPanel implements UpdatablePanel {
     private final GameInstance gameInstance;
     private final LangFile lang;
 
-    public GamePanel(GameInstance gameInstance) {
+    public Game(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
         this.setLayout(new GridLayout(1,2));
 
@@ -69,7 +71,7 @@ public class GamePanel extends JPanel implements UpdatablePanel {
         this.controlPanel.setLayout(new GridLayout(0,1));
         this.controlPanel.setBackground(Constants.BLUE);
 
-        this.returnButton = new MenuButton(LangFile.getLangFile().getString("menu.back"));
+        this.returnButton = new TamaButton(LangFile.getLangFile().getString("menu.back"));
         this.controlPanel.add(this.returnButton);
 
         this.tamaName = new JLabel();
@@ -111,59 +113,63 @@ public class GamePanel extends JPanel implements UpdatablePanel {
         this.hungerLabel.setHorizontalAlignment(JLabel.CENTER);
         this.hungerLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hungerLabel);
-        this.hungerGauge = new AttribBarComponent(Color.DARK_GRAY);
+        this.hungerGauge = new TamaAttribBarComponent(Color.DARK_GRAY);
         statusPanel.add(this.hungerGauge);
 
         this.hygeneLabel = new JLabel("Hygiène : ");
         this.hygeneLabel.setHorizontalAlignment(JLabel.CENTER);
         this.hygeneLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hygeneLabel);
-        this.hygeneGauge = new AttribBarComponent(Color.CYAN);
+        this.hygeneGauge = new TamaAttribBarComponent(Color.CYAN);
         statusPanel.add(this.hygeneGauge);
 
         this.happinessLabel = new JLabel("Bonheur : ");
         this.happinessLabel.setHorizontalAlignment(JLabel.CENTER);
         this.happinessLabel.setForeground(Color.WHITE);
         statusPanel.add(this.happinessLabel);
-        this.happinessGauge = new AttribBarComponent(Color.ORANGE);
+        this.happinessGauge = new TamaAttribBarComponent(Color.ORANGE);
         statusPanel.add(this.happinessGauge);
 
         this.toiletLabel = new JLabel("Toilettes : ");
         this.toiletLabel.setHorizontalAlignment(JLabel.CENTER);
         this.toiletLabel.setForeground(Color.WHITE);
         statusPanel.add(this.toiletLabel);
-        this.toiletGauge = new AttribBarComponent(Color.BLUE);
+        this.toiletGauge = new TamaAttribBarComponent(Color.BLUE);
         statusPanel.add(this.toiletGauge);
 
         this.energyLabel = new JLabel("Energie : ");
         this.energyLabel.setHorizontalAlignment(JLabel.CENTER);
         this.energyLabel.setForeground(Color.WHITE);
         statusPanel.add(this.energyLabel);
-        this.energyGauge =new AttribBarComponent(Color.YELLOW);
+        this.energyGauge =new TamaAttribBarComponent(Color.YELLOW);
         statusPanel.add(this.energyGauge);
 
         this.controlPanel.add(statusPanel);
 
-        this.actionButton = new GameButton(""); // Le text est rajouté à chaque update du panel
+        this.actionButton = new TamaButton(""); // Le text est rajouté à chaque update du panel
         controlPanel.add(this.actionButton);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0,3));
         buttonPanel.setBackground(Constants.BLUE);
-        this.moveLeftButton = new GameButton("<");
+        this.moveLeftButton = new TamaButton("<");
         buttonPanel.add(this.moveLeftButton);
         this.locationLabel = new JLabel();
         this.locationLabel.setHorizontalAlignment(JLabel.CENTER);
         this.locationLabel.setForeground(Color.WHITE);
         this.locationLabel.setFont(new Font("Arial", Font.BOLD, 20));
         buttonPanel.add(this.locationLabel);
-        this.moveRightButton = new GameButton(">");
+        this.moveRightButton = new TamaButton(">");
         buttonPanel.add(this.moveRightButton);
         this.controlPanel.add(buttonPanel);
 
         pane.add(controlPanel);
 
         this.add(pane);
+    }
+
+    public GameScreen getGameScreen() {
+        return gameScreen;
     }
 
     public void updatePanel(){
@@ -180,10 +186,10 @@ public class GamePanel extends JPanel implements UpdatablePanel {
         this.hungerGauge.updateDisplay(tamagotchi.getAttribute("hunger").getMax(),tamagotchi.getAttribute("hunger").getValue());
         this.hygeneGauge.updateDisplay(tamagotchi.getAttribute("cleanliness").getMax(),tamagotchi.getAttribute("cleanliness").getValue());
         this.toiletGauge.updateDisplay(tamagotchi.getAttribute("toilet").getMax(),tamagotchi.getAttribute("toilet").getValue());
-        this.tamaName.setText(this.gameInstance.getTamagotchi().getName());
+        this.tamaName.setText(this.gameInstance.getTamagotchi().getName()+this.gameInstance.getTamagotchi().getEvolCD());
         this.tamaMState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getMood().name())+tamagotchi.getMoodCD());
         this.tamaPState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getShape().name())+tamagotchi.getShapeCD());
-        this.gameScreen.repaint();
+        this.repaint();
     }
 
     public JButton getReturnButton() { return this.returnButton; }
@@ -216,7 +222,7 @@ public class GamePanel extends JPanel implements UpdatablePanel {
         return tamaPState;
     }
 
-    public AttribBarComponent getHungerGauge() {
+    public TamaAttribBarComponent getHungerGauge() {
         return hungerGauge;
     }
 
@@ -224,7 +230,7 @@ public class GamePanel extends JPanel implements UpdatablePanel {
         return hungerLabel;
     }
 
-    public AttribBarComponent getHygeneGauge() {
+    public TamaAttribBarComponent getHygeneGauge() {
         return hygeneGauge;
     }
 
@@ -232,7 +238,7 @@ public class GamePanel extends JPanel implements UpdatablePanel {
         return hygeneLabel;
     }
 
-    public AttribBarComponent getHappinessGauge() {
+    public TamaAttribBarComponent getHappinessGauge() {
         return happinessGauge;
     }
 
@@ -240,7 +246,7 @@ public class GamePanel extends JPanel implements UpdatablePanel {
         return happinessLabel;
     }
 
-    public AttribBarComponent getToiletGauge() {
+    public TamaAttribBarComponent getToiletGauge() {
         return toiletGauge;
     }
 
@@ -248,7 +254,7 @@ public class GamePanel extends JPanel implements UpdatablePanel {
         return toiletLabel;
     }
 
-    public AttribBarComponent getEnergyGauge() {
+    public TamaAttribBarComponent getEnergyGauge() {
         return energyGauge;
     }
 

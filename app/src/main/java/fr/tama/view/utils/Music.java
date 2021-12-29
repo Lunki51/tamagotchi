@@ -1,4 +1,4 @@
-package fr.tama.view;
+package fr.tama.view.utils;
 import fr.tama.controller.DBConfig;
 
 import javax.sound.sampled.*;
@@ -34,16 +34,12 @@ public class Music {
         AudioInputStream ais = null;
         try {
             ais = AudioSystem.getAudioInputStream( this.getClass().getClassLoader().getResource("music/main_theme.wav") );
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (UnsupportedAudioFileException | IOException e) {
             e.printStackTrace();
         }
         try {
             this.clip.open(ais);
-        }catch (LineUnavailableException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }catch (LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
         this.fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -66,16 +62,12 @@ public class Music {
             AudioInputStream ais = null;
             try {
                 ais = AudioSystem.getAudioInputStream(this.getClass().getClassLoader().getResource("music/main_theme_sleeping.wav"));
-            } catch (UnsupportedAudioFileException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (UnsupportedAudioFileException | IOException e) {
                 e.printStackTrace();
             }
             try {
                 this.clip.open(ais);
-            } catch (LineUnavailableException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (LineUnavailableException | IOException e) {
                 e.printStackTrace();
             }
             this.fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);

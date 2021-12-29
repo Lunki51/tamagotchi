@@ -2,10 +2,13 @@ package fr.tama.view;
 
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
+import fr.tama.view.utils.Music;
+import fr.tama.view.utils.Updatable;
+
 /**
  * Main View class
  */
-public class GameView {
+public class GameView implements Updatable {
 
     private final Music music;
     private GameFrame gameFrame;
@@ -37,5 +40,10 @@ public class GameView {
 
     public void setLangFile(LangFile file) {
         this.lang = file;
+    }
+
+    @Override
+    public void updatePanel() {
+        this.gameFrame.updatePanel();
     }
 }

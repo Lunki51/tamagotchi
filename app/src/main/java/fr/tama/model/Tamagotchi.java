@@ -206,6 +206,10 @@ public abstract class Tamagotchi {
         return this.statusCD[1];
     }
 
+    public int getEvolCD() {
+        return evolCD;
+    }
+
     public void update(){
         System.out.println(this.level);
         if(this.level == Level.EGG){

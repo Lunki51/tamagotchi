@@ -1,4 +1,4 @@
-package fr.tama.view;
+package fr.tama.view.components;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +25,11 @@ public class TamaCheckBox extends JCheckBox{
     public void setFont(Font font) {
         super.setFont(font);
         if(this.label!=null)this.label.setFont(font);
+    }
+
+    @Override
+    public void setText(String text) {
+        this.label.setText(text);
     }
 
     @Override

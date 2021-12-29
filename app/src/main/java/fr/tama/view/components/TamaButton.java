@@ -1,12 +1,12 @@
-package fr.tama.view;
+package fr.tama.view.components;
 
 import fr.tama.model.Constants;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GameButton extends JButton {
-    public GameButton(String text) {
+public class TamaButton extends JButton {
+    public TamaButton(String text) {
         super(text);
         this.setHorizontalTextPosition(JButton.CENTER);
         this.setVerticalTextPosition(JButton.CENTER);

@@ -149,6 +149,7 @@ public class GameController {
 
         this.gameView.getGameFrame().getGamePanel().getReturnButton().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(1);
+            INSTANCE.alive=false;
             this.gameView.getGameFrame().getMenuPanel().repaint();
         });
 

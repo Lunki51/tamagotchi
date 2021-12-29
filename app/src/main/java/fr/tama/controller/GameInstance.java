@@ -80,6 +80,7 @@ public class GameInstance implements Runnable{
                 this.save.save();
             }catch (InterruptedException e){
                 System.out.println("Thread stopped");
+                this.alive=false;
                 thisThread.interrupt();
             }
         }

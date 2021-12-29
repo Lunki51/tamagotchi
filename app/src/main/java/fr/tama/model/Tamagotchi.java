@@ -16,6 +16,7 @@ public abstract class Tamagotchi {
     private Level level;
     private Attribute[] attributes;
     protected final int[] statusCD;
+    protected int evolCD;
     protected int lifeCD;
     /**
      * Create a new tamagotchi object
@@ -34,6 +35,7 @@ public abstract class Tamagotchi {
         this.info = "Dites bonjour à votre nouvel ami !";
         this.statusCD = new int[]{144,144};
         this.lifeCD = 288;
+        this.evolCD = 500;
         setupDefaultAttributes();
     }
 
@@ -209,6 +211,15 @@ public abstract class Tamagotchi {
         if(this.level == Level.EGG){
             this.levelUp();
             return;
+        }
+
+        if(this.evolCD==0){
+            if(this.getShape().isGood() && this.getMood().isGood()){
+                this.levelUp();
+            }
+            this.evolCD=500;
+        }else{
+            this.evolCD--;
         }
         for(Attribute attribute : this.attributes){
             attribute.reduceCD();

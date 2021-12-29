@@ -13,7 +13,7 @@ import java.util.Date;
 */
 public class GameInstance implements Runnable{
 
-    private static final int INTERVAL = 100000; // In milliseconds
+    private static final int INTERVAL = 500; // In milliseconds
     //private static final int INTERVAL = 300000;
 
     GameSave save;
@@ -44,6 +44,7 @@ public class GameInstance implements Runnable{
     }
 
     void start(){
+        if(this.thisThread.isAlive())this.thisThread.interrupt();
         this.thisThread.start();
     }
 

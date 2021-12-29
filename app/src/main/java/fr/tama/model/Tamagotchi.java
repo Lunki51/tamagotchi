@@ -50,13 +50,13 @@ public abstract class Tamagotchi {
      */
     public void setupDefaultAttributes(){
         this.attributes = new Attribute[]{
-                new Attribute("hunger", 1000,2000),
-                new Attribute("toilet",1000,2000),
-                new Attribute("tiredness",500,1000),
-                new Attribute("cleanliness",2000,4000),
-                new Attribute("happiness",1000,2000),
-                // NON AFFICHE
-                new Attribute("health",20,20)
+                new Attribute("hunger", 1000,2000,75),
+                new Attribute("toilet",1000,2000,75),
+                new Attribute("tiredness",500,1000,75),
+                new Attribute("cleanliness",2000,4000,75),
+                new Attribute("happiness",1000,2000,75),
+
+                new Attribute("health",20,20,200)
         };
     }
 
@@ -195,11 +195,23 @@ public abstract class Tamagotchi {
     public abstract void play();
     public abstract void toilet();
     public abstract void wash();
+
+    public int getShapeCD(){
+        return this.statusCD[0];
+    }
+
+    public int getMoodCD(){
+        return this.statusCD[1];
+    }
+
     public void update(){
         System.out.println(this.level);
         if(this.level == Level.EGG){
             this.levelUp();
             return;
+        }
+        for(Attribute attribute : this.attributes){
+            attribute.reduceCD();
         }
         //ATTRIBUTES DEFAULT DECREASE
         this.getAttribute("hunger").decrease(7);

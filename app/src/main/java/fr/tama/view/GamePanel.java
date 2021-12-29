@@ -168,7 +168,12 @@ public class GamePanel extends JPanel implements UpdatablePanel {
 
     public void updatePanel(){
         Tamagotchi tamagotchi = this.gameInstance.getTamagotchi();
-        this.actionButton.setText(LangFile.getLangFile().getString("attribute_action_"+this.gameInstance.getLocation().getAction()+"_"+(this.gameInstance.getTamagotchi().getCurrent()== Current.ASLEEP?"off":"on")));
+        if(tamagotchi.getAttribute(this.gameInstance.getLocation().getAction()).getCoolDown()!=0 && !this.gameInstance.getLocation().getAction().equals("tiredness")){
+            this.actionButton.setText(String.valueOf(tamagotchi.getAttribute(this.gameInstance.getLocation().getAction()).getCoolDown()));
+        }else{
+            this.actionButton.setText(LangFile.getLangFile().getString("attribute_action_"+this.gameInstance.getLocation().getAction()+"_"+(this.gameInstance.getTamagotchi().getCurrent()==Current.ASLEEP?"off":"on")));
+        }
+
         this.locationLabel.setText(LangFile.getLangFile().getString("location_"+this.gameInstance.getLocation().getName()));
         this.energyGauge.updateDisplay(tamagotchi.getAttribute("tiredness").getMax(),tamagotchi.getAttribute("tiredness").getValue());
         this.happinessGauge.updateDisplay(tamagotchi.getAttribute("happiness").getMax(),tamagotchi.getAttribute("happiness").getValue());
@@ -176,8 +181,8 @@ public class GamePanel extends JPanel implements UpdatablePanel {
         this.hygeneGauge.updateDisplay(tamagotchi.getAttribute("cleanliness").getMax(),tamagotchi.getAttribute("cleanliness").getValue());
         this.toiletGauge.updateDisplay(tamagotchi.getAttribute("toilet").getMax(),tamagotchi.getAttribute("toilet").getValue());
         this.tamaName.setText(this.gameInstance.getTamagotchi().getName());
-        this.tamaMState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getMood().name()));
-        this.tamaPState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getShape().name()));
+        this.tamaMState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getMood().name())+tamagotchi.getMoodCD());
+        this.tamaPState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getShape().name())+tamagotchi.getShapeCD());
         this.gameScreen.repaint();
     }
 

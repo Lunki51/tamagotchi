@@ -36,10 +36,12 @@ public class GameController {
     {
         //Menu control events
         this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(2));
+
         this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> {
             this.gameView.getGameFrame().switchPanel(4);
             this.gameView.getGameFrame().repaint();
         });
+
         this.gameView.getGameFrame().getMenuPanel().getButtonQuit().addActionListener(e -> System.exit(0));
 
         //In-game control events
@@ -187,7 +189,6 @@ public class GameController {
             INSTANCE.start();
             this.gameView.getGameFrame().switchPanel(3);
         });
-
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3().addLoadSaveListener(e->{
             GameSave save = GameSave.loadSave(2);

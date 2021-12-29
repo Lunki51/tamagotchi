@@ -82,15 +82,16 @@ public class Game extends JPanel implements Updatable {
         this.controlPanel.add(this.returnButton,c);
 
         this.tamaName = new JLabel();
-        this.tamaName.setHorizontalAlignment(JLabel.CENTER);
+        this.tamaName.setHorizontalAlignment(JLabel.LEFT);
         this.tamaName.setForeground(Color.WHITE);
         this.tamaName.setFont(new Font("Arial", Font.BOLD, 30));
         c.weighty=0.2;
         c.gridy=1;
+        c.insets=new Insets(0,50,0,0);
         this.controlPanel.add(this.tamaName,c);
+        c.insets=new Insets(0,0,0,0);
 
-
-        JLabel infoLabel = new JLabel("Information : ");
+        JLabel infoLabel = new JLabel("Informations : ");
         infoLabel.setHorizontalAlignment(JLabel.CENTER);
         infoLabel.setForeground(Color.WHITE);
         infoLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -99,64 +100,92 @@ public class Game extends JPanel implements Updatable {
         this.controlPanel.add(infoLabel,c);
 
         JPanel statusPanel = new JPanel();
-        statusPanel.setLayout(new GridLayout(0,2,0,5));
+        statusPanel.setLayout(new GridBagLayout());
+        GridBagConstraints c2 = new GridBagConstraints();
+        c2.fill = GridBagConstraints.BOTH;
+        c2.weightx=1;
+        c2.weighty=0.2;
+        c2.gridwidth=1;
+        c2.insets = new Insets(2,5,2,0);
         statusPanel.setBackground(Constants.BLUE);
         this.mStateLabel = new JLabel("État mental : ");
-        this.mStateLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.mStateLabel.setHorizontalAlignment(JLabel.RIGHT);
         this.mStateLabel.setForeground(Color.WHITE);
-        statusPanel.add(this.mStateLabel);
+        c2.gridx=0;
+        statusPanel.add(this.mStateLabel,c2);
         this.tamaMState = new JLabel("Bon");
-        this.tamaMState.setHorizontalAlignment(JLabel.CENTER);
+        this.tamaMState.setHorizontalAlignment(JLabel.LEFT);
         this.tamaMState.setForeground(Color.WHITE);
-        statusPanel.add(this.tamaMState);
+        c2.gridx=1;
+        statusPanel.add(this.tamaMState,c2);
         this.pStateLabel = new JLabel("État physique : ");
-        this.pStateLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.pStateLabel.setHorizontalAlignment(JLabel.RIGHT);
         this.pStateLabel.setForeground(Color.WHITE);
-        statusPanel.add(this.pStateLabel);
+        c2.gridx=0;
+        c2.gridy=1;
+        statusPanel.add(this.pStateLabel,c2);
         this.tamaPState = new JLabel("Mauvais");
-        this.tamaPState.setHorizontalAlignment(JLabel.CENTER);
+        this.tamaPState.setHorizontalAlignment(JLabel.LEFT);
         this.tamaPState.setForeground(Color.WHITE);
-        statusPanel.add(this.tamaPState);
+        c2.gridx=1;
+        statusPanel.add(this.tamaPState,c2);
 
-
-        this.hungerLabel = new JLabel("Faim : ");
-        this.hungerLabel.setHorizontalAlignment(JLabel.CENTER);
+        c2.weightx=0.2;
+        c2.gridy=2;
+        c2.gridx=1;
+        this.hungerLabel = new JLabel("Faim");
+        this.hungerLabel.setHorizontalAlignment(JLabel.LEFT);
         this.hungerLabel.setForeground(Color.WHITE);
-        statusPanel.add(this.hungerLabel);
+        statusPanel.add(this.hungerLabel,c2);
+        c2.gridx=0;
+        c2.weightx=0.8;
         this.hungerGauge = new TamaAttribBarComponent(Color.DARK_GRAY);
-        statusPanel.add(this.hungerGauge);
+        statusPanel.add(this.hungerGauge,c2);
 
-        this.hygeneLabel = new JLabel("Hygiène : ");
-        this.hygeneLabel.setHorizontalAlignment(JLabel.CENTER);
+        c2.gridy=3;
+        c2.gridx=1;
+        this.hygeneLabel = new JLabel("Hygiène");
+        this.hygeneLabel.setHorizontalAlignment(JLabel.LEFT);
         this.hygeneLabel.setForeground(Color.WHITE);
-        statusPanel.add(this.hygeneLabel);
+        statusPanel.add(this.hygeneLabel,c2);
         this.hygeneGauge = new TamaAttribBarComponent(Color.CYAN);
-        statusPanel.add(this.hygeneGauge);
+        c2.gridx=0;
+        statusPanel.add(this.hygeneGauge,c2);
 
-        this.happinessLabel = new JLabel("Bonheur : ");
-        this.happinessLabel.setHorizontalAlignment(JLabel.CENTER);
+        c2.gridy=4;
+        c2.gridx=1;
+        this.happinessLabel = new JLabel("Bonheur");
+        this.happinessLabel.setHorizontalAlignment(JLabel.LEFT);
         this.happinessLabel.setForeground(Color.WHITE);
-        statusPanel.add(this.happinessLabel);
+        statusPanel.add(this.happinessLabel,c2);
+        c2.gridx=0;
         this.happinessGauge = new TamaAttribBarComponent(Color.ORANGE);
-        statusPanel.add(this.happinessGauge);
+        statusPanel.add(this.happinessGauge,c2);
 
-        this.toiletLabel = new JLabel("Toilettes : ");
-        this.toiletLabel.setHorizontalAlignment(JLabel.CENTER);
+        c2.gridy=5;
+        c2.gridx=1;
+        this.toiletLabel = new JLabel("Toilettes");
+        this.toiletLabel.setHorizontalAlignment(JLabel.LEFT);
         this.toiletLabel.setForeground(Color.WHITE);
-        statusPanel.add(this.toiletLabel);
+        statusPanel.add(this.toiletLabel,c2);
+        c2.gridx=0;
         this.toiletGauge = new TamaAttribBarComponent(Color.BLUE);
-        statusPanel.add(this.toiletGauge);
+        statusPanel.add(this.toiletGauge,c2);
 
-        this.energyLabel = new JLabel("Energie : ");
-        this.energyLabel.setHorizontalAlignment(JLabel.CENTER);
+        c2.gridy=6;
+        c2.gridx=1;
+        this.energyLabel = new JLabel("Energie");
+        this.energyLabel.setHorizontalAlignment(JLabel.LEFT);
         this.energyLabel.setForeground(Color.WHITE);
-        statusPanel.add(this.energyLabel);
+        statusPanel.add(this.energyLabel,c2);
+        c2.gridx=0;
         this.energyGauge =new TamaAttribBarComponent(Color.YELLOW);
-        statusPanel.add(this.energyGauge);
+        statusPanel.add(this.energyGauge,c2);
 
         c.gridy=3;
         c.weighty=0.8;
         c.gridwidth=1;
+        //statusPanel.setBorder(BorderFactory.createMatteBorder(5,0,0,0,Constants.PURPLE));
         this.controlPanel.add(statusPanel,c);
 
         this.actionButton = new TamaButton(""); // Le text est rajouté à chaque update du panel

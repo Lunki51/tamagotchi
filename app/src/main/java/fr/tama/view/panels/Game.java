@@ -68,17 +68,26 @@ public class Game extends JPanel implements Updatable {
 
 
         this.controlPanel = new JPanel();
-        this.controlPanel.setLayout(new GridLayout(0,1));
+        this.controlPanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.weightx=1;
+        c.fill=GridBagConstraints.BOTH;
+        c.gridwidth=2;
         this.controlPanel.setBackground(Constants.BLUE);
 
+        c.weighty=0.1;
+        c.gridy=0;
+        c.gridx=0;
         this.returnButton = new TamaButton(LangFile.getLangFile().getString("menu.back"));
-        this.controlPanel.add(this.returnButton);
+        this.controlPanel.add(this.returnButton,c);
 
         this.tamaName = new JLabel();
         this.tamaName.setHorizontalAlignment(JLabel.CENTER);
         this.tamaName.setForeground(Color.WHITE);
         this.tamaName.setFont(new Font("Arial", Font.BOLD, 30));
-        this.controlPanel.add(this.tamaName);
+        c.weighty=0.2;
+        c.gridy=1;
+        this.controlPanel.add(this.tamaName,c);
 
 
         JLabel infoLabel = new JLabel("Information : ");
@@ -86,10 +95,11 @@ public class Game extends JPanel implements Updatable {
         infoLabel.setForeground(Color.WHITE);
         infoLabel.setFont(new Font("Arial", Font.BOLD, 20));
 
-        this.controlPanel.add(infoLabel);
+        c.gridy=2;
+        this.controlPanel.add(infoLabel,c);
 
         JPanel statusPanel = new JPanel();
-        statusPanel.setLayout(new GridLayout(0,2));
+        statusPanel.setLayout(new GridLayout(0,2,0,5));
         statusPanel.setBackground(Constants.BLUE);
         this.mStateLabel = new JLabel("État mental : ");
         this.mStateLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -144,10 +154,16 @@ public class Game extends JPanel implements Updatable {
         this.energyGauge =new TamaAttribBarComponent(Color.YELLOW);
         statusPanel.add(this.energyGauge);
 
-        this.controlPanel.add(statusPanel);
+        c.gridy=3;
+        c.weighty=0.8;
+        c.gridwidth=1;
+        this.controlPanel.add(statusPanel,c);
 
         this.actionButton = new TamaButton(""); // Le text est rajouté à chaque update du panel
-        controlPanel.add(this.actionButton);
+        c.gridwidth=2;
+        c.weighty=0.1;
+        c.gridy=4;
+        controlPanel.add(this.actionButton,c);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0,3));
@@ -161,7 +177,8 @@ public class Game extends JPanel implements Updatable {
         buttonPanel.add(this.locationLabel);
         this.moveRightButton = new TamaButton(">");
         buttonPanel.add(this.moveRightButton);
-        this.controlPanel.add(buttonPanel);
+        c.gridy=5;
+        this.controlPanel.add(buttonPanel,c);
 
         pane.add(controlPanel);
 

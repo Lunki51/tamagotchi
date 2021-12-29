@@ -45,6 +45,7 @@ public class GameInstance implements Runnable{
 
     void start(){
         if(this.thisThread.isAlive())this.thisThread.interrupt();
+        this.alive=true;
         this.thisThread.start();
     }
 
@@ -85,6 +86,7 @@ public class GameInstance implements Runnable{
                 thisThread.interrupt();
             }
         }
+        System.out.println("END");
     }
 
     public void setLocation(Location location) {

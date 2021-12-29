@@ -211,7 +211,6 @@ public abstract class Tamagotchi {
     }
 
     public void update(){
-        System.out.println(this.level);
         if(this.level == Level.EGG){
             this.levelUp();
             return;

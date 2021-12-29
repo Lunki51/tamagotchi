@@ -56,7 +56,6 @@ public class GameInstance implements Runnable{
         Date now = new Date();
         long elapsed = now.getTime() - date.getTime();
         long nbUpdate = (elapsed ) / INTERVAL;
-        System.out.println(nbUpdate);
         if(nbUpdate > 2016) //If the tamagotchi has been abandoned for more than a week => dead
             save.getTamagotchi().getAttribute("health").setValue(0);
         else
@@ -81,12 +80,10 @@ public class GameInstance implements Runnable{
                 this.save.updateLastSeen();
                 this.save.save();
             }catch (InterruptedException e){
-                System.out.println("Thread stopped");
                 this.alive=false;
                 thisThread.interrupt();
             }
         }
-        System.out.println("END");
     }
 
     public void setLocation(Location location) {

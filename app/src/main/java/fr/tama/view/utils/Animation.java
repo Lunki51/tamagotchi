@@ -10,11 +10,13 @@ public class Animation implements Runnable{
     ImageIcon[] frames;
     int currentFrame;
     long delta;
+    private final boolean doesEnd;
     private final ArrayList<ActionListener> listeners = new ArrayList<>();
 
-    public Animation(String[] files,long delta){
+    public Animation(String[] files,long delta,boolean doesEnd){
         frames = new ImageIcon[files.length];
         this.delta = delta;
+        this.doesEnd = doesEnd;
         for(int i=0;i<files.length;i++){
             frames[i] = new ImageIcon(this.getClass().getClassLoader().getResource(files[i]));
         }
@@ -23,13 +25,17 @@ public class Animation implements Runnable{
 
     @Override
     public void run() {
-        while (true){
+        int i=0;
+        while (i!=frames.length){
             try{
                 Thread.sleep(this.delta);
                 currentFrame++;
                 if(currentFrame==frames.length)currentFrame=0;
                 for(ActionListener l : this.listeners){
                     l.actionPerformed(new ActionEvent(this,0,"update"));
+                }
+                if(doesEnd){
+                    i++;
                 }
 
             }catch (InterruptedException e){

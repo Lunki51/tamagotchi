@@ -9,12 +9,15 @@ public class Music {
     private FloatControl fc;
     private boolean isSleepingmusic;
 
-    public Music() {
-        initGameMusic();
+    public Music(boolean b)
+    {
+        this.isSleepingmusic = b;
+        if(isSleepingmusic) initSleepMusic();
+        else initGameMusic();
     }
 
     public void initGameMusic() {
-
+        if(!isStopped() && !isSleepingmusic) return;
         try{
             if(isSleepingmusic) {
                 this.clip.stop();
@@ -107,6 +110,6 @@ public class Music {
 
     public boolean isStopped()
     {
-        return !this.clip.isActive();
+        return this.clip == null ? true : !this.clip.isActive();
     }
 }

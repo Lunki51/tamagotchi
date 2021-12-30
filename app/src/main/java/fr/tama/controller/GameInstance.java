@@ -81,6 +81,7 @@ public class GameInstance implements Runnable{
                 if(this.getTamagotchi().isDead()){
                     this.alive=false;
                     this.gameFrame.switchPanel(GameFrame.DEATH);
+                    this.save.delete();
                 }
             }catch (InterruptedException e){
                 this.alive=false;

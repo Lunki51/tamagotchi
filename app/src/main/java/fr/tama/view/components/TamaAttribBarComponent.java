@@ -35,7 +35,12 @@ public class TamaAttribBarComponent extends JComponent {
     protected void paintComponent(Graphics g) {
         g.setColor(this.color);
         g.fillRoundRect(0,0,(int)(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0))),this.getHeight(), 10, 10);
+        if(this.currentValue!=this.maxValue &&(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))>12&&(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))<(this.getWidth()*(((float)maxValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))-12){
+            g.fillRect((int)(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))-10,0,10,this.getHeight());
+        }
+
+
         g.setColor(Color.BLACK);
-        g.drawRoundRect(0,0,this.getWidth(),this.getHeight(), 10, 10);
+        g.drawRoundRect(0,0,this.getWidth()-1,this.getHeight()-1, 10, 10);
     }
 }

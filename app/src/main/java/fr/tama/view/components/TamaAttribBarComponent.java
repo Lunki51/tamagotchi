@@ -40,7 +40,10 @@ public class TamaAttribBarComponent extends JComponent {
         }
 
 
-        g.setColor(Color.BLACK);
-        g.drawRoundRect(0,0,this.getWidth()-1,this.getHeight()-1, 10, 10);
+        Graphics2D g2d = (Graphics2D)g ;
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(2));
+
+        g2d.drawRoundRect(1,1,this.getWidth()-2,this.getHeight()-2, 10, 10);
     }
 }

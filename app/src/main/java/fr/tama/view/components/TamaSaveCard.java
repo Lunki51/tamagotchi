@@ -134,7 +134,6 @@ class CreatedSave extends AbstractButton implements Updatable {
         this.label = new JLabel(this.name);
 
         this.setLayout(new BorderLayout());
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         JLayeredPane pane = new JLayeredPane();
         SpringLayout layout = new SpringLayout();
         pane.setLayout(layout);

@@ -9,8 +9,11 @@ public class Music {
     private FloatControl fc;
     private boolean isSleepingmusic;
 
-    public Music() {
-        initGameMusic();
+    public Music(boolean b)
+    {
+        this.isSleepingmusic = b;
+        if(isSleepingmusic) initSleepMusic();
+        else initGameMusic();
     }
 
     public void initGameMusic() {

@@ -28,7 +28,7 @@ public class Options extends JPanel implements Updatable {
     public Options(){
         super(new GridLayout(4,3));
         super.setBackground(Constants.BLUE);
-        this.musicSwitch = new TamaCheckBox("MUET",Constants.PURPLE,Constants.DARK_PURPLE,Constants.BASIC_FONT);
+        this.musicSwitch = new TamaCheckBox("Muet",Constants.PURPLE,Constants.DARK_PURPLE, Constants.BASIC_FONT);
 
         this.musicSlider = new JSlider(-40,6);
         musicSwitch.setAlignmentX(CENTER_ALIGNMENT);
@@ -113,16 +113,16 @@ public class Options extends JPanel implements Updatable {
         this.aboutPanel.add(new JLabel("Responsable développement : BUAN Kilian"));
         this.aboutPanel.add(new JLabel("Musiques et graphismes par DIBERDER Evan sous CC-BY-SA"));
         this.add(new JLabel()); // 0 0
-        this.add(titlePanel);        // 0 1
+        this.add(titlePanel);   // 0 1
         this.add(new JLabel()); // 0 2
-        this.add(new JLabel()); // 1 0;
+        this.add(new JLabel()); // 1 0
         this.add(musicPanel);   // 1 1
         this.add(new JLabel()); // 1 2
         this.add(new JLabel()); // 2 0
         this.add(langPanel);    // 2 1
         this.add(new JLabel()); // 2 2
         this.add(cancelButton); // 3 0
-        this.add(aboutPanel); // 3 1
+        this.add(aboutPanel);   // 3 1
         this.add(saveButton);   // 3 2
     }
 

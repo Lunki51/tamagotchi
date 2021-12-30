@@ -151,6 +151,7 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getGamePanel().getReturnButton().addActionListener(e -> {
+            this.gameView.getMusic().initGameMusic();
             this.gameView.getGameFrame().switchPanel(1);
             INSTANCE.alive=false;
             this.gameView.getGameFrame().getMenuPanel().repaint();
@@ -160,6 +161,7 @@ public class GameController {
             GameSave save=GameSave.createSave(0,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1()),Location.getDefaultLocation());
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
+
             this.gameView.getGameFrame().switchPanel(3);
         });
 
@@ -167,6 +169,7 @@ public class GameController {
             GameSave save=GameSave.createSave(1,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2()),Location.getDefaultLocation());
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
+
             this.gameView.getGameFrame().switchPanel(3);
         });
 
@@ -181,6 +184,9 @@ public class GameController {
             GameSave save = GameSave.loadSave(0);
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
+            if(INSTANCE.getTamagotchi().getCurrent() == Current.ASLEEP){
+                this.gameView.getMusic().initSleepMusic();
+            }
             this.gameView.getGameFrame().switchPanel(3);
         });
 
@@ -188,6 +194,9 @@ public class GameController {
             GameSave save = GameSave.loadSave(1);
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
+            if(INSTANCE.getTamagotchi().getCurrent() == Current.ASLEEP){
+                this.gameView.getMusic().initSleepMusic();
+            }
             this.gameView.getGameFrame().switchPanel(3);
         });
 
@@ -195,6 +204,9 @@ public class GameController {
             GameSave save = GameSave.loadSave(2);
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
+            if(INSTANCE.getTamagotchi().getCurrent() == Current.ASLEEP){
+                this.gameView.getMusic().initSleepMusic();
+            }
             this.gameView.getGameFrame().switchPanel(3);
         });
 

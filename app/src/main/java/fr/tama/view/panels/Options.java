@@ -21,7 +21,6 @@ public class Options extends JPanel implements Updatable {
     private final ButtonGroup langButtons;
     private final JLabel title;
     private final TamaCheckBox musicSwitch;
-    private final JLabel switchName;
     private final JLabel musicTitle;
     private final JLabel langTitle;
 
@@ -58,20 +57,13 @@ public class Options extends JPanel implements Updatable {
         musicTitle.setForeground(Color.white);
         GridBagConstraints c2 = new GridBagConstraints();
         c2.weightx=1;
-        c2.fill = GridBagConstraints.BOTH;
-        c2.weighty=0.5;
+        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.weighty=1;
         musicPanel.add(musicTitle,c2);
-        c2.gridx=1;
+        c2.gridx=2;
         musicPanel.add(musicSlider,c2);
-        c2.gridy=1;
-        c2.gridx=0;
-        this.switchName = new JLabel();
-        this.switchName.setHorizontalAlignment(SwingConstants.CENTER);
-        this.switchName.setFont(Constants.BASIC_FONT);
-        this.switchName.setForeground(Color.WHITE);
-        musicPanel.add(this.switchName,c2);
+        c2.gridy=0;
         c2.gridx=1;
-        c2.insets = new Insets(5,0,5,0);
         musicPanel.add(musicSwitch,c2);
 
         //Language panels
@@ -151,7 +143,6 @@ public class Options extends JPanel implements Updatable {
 
     @Override
     public void updatePanel() {
-        this.switchName.setText(LangFile.getLangFile().getString("menu.mute") + " : ");
         this.cancelButton.setText(LangFile.getLangFile().getString("option.cancel"));
         this.saveButton.setText(LangFile.getLangFile().getString("option.save"));
         this.title.setText(LangFile.getLangFile().getString("menu.options"));

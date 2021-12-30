@@ -106,7 +106,7 @@ public class Game extends JPanel implements Updatable {
         c2.fill = GridBagConstraints.BOTH;
         c2.weightx=1;
         c2.weighty=0.2;
-        c2.gridwidth=1;
+        c2.gridwidth=2;
         c2.insets = new Insets(2,5,2,0);
         statusPanel.setBackground(Constants.BLUE);
         this.mStateLabel = new JLabel("État mental : ");
@@ -117,7 +117,7 @@ public class Game extends JPanel implements Updatable {
         this.tamaMState = new JLabel("Bon");
         this.tamaMState.setHorizontalAlignment(JLabel.LEFT);
         this.tamaMState.setForeground(Color.WHITE);
-        c2.gridx=1;
+        c2.gridx=2;
         statusPanel.add(this.tamaMState,c2);
         this.pStateLabel = new JLabel("État physique : ");
         this.pStateLabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -128,20 +128,25 @@ public class Game extends JPanel implements Updatable {
         this.tamaPState = new JLabel("Mauvais");
         this.tamaPState.setHorizontalAlignment(JLabel.LEFT);
         this.tamaPState.setForeground(Color.WHITE);
-        c2.gridx=1;
+        c2.gridx=2;
         statusPanel.add(this.tamaPState,c2);
 
-        c2.weightx=0.2;
-        c2.gridy=2;
-        c2.gridx=1;
+        c2.weightx=0.5;
+        c2.gridy=3;
+
+        c2.gridx=0;
+        c2.gridwidth=3;
+        this.hungerGauge = new TamaAttribBarComponent(Color.DARK_GRAY);
+        statusPanel.add(this.hungerGauge,c2);
+        c2.gridwidth=1;
+
+        c2.weightx=1;
+        c2.gridx=3;
         this.hungerLabel = new JLabel("Faim");
         this.hungerLabel.setHorizontalAlignment(JLabel.LEFT);
         this.hungerLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hungerLabel,c2);
-        c2.gridx=0;
-        c2.weightx=0.8;
-        this.hungerGauge = new TamaAttribBarComponent(Color.DARK_GRAY);
-        statusPanel.add(this.hungerGauge,c2);
+
 
         c2.gridy=3;
         c2.gridx=1;

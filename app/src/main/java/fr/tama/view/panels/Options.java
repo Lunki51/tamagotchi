@@ -27,11 +27,11 @@ public class Options extends JPanel implements Updatable {
     public Options(){
         super(new GridLayout(4,3));
         super.setBackground(Constants.BLUE);
-        this.musicSwitch = new TamaCheckBox("MUET",Color.WHITE,Constants.BLUE,Constants.PURPLE,Constants.DARK_PURPLE);
+        this.musicSwitch = new TamaCheckBox("MUET",Constants.PURPLE,Constants.DARK_PURPLE,Constants.BASIC_FONT);
 
         this.musicSlider = new JSlider(-40,6);
         musicSwitch.setAlignmentX(CENTER_ALIGNMENT);
-        musicSwitch.setBackground(Constants.PURPLE);
+        musicSwitch.setBackground(Constants.BLUE);
         musicSwitch.setFont(Constants.BASIC_FONT);
         musicSlider.setBackground(Constants.BLUE);
 
@@ -57,7 +57,7 @@ public class Options extends JPanel implements Updatable {
         musicTitle.setForeground(Color.white);
         GridBagConstraints c2 = new GridBagConstraints();
         c2.weightx=1;
-        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.fill = GridBagConstraints.BOTH;
         c2.weighty=1;
         musicPanel.add(musicTitle,c2);
         c2.gridx=2;

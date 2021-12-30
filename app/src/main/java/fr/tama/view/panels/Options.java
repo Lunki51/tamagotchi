@@ -27,7 +27,7 @@ public class Options extends JPanel implements Updatable {
     public Options(){
         super(new GridLayout(4,3));
         super.setBackground(Constants.BLUE);
-        this.musicSwitch = new TamaCheckBox(null,Color.WHITE,Constants.BLUE,Constants.PURPLE,Constants.DARK_PURPLE);
+        this.musicSwitch = new TamaCheckBox("MUET",Color.WHITE,Constants.BLUE,Constants.PURPLE,Constants.DARK_PURPLE);
 
         this.musicSlider = new JSlider(-40,6);
         musicSwitch.setAlignmentX(CENTER_ALIGNMENT);
@@ -143,6 +143,7 @@ public class Options extends JPanel implements Updatable {
 
     @Override
     public void updatePanel() {
+        this.musicSwitch.setText(LangFile.getLangFile().getString("option.mute"));
         this.cancelButton.setText(LangFile.getLangFile().getString("option.cancel"));
         this.saveButton.setText(LangFile.getLangFile().getString("option.save"));
         this.title.setText(LangFile.getLangFile().getString("menu.options"));

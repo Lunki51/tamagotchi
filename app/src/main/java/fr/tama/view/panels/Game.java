@@ -131,7 +131,7 @@ public class Game extends JPanel implements Updatable {
         c2.gridx=2;
         statusPanel.add(this.tamaPState,c2);
 
-        c2.insets = new Insets(2,20,2,0);
+        c2.insets = new Insets(2,11,2,0);
         c2.weightx=0.5;
         c2.gridy=2;
 

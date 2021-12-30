@@ -34,8 +34,8 @@ public class TamaAttribBarComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         g.setColor(this.color);
-        g.fillRect(0,0,(int)(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0))),this.getHeight());
+        g.fillRoundRect(0,0,(int)(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0))),this.getHeight(), 10, 10);
         g.setColor(Color.BLACK);
-        g.drawRect(0,0,this.getWidth()-1,this.getHeight()-1);
+        g.drawRoundRect(0,0,this.getWidth(),this.getHeight(), 10, 10);
     }
 }

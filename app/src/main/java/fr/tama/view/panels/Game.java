@@ -136,7 +136,7 @@ public class Game extends JPanel implements Updatable {
 
         c2.gridx=0;
         c2.gridwidth=3;
-        this.hungerGauge = new TamaAttribBarComponent(Color.DARK_GRAY);
+        this.hungerGauge = new TamaAttribBarComponent(Constants.PURPLE);
         statusPanel.add(this.hungerGauge,c2);
 
         c2.gridwidth=1;
@@ -156,7 +156,7 @@ public class Game extends JPanel implements Updatable {
         this.hygeneLabel.setHorizontalAlignment(JLabel.CENTER);
         this.hygeneLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hygeneLabel,c2);
-        this.hygeneGauge = new TamaAttribBarComponent(Color.CYAN);
+        this.hygeneGauge = new TamaAttribBarComponent(Constants.PURPLE);
         c2.gridx=0;
         c2.gridwidth=3;
         statusPanel.add(this.hygeneGauge,c2);
@@ -168,7 +168,7 @@ public class Game extends JPanel implements Updatable {
         this.happinessLabel.setForeground(Color.WHITE);
         statusPanel.add(this.happinessLabel,c2);
         c2.gridx=0;
-        this.happinessGauge = new TamaAttribBarComponent(Color.ORANGE);
+        this.happinessGauge = new TamaAttribBarComponent(Constants.PURPLE);
         statusPanel.add(this.happinessGauge,c2);
 
         c2.gridy=5;
@@ -178,7 +178,7 @@ public class Game extends JPanel implements Updatable {
         this.toiletLabel.setForeground(Color.WHITE);
         statusPanel.add(this.toiletLabel,c2);
         c2.gridx=0;
-        this.toiletGauge = new TamaAttribBarComponent(Color.BLUE);
+        this.toiletGauge = new TamaAttribBarComponent(Constants.PURPLE);
         statusPanel.add(this.toiletGauge,c2);
 
         c2.gridy=6;
@@ -188,7 +188,7 @@ public class Game extends JPanel implements Updatable {
         this.energyLabel.setForeground(Color.WHITE);
         statusPanel.add(this.energyLabel,c2);
         c2.gridx=0;
-        this.energyGauge =new TamaAttribBarComponent(Color.YELLOW);
+        this.energyGauge =new TamaAttribBarComponent(Constants.PURPLE);
         statusPanel.add(this.energyGauge,c2);
 
         c.gridy=3;

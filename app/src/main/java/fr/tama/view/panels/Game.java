@@ -132,36 +132,39 @@ public class Game extends JPanel implements Updatable {
         statusPanel.add(this.tamaPState,c2);
 
         c2.weightx=0.5;
-        c2.gridy=3;
+        c2.gridy=2;
 
         c2.gridx=0;
         c2.gridwidth=3;
         this.hungerGauge = new TamaAttribBarComponent(Color.DARK_GRAY);
         statusPanel.add(this.hungerGauge,c2);
-        c2.gridwidth=1;
 
+        c2.gridwidth=1;
         c2.weightx=1;
         c2.gridx=3;
         this.hungerLabel = new JLabel("Faim");
-        this.hungerLabel.setHorizontalAlignment(JLabel.LEFT);
+        this.hungerLabel.setHorizontalAlignment(JLabel.CENTER);
         this.hungerLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hungerLabel,c2);
 
 
         c2.gridy=3;
-        c2.gridx=1;
+        c2.gridwidth=1;
+        c2.weightx=1;
+        c2.gridx=3;
         this.hygeneLabel = new JLabel("Hygiène");
-        this.hygeneLabel.setHorizontalAlignment(JLabel.LEFT);
+        this.hygeneLabel.setHorizontalAlignment(JLabel.CENTER);
         this.hygeneLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hygeneLabel,c2);
         this.hygeneGauge = new TamaAttribBarComponent(Color.CYAN);
         c2.gridx=0;
+        c2.gridwidth=3;
         statusPanel.add(this.hygeneGauge,c2);
 
         c2.gridy=4;
-        c2.gridx=1;
+        c2.gridx=3;
         this.happinessLabel = new JLabel("Bonheur");
-        this.happinessLabel.setHorizontalAlignment(JLabel.LEFT);
+        this.happinessLabel.setHorizontalAlignment(JLabel.CENTER);
         this.happinessLabel.setForeground(Color.WHITE);
         statusPanel.add(this.happinessLabel,c2);
         c2.gridx=0;
@@ -169,9 +172,9 @@ public class Game extends JPanel implements Updatable {
         statusPanel.add(this.happinessGauge,c2);
 
         c2.gridy=5;
-        c2.gridx=1;
+        c2.gridx=3;
         this.toiletLabel = new JLabel("Toilettes");
-        this.toiletLabel.setHorizontalAlignment(JLabel.LEFT);
+        this.toiletLabel.setHorizontalAlignment(JLabel.CENTER);
         this.toiletLabel.setForeground(Color.WHITE);
         statusPanel.add(this.toiletLabel,c2);
         c2.gridx=0;
@@ -179,9 +182,9 @@ public class Game extends JPanel implements Updatable {
         statusPanel.add(this.toiletGauge,c2);
 
         c2.gridy=6;
-        c2.gridx=1;
+        c2.gridx=3;
         this.energyLabel = new JLabel("Energie");
-        this.energyLabel.setHorizontalAlignment(JLabel.LEFT);
+        this.energyLabel.setHorizontalAlignment(JLabel.CENTER);
         this.energyLabel.setForeground(Color.WHITE);
         statusPanel.add(this.energyLabel,c2);
         c2.gridx=0;

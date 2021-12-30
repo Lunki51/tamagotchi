@@ -17,7 +17,7 @@ public class Music {
     }
 
     public void initGameMusic() {
-
+        if(!isStopped() && !isSleepingmusic) return;
         try{
             if(isSleepingmusic) {
                 this.clip.stop();
@@ -110,6 +110,6 @@ public class Music {
 
     public boolean isStopped()
     {
-        return !this.clip.isActive();
+        return this.clip == null ? true : !this.clip.isActive();
     }
 }

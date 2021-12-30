@@ -5,6 +5,7 @@ import fr.tama.controller.LangFile;
 import fr.tama.model.Constants;
 import fr.tama.model.Current;
 import fr.tama.model.Tamagotchi;
+import fr.tama.view.components.TamaBigButton;
 import fr.tama.view.utils.Updatable;
 import fr.tama.view.components.TamaAttribBarComponent;
 import fr.tama.view.components.TamaButton;
@@ -78,7 +79,7 @@ public class Game extends JPanel implements Updatable {
         c.weighty=0.1;
         c.gridy=0;
         c.gridx=0;
-        this.returnButton = new TamaButton(LangFile.getLangFile().getString("menu.back"));
+        this.returnButton = new TamaBigButton(LangFile.getLangFile().getString("menu.back"));
         this.controlPanel.add(this.returnButton,c);
 
         this.tamaName = new JLabel();
@@ -188,7 +189,7 @@ public class Game extends JPanel implements Updatable {
         //statusPanel.setBorder(BorderFactory.createMatteBorder(5,0,0,0,Constants.PURPLE));
         this.controlPanel.add(statusPanel,c);
 
-        this.actionButton = new TamaButton(""); // Le text est rajouté à chaque update du panel
+        this.actionButton = new TamaBigButton(""); // Le text est rajouté à chaque update du panel
         c.gridwidth=2;
         c.weighty=0.1;
         c.gridy=4;
@@ -197,14 +198,14 @@ public class Game extends JPanel implements Updatable {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0,3));
         buttonPanel.setBackground(Constants.BLUE);
-        this.moveLeftButton = new TamaButton("<");
+        this.moveLeftButton = new TamaBigButton("<");
         buttonPanel.add(this.moveLeftButton);
         this.locationLabel = new JLabel();
         this.locationLabel.setHorizontalAlignment(JLabel.CENTER);
         this.locationLabel.setForeground(Color.WHITE);
         this.locationLabel.setFont(new Font("Arial", Font.BOLD, 20));
         buttonPanel.add(this.locationLabel);
-        this.moveRightButton = new TamaButton(">");
+        this.moveRightButton = new TamaBigButton(">");
         buttonPanel.add(this.moveRightButton);
         c.gridy=5;
         this.controlPanel.add(buttonPanel,c);

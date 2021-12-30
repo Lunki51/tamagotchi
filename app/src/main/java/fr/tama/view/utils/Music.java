@@ -13,8 +13,7 @@ public class Music {
         initGameMusic();
     }
 
-    public void initGameMusic()
-    {
+    public void initGameMusic() {
 
         try{
             if(isSleepingmusic) {

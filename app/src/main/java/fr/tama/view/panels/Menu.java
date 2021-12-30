@@ -2,6 +2,7 @@ package fr.tama.view.panels;
 
 import fr.tama.controller.LangFile;
 import fr.tama.model.Constants;
+import fr.tama.view.components.TamaBigButton;
 import fr.tama.view.components.TamaButton;
 import fr.tama.view.utils.Updatable;
 
@@ -27,16 +28,16 @@ public class Menu extends JPanel implements Updatable {
         buttonPanel.setLayout(new GridLayout(3,3, 12, 12));
         this.add(buttonPanel, BorderLayout.SOUTH);
 
-        this.buttonPlay = new TamaButton(LangFile.getLangFile().getString("menu.play"));
+        this.buttonPlay = new TamaBigButton(LangFile.getLangFile().getString("menu.play"));
         buttonPanel.add(new JLabel());
         buttonPanel.add(this.buttonPlay);
         buttonPanel.add(new JLabel());
         buttonPanel.add(new JLabel());
-        this.buttonOption = new TamaButton(LangFile.getLangFile().getString("menu.options"));
+        this.buttonOption = new TamaBigButton(LangFile.getLangFile().getString("menu.options"));
         buttonPanel.add(this.buttonOption);
         buttonPanel.add(new JLabel());
         buttonPanel.add(new JLabel());
-        this.buttonQuit = new TamaButton(LangFile.getLangFile().getString("menu.quit"));
+        this.buttonQuit = new TamaBigButton(LangFile.getLangFile().getString("menu.quit"));
         buttonPanel.add(this.buttonQuit);
         buttonPanel.add(new JLabel());
     }

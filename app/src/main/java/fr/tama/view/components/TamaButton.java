@@ -14,7 +14,6 @@ public class TamaButton extends JButton {
         this.setFont(new Font(Font.SANS_SERIF,  Font.BOLD, 20));
         this.setForeground(Color.white);
         this.setBackground(Constants.PURPLE);
-        this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Constants.BLUE, 10), BorderFactory.createLineBorder(Constants.PURPLE, 10)));
         this.setFont(new Font("Arial", Font.BOLD, 25));
     }
 

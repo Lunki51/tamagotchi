@@ -1,7 +1,9 @@
 package fr.tama.view.panels;
 
+import fr.tama.controller.LangFile;
 import fr.tama.model.Constants;
 import fr.tama.model.GameSave;
+import fr.tama.view.components.TamaBigButton;
 import fr.tama.view.components.TamaButton;
 import fr.tama.view.components.TamaSaveCard;
 import fr.tama.view.utils.Updatable;
@@ -16,9 +18,11 @@ public class Saves extends JPanel implements Updatable {
     private final TamaSaveCard saveCardPanel2;
     private final TamaSaveCard saveCardPanel3;
     private final TamaButton returnButton;
+    private final LangFile lang;
 
     public Saves() {
         super(new GridBagLayout());
+        this.lang = LangFile.getLangFile();
         this.setBackground(Constants.BLUE);
         GridBagConstraints mainC = new GridBagConstraints();
         mainC.fill = GridBagConstraints.BOTH;
@@ -29,7 +33,7 @@ public class Saves extends JPanel implements Updatable {
         mainC.gridx=0;
 
         JPanel titlePanel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel("SAUVEGARDES");
+        JLabel label = new JLabel(lang.getString("menu.saves"));
         label.setForeground(Color.white);
         label.setFont(Constants.TITLE_FONT);
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -107,7 +111,7 @@ public class Saves extends JPanel implements Updatable {
         fill.setBackground(Constants.BLUE);
         buttonsPanel.add(fill,c3);
         c3.gridy=1;
-        this.returnButton = new TamaButton("Retour");
+        this.returnButton = new TamaBigButton(lang.getString("menu.back"));
         buttonsPanel.add(this.returnButton,c3);
         c3.gridx=1;
         c3.weightx=1;

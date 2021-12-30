@@ -1,5 +1,6 @@
 package fr.tama.view.components;
 
+import fr.tama.controller.LangFile;
 import fr.tama.model.Constants;
 import fr.tama.view.utils.Updatable;
 
@@ -13,14 +14,14 @@ import java.awt.event.ActionListener;
 
 public class TamaSaveCard extends JPanel implements Updatable {
 
-    private int currentPanel=0;
+    private int currentPanel; // = 0 par défaut
     private final EmptySave emptySavePanel;
     private final SaveCreation saveCreationPanel;
     private final CreatedSave createdSavePanel;
 
     public TamaSaveCard() {
         this.setLayout(new CardLayout());
-        emptySavePanel = new EmptySave(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/big_egg_chien.png")));
+        emptySavePanel = new EmptySave(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/egg_plus.png")));
         saveCreationPanel = new SaveCreation();
         createdSavePanel = new CreatedSave();
         this.add(emptySavePanel,"0");
@@ -126,11 +127,11 @@ class CreatedSave extends AbstractButton implements Updatable {
 
     public CreatedSave() {
         super();
-        this.name = "Name";
+        this.name = LangFile.getLangFile().getString("menu.name");
         this.type="Chien";
         this.level="egg";
         this.image = new EmptySave(new ImageIcon("/sprites/tamagotchi/big_egg_chat.png"));
-        this.label =new JLabel(this.name);
+        this.label = new JLabel(this.name);
 
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -291,7 +292,7 @@ class SaveCreation extends JPanel implements Updatable {
     private int currentEgg = 0;
 
     private final EmptySave image;
-    private final JButton validation;
+    private final AbstractButton validation;
     private final JTextField jTextField;
 
     public SaveCreation() {
@@ -308,7 +309,7 @@ class SaveCreation extends JPanel implements Updatable {
         c.gridwidth=3;
         JPanel name = new JPanel();
         name.setBackground(Constants.PURPLE);
-        JLabel label = new JLabel("NAME : ");
+        JLabel label = new JLabel(LangFile.getLangFile().getString("menu.name")  + " : " );
         label.setFont(Constants.BASIC_FONT);
         label.setForeground(Color.WHITE);
         this.jTextField = new JTextField(7);
@@ -392,13 +393,13 @@ class SaveCreation extends JPanel implements Updatable {
         c.gridheight=1;
         JPanel validate = new JPanel();
         validate.setBackground(Constants.PURPLE);
-        validation = new JButton("Valider");
+        validation = new TamaButton(LangFile.getLangFile().getString("menu.validate"));
         validate.add(validation);
 
         this.add(validate,c);
     }
 
-    public JButton getValidation() {
+    public AbstractButton getValidation() {
         return validation;
     }
 

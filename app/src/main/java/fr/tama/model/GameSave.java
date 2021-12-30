@@ -59,11 +59,12 @@ public class GameSave {
             generatedKeys.next();
             int id = generatedKeys.getInt(1);
             for(Attribute attr : tamagotchi.getAttributes()){
-                    sql = "INSERT INTO attribute VALUES(null,?,?,?)";
+                    sql = "INSERT INTO attribute VALUES(null,?,?,?,?)";
                     try (PreparedStatement pstmt2 = DBConnection.getConnection().prepareStatement(sql)) {
                         pstmt2.setString(1, attr.getName());
                         pstmt2.setInt(2, attr.getValue());
                         pstmt2.setInt(3, id);
+                        pstmt2.setInt(4,attr.getCoolDown());
                         pstmt2.executeUpdate();
                     } catch (SQLException e) {
                         System.out.println(e.getMessage());
@@ -176,7 +177,9 @@ public class GameSave {
                             ignored.setInt(1,rs2.getInt("saveID"));
                             ResultSet rs3 = ignored.executeQuery();
                             while(rs3.next()){
-                                tamagotchi.setAttribute(rs3.getString("name"),rs3.getInt("value"));
+                                Attribute attrib = tamagotchi.getAttribute(rs3.getString("name"));
+                                attrib.setValue(rs3.getInt("value"));
+                                attrib.setCoolDown(rs3.getInt("cooldown"));
                             }
                         }
                 }else return null;

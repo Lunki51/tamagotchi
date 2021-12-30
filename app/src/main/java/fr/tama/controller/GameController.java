@@ -1,6 +1,7 @@
 package fr.tama.controller;
 
 import fr.tama.model.*;
+import fr.tama.view.GameFrame;
 import fr.tama.view.utils.Animation;
 import fr.tama.view.GameView;
 import fr.tama.view.components.TamaSaveCard;
@@ -36,10 +37,10 @@ public class GameController {
     public void applyListeners()
     {
         //Menu control events
-        this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(2));
+        this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.SAVES));
 
         this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(4);
+            this.gameView.getGameFrame().switchPanel(GameFrame.OPTIONS);
             this.gameView.getGameFrame().repaint();
         });
 
@@ -113,7 +114,7 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getSaveButton().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(1);
+            this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
             this.gameView.getGameFrame().getMenuPanel().repaint();
             this.gameView.getMusic().saveVolume();
             this.gameView.getMusic().saveMute();
@@ -127,13 +128,13 @@ public class GameController {
         
             if(DBConfig.getString("lang").equals(LangFile.lang))
             {
-                this.gameView.getGameFrame().switchPanel(1);
+                this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
                 this.gameView.getGameFrame().getMenuPanel().repaint();
             }
             else
             {
                 LangFile.switchLang(DBConfig.getString("lang"));
-                this.gameView.getGameFrame().switchPanel(1);
+                this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
                 this.applyListeners();
             }
 
@@ -146,12 +147,12 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getSavesPanel().getReturnButton().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(1);
+            this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
             this.gameView.getGameFrame().getMenuPanel().repaint();
         });
 
         this.gameView.getGameFrame().getGamePanel().getReturnButton().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(1);
+            this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
             INSTANCE.alive=false;
             this.gameView.getGameFrame().getMenuPanel().repaint();
         });
@@ -160,42 +161,42 @@ public class GameController {
             GameSave save=GameSave.createSave(0,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1()),Location.getDefaultLocation());
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2().addCreateSaveListener(e->{
             GameSave save=GameSave.createSave(1,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2()),Location.getDefaultLocation());
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3().addCreateSaveListener(e->{
             GameSave save=GameSave.createSave(2,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3()),Location.getDefaultLocation());
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1().addLoadSaveListener(e->{
             GameSave save = GameSave.loadSave(0);
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2().addLoadSaveListener(e->{
             GameSave save = GameSave.loadSave(1);
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3().addLoadSaveListener(e->{
             GameSave save = GameSave.loadSave(2);
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1().addDeleteSaveListener(e->{

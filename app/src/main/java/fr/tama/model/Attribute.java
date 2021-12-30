@@ -7,6 +7,11 @@ public class Attribute {
 
     private String name;
     private int value;
+
+    public void setCoolDown(int coolDown) {
+        this.coolDown = coolDown;
+    }
+
     private final int max;
     private int coolDown;
     private final int maxCoolDown;
@@ -20,7 +25,7 @@ public class Attribute {
         this.name = name;
         this.value = value;
         this.max = max;
-        this.coolDown = 0;
+        this.coolDown = coolDown;
         this.maxCoolDown = coolDown;
     }
 

@@ -17,17 +17,8 @@ public class TamaRadioButton extends JRadioButton {
     }
 
     @Override
-    public void setSize(int width, int height) {
-        super.setSize(this.getFontMetrics(this.getFont()).stringWidth(getText()) + height + 10, height);
-    }
-
-    @Override
-    public void setSize(Dimension d) {
-        this.setSize(this.getFontMetrics(this.getFont()).stringWidth(getText()) + d.height + 10, d.height);
-    }
-
-    @Override
     protected void paintComponent(Graphics g) {
+        this.setPreferredSize(new Dimension(this.getFontMetrics(this.getFont()).stringWidth(getText()) + this.getHeight() + 10, this.getHeight()));
         //Reset surface
         g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight()+5);
@@ -48,5 +39,6 @@ public class TamaRadioButton extends JRadioButton {
             g.setColor(buttonSelectedColor);
             g.fillOval(getHeight()/6, getHeight()/6, 2*getHeight()/3, 2*getHeight()/3);
         }
+
     }
 }

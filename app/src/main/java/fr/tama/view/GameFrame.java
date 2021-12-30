@@ -18,14 +18,14 @@ public class GameFrame extends JFrame implements Updatable {
     private final Menu menu;
     private final Saves savesPanel;
     private final Game gamePanel;
-    private Options options;
+    private final Options options;
     private int currentPanel;
 
     public GameFrame(GameInstance gameInstance) throws HeadlessException {
         super(LangFile.getLangFile().getString("title"));
         this.menu = new Menu();
         this.savesPanel = new Saves();
-        this.options = new Options(this.options);
+        this.options = new Options();
         this.gamePanel = new Game(gameInstance);
         this.currentPanel=1;
 

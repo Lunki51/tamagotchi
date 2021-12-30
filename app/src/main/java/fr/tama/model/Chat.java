@@ -4,16 +4,16 @@ public class Chat extends Tamagotchi{
     public Chat(Status mood, Status shape, Current current,boolean sex,String name,Level level) {
         super(mood, shape, current,sex,name,level);
     }
-    //TODO CUSTOM UPDATE
 
     @Override
     public void eat() {
         Attribute food = this.getAttribute("hungry");
         if(food.getCoolDown()==0){
             food.increase(1250);
-            if(this.statusCD[0]==0 && food.isMax()){
+            Attribute shapeCD = this.getAttribute("shapeCD");
+            if(shapeCD.getCoolDown()==0 && food.isMax()){
                 this.setShape(this.getShape().getPlus());
-                this.statusCD[0]=144;
+                shapeCD.resetCD();
             }
             food.resetCD();
         }
@@ -33,13 +33,15 @@ public class Chat extends Tamagotchi{
     public void play() {
         Attribute attrib = this.getAttribute("happiness");
         if(attrib.getCoolDown()==0){
-            this.getAttribute("tiredness").decrease(50);
-            this.getAttribute("toilet").decrease(50);
-            attrib.increase(1000);
 
-            if(this.statusCD[1]==0 && attrib.isMax()){
+            this.getAttribute("tiredness").decrease(100);
+            this.getAttribute("toilet").decrease(50);
+            attrib.increase(500);
+
+            Attribute moodCD = this.getAttribute("moodCD");
+            if(moodCD.getCoolDown()==0 && attrib.isMax()){
                 this.setMood(this.getMood().getPlus());
-                this.statusCD[1]=144;
+                moodCD.resetCD();
             }
             attrib.resetCD();
         }
@@ -50,10 +52,12 @@ public class Chat extends Tamagotchi{
     public void toilet() {
         Attribute attrib = this.getAttribute("toilet");
         if(attrib.getCoolDown()==0){
-            this.getAttribute("toilet").increase(1100);
-            if(this.statusCD[1]==0 && this.getAttribute("happiness").isMax()){
+            this.getAttribute("toilet").increase(1200);
+
+            Attribute moodCD = this.getAttribute("moodCD");
+            if(moodCD.getCoolDown()==0 && this.getAttribute("happiness").isMax()){
                 this.setMood(this.getMood().getPlus());
-                this.statusCD[1]=144;
+                moodCD.resetCD();
             }
             attrib.resetCD();
         }
@@ -65,24 +69,28 @@ public class Chat extends Tamagotchi{
         Attribute attrib = this.getAttribute("cleanliness");
         if(attrib.getCoolDown()==0){
             attrib.increase(2000);
+            this.getAttribute("happiness").increase(100);
             if(this.getAttribute("cleanliness").isMax()){
-                if(this.statusCD[0]==0 ){
-                    this.setShape(this.getMood().getPlus());
-                    this.statusCD[0]=144;
-                }else if(this.statusCD[1]==0 ){
+                Attribute moodCD = this.getAttribute("moodCD");
+                Attribute shapeCD = this.getAttribute("shapeCD");
+                if(shapeCD.getCoolDown()==0 ){
+                    this.setShape(this.getShape().getPlus());
+                    shapeCD.resetCD();
+                }else if(moodCD.getCoolDown()==0 ){
                     this.setMood(this.getMood().getPlus());
-                    this.statusCD[1]=144;
+                    moodCD.resetCD();
                 }
             }
             attrib.resetCD();
         }
-
-
     }
 
     @Override
     public void update() {
         super.update();
+        this.getAttribute("tiredness").decrease(2);
+        this.getAttribute("toilet").decrease(2);
+        this.getAttribute("happiness").decrease(2);
     }
 
     @Override

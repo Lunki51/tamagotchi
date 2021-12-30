@@ -2,10 +2,8 @@ package fr.tama.view;
 
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
-import fr.tama.view.panels.Game;
+import fr.tama.view.panels.*;
 import fr.tama.view.panels.Menu;
-import fr.tama.view.panels.Options;
-import fr.tama.view.panels.Saves;
 import fr.tama.view.utils.Updatable;
 
 import javax.swing.*;
@@ -19,15 +17,23 @@ public class GameFrame extends JFrame implements Updatable {
     private final Saves savesPanel;
     private final Game gamePanel;
     private final Options options;
+    private final Death death;
     private int currentPanel;
+
+    public static final int MENU = 1;
+    public static final int SAVES = 2;
+    public static final int GAME = 3;
+    public static final int OPTIONS = 4;
+    public static final int DEATH = 5;
 
     public GameFrame(GameInstance gameInstance) throws HeadlessException {
         super(LangFile.getLangFile().getString("title"));
         this.menu = new Menu();
         this.savesPanel = new Saves();
         this.options = new Options();
+        this.death = new Death();
         this.gamePanel = new Game(gameInstance);
-        this.currentPanel=1;
+        this.currentPanel=MENU;
 
         this.setSize(1280,720);
         this.setIconImage(icon.getImage());
@@ -59,6 +65,8 @@ public class GameFrame extends JFrame implements Updatable {
         return savesPanel;
     }
 
+
+
     public void switchPanel(int panel) {
         this.currentPanel=panel;
         this.getContentPane().removeAll();
@@ -80,6 +88,10 @@ public class GameFrame extends JFrame implements Updatable {
                 this.getContentPane().add(this.options);
                 this.options.updatePanel();
                 break;
+            case 5:
+                this.getContentPane().add(this.death);
+                this.death.updatePanel();
+                break;
         }
         this.getContentPane().revalidate();
         this.repaint();
@@ -100,6 +112,9 @@ public class GameFrame extends JFrame implements Updatable {
                 break;
             case 4:
                 this.options.updatePanel();
+                break;
+            case 5:
+                this.death.updatePanel();
                 break;
         }
         this.repaint();

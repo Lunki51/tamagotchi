@@ -35,6 +35,7 @@ CREATE TABLE attribute(
     name TEXT NOT NULL,
     value INTEGER NOT NULL,
     save INTEGER NOT NULL,
+    cooldown INTEGER NOT NULL,
     FOREIGN KEY (save) REFERENCES save(saveID)
 );
 

@@ -20,15 +20,15 @@ public class GameInstance implements Runnable{
     boolean alive = true;
     Thread thisThread=null;
     Date lastSeen;
-    Game gamePanel;
+    GameFrame gameFrame;
 
 
-    void setInstance(GameSave save, GameFrame gamePanel){
+    void setInstance(GameSave save, GameFrame gameFrame){
         if(this.thisThread!= null)this.thisThread.interrupt();
         this.save =save;
         this.thisThread = new Thread(this,new Date().toString());
         this.lastSeen = save.getLastSeen();
-        this.gamePanel = gamePanel.getGamePanel();
+        this.gameFrame = gameFrame;
     }
 
     public Tamagotchi getTamagotchi(){
@@ -75,10 +75,13 @@ public class GameInstance implements Runnable{
                 Thread.sleep(INTERVAL-skipped);
                 skipped=0;
                 this.getTamagotchi().update();
-                this.gamePanel.updatePanel();
-                this.gamePanel.repaint();
+                this.gameFrame.updatePanel();
                 this.save.updateLastSeen();
                 this.save.save();
+                if(this.getTamagotchi().isDead()){
+                    this.alive=false;
+                    this.gameFrame.switchPanel(GameFrame.DEATH);
+                }
             }catch (InterruptedException e){
                 this.alive=false;
                 thisThread.interrupt();

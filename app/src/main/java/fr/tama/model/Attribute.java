@@ -7,17 +7,21 @@ public class Attribute {
 
     private String name;
     private int value;
-    private int max;
+    private final int max;
+    private int coolDown;
+    private final int maxCoolDown;
 
     /**
      * Create a new tamagotchi attribute
      * @param name the name of the attribute
      * @param value the default value of the attribute
      */
-    public Attribute(String name, int value,int max) {
+    public Attribute(String name, int value,int max,int coolDown) {
         this.name = name;
         this.value = value;
         this.max = max;
+        this.coolDown = 0;
+        this.maxCoolDown = coolDown;
     }
 
     /**
@@ -72,11 +76,27 @@ public class Attribute {
         return max;
     }
 
+    public boolean isMax(){
+        return this.value==this.max;
+    }
+
     /**
      * Change the value of the attribute
      * @param value the new value of the attribute
      */
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public void reduceCD(){
+        if(this.coolDown!=0)this.coolDown--;
+    }
+
+    public void resetCD(){
+        this.coolDown = maxCoolDown;
+    }
+
+    public int getCoolDown() {
+        return coolDown;
     }
 }

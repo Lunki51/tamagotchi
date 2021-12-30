@@ -39,8 +39,9 @@ CREATE TABLE attribute(
 );
 
 CREATE TABLE config(
-    darkMode BOOLEAN NOT NULL,
-    lang TEXT NOT NULL
+    lang TEXT NOT NULL,
+	mute BOOLEAN NOT NULL,
+	volume INTEGER NOT NULL
 );
 
 CREATE TRIGGER config_remover
@@ -88,6 +89,6 @@ BEGIN
 
 end;
 
-INSERT INTO config VALUES(false,'fr');
+INSERT INTO config VALUES('fr', false, -17);
 INSERT INTO save VALUES(1,1,1,'BAD','GOOD','GOOD','AWAKE',0);
 

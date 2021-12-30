@@ -1,16 +1,16 @@
-package fr.tama.view;
+package fr.tama.view.components;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class AttribBarComponent extends JComponent {
+public class TamaAttribBarComponent extends JComponent {
 
     private int minValue;
     private int maxValue;
     private int currentValue;
     private Color color;
 
-    AttribBarComponent(Color color){
+    public TamaAttribBarComponent(Color color){
         this.minValue=0;
         this.maxValue=0;
         this.currentValue=0;

@@ -1,17 +1,14 @@
 package fr.tama.view;
 
-
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
-
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
+import fr.tama.view.utils.Music;
+import fr.tama.view.utils.Updatable;
 
 /**
  * Main View class
  */
-public class GameView {
+public class GameView implements Updatable {
 
     private final Music music;
     private GameFrame gameFrame;
@@ -23,14 +20,13 @@ public class GameView {
         this.music = new Music();
     }
 
-
     /**
      * Allows to init the GameFrame
      */
     public void start(){
 
         if(lang == null) {
-            throw new RuntimeException("Impossible de lancer la vue car l'objet de gestiond es langue n'est pas set");
+            throw new RuntimeException("Impossible de lancer la vue car l'objet de gestion des langues n'est pas défini");
         }
         this.gameFrame = new GameFrame(gameInstance);
     }
@@ -44,5 +40,10 @@ public class GameView {
 
     public void setLangFile(LangFile file) {
         this.lang = file;
+    }
+
+    @Override
+    public void updatePanel() {
+        this.gameFrame.updatePanel();
     }
 }

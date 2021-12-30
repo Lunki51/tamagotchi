@@ -15,9 +15,9 @@ public abstract class Tamagotchi {
     private Current current;
     private Level level;
     private Attribute[] attributes;
-    private final int[] statusCD;
-    private int lifeCD;
-
+    protected final int[] statusCD;
+    protected int evolCD;
+    protected int lifeCD;
     /**
      * Create a new tamagotchi object
      * @param mood the mood of the tamagotchi
@@ -35,6 +35,7 @@ public abstract class Tamagotchi {
         this.info = "Dites bonjour à votre nouvel ami !";
         this.statusCD = new int[]{144,144};
         this.lifeCD = 288;
+        this.evolCD = 500;
         setupDefaultAttributes();
     }
 
@@ -51,13 +52,13 @@ public abstract class Tamagotchi {
      */
     public void setupDefaultAttributes(){
         this.attributes = new Attribute[]{
-                new Attribute("hunger", 1000,2000),
-                new Attribute("toilet",1000,2000),
-                new Attribute("tiredness",500,1000),
-                new Attribute("cleanliness",2000,4000),
-                new Attribute("happiness",1000,2000),
-                // NON AFFICHE
-                new Attribute("health",20,20)
+                new Attribute("hunger", 1000,2000,75),
+                new Attribute("toilet",1000,2000,75),
+                new Attribute("tiredness",500,1000,75),
+                new Attribute("cleanliness",2000,4000,75),
+                new Attribute("happiness",1000,2000,75),
+
+                new Attribute("health",20,20,200)
         };
     }
 
@@ -68,7 +69,10 @@ public abstract class Tamagotchi {
      */
     public void setAttribute(String name,int value){
         for(Attribute attr : this.attributes){
-            if(attr.getName().equals(name))attr.setValue(value);
+            if(attr.getName().equals(name)){
+                attr.setValue(value);
+                break;
+            }
         }
     }
 
@@ -81,7 +85,7 @@ public abstract class Tamagotchi {
         for(Attribute attr : this.attributes){
             if(attr.getName().equals(name))return attr;
         }
-        return this.attributes[0];
+        return this.attributes[0]; //SHOULD REALLY THROW AN EXCEPTION INSTEAD OF RETURNING FIRST ATTRIBUTE
     }
 
     /**
@@ -193,36 +197,77 @@ public abstract class Tamagotchi {
     public abstract void play();
     public abstract void toilet();
     public abstract void wash();
+
+    public int getShapeCD(){
+        return this.statusCD[0];
+    }
+
+    public int getMoodCD(){
+        return this.statusCD[1];
+    }
+
+    public int getEvolCD() {
+        return evolCD;
+    }
+
     public void update(){
+        if(this.level == Level.EGG){
+            this.levelUp();
+            return;
+        }
+
+        if(this.evolCD==0){
+            if(this.getShape().isGood() && this.getMood().isGood()){
+                this.levelUp();
+            }
+            this.evolCD=500;
+        }else{
+            this.evolCD--;
+        }
+        for(Attribute attribute : this.attributes){
+            attribute.reduceCD();
+        }
+        //ATTRIBUTES DEFAULT DECREASE
         this.getAttribute("hunger").decrease(7);
         this.getAttribute("toilet").decrease(7);
+        this.getAttribute("cleanliness").decrease(7);
+        this.getAttribute("happiness").decrease(7);
         if(this.current==Current.AWAKE){
             this.getAttribute("tiredness").decrease(7);
         }else if(this.current==Current.ASLEEP){
             this.getAttribute("tiredness").increase(7);
         }
-        this.getAttribute("cleanliness").decrease(7);
-        this.getAttribute("happiness").decrease(7);
-        if(this.statusCD[0]==0||this.statusCD[1]==0){
+        //
+
+        if(this.getAttribute("tiredness").isMax()){
+            if(this.statusCD[0]==0){
+                this.shape = this.shape.getPlus();
+                this.statusCD[0]=144;
+            }
+        }
+
+        //STATUS DECREASE
+        if(this.statusCD[0]==0 ){
             if(this.getAttribute("tiredness").getValue()==0 || this.getAttribute("hunger").getValue()==0
                     || this.getAttribute("cleanliness").getValue()==0){
                 this.shape = this.shape.getMinus();
                 this.info = "Son état de santé baisse ...";
                 this.statusCD[0]=144;
-                this.statusCD[1]=144;
             }
+        }else this.statusCD[0]--;
+
+
+        if(this.statusCD[1]==0){
             if(this.getAttribute("toilet").getValue()==0 || this.getAttribute("happiness").getValue()==0
-                    || this.getAttribute("cleanliness").getValue()==0){
+                || this.getAttribute("cleanliness").getValue()==0) {
                 this.mood = this.mood.getMinus();
                 this.info = "Son état mental n'est pas au plus haut ...";
-                this.statusCD[0]=144;
-                this.statusCD[1]=144;
+                this.statusCD[1] = 144;
             }
-        }else{
-            this.statusCD[0]--;
-            this.statusCD[1]--;
-        }
+        }else this.statusCD[1]--;
+        //
 
+        //LIFE DECREASE
         if(this.lifeCD==0){
             if(this.mood.isGood()){
                 this.getAttribute("health").increase(1);
@@ -238,5 +283,6 @@ public abstract class Tamagotchi {
         }else{
             this.lifeCD--;
         }
+        //
     }
 }

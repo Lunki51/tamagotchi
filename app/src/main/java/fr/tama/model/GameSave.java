@@ -3,7 +3,7 @@ package fr.tama.model;
 import fr.tama.controller.DBConnection;
 
 import java.sql.*;
-import java.time.format.DateTimeFormatter;
+//import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -19,7 +19,7 @@ public class GameSave {
     private final int slot;
     private final Tamagotchi tamagotchi;
     private Location location;
-    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    //private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private GameSave(Date creationDate,Date lastSeen, Tamagotchi tamagotchi,int slot,Location location){
         this.creationDate=creationDate;
@@ -29,17 +29,24 @@ public class GameSave {
         this.location = location;
     }
 
+    public void updateLastSeen(){
+        this.lastSeen = new Date();
+    }
+
+    public void setLastSeen(long time){
+        this.lastSeen = new Date(time);
+    }
+
     /**
      * Save the GameSave object into the database.Create a new save from the profil wich this GameSave correspond.
      */
     public void save(){
         if(deleted)return;
-        Date now = new Date();
         try{
             String sql = "INSERT INTO save(date,location,mood,shape,current,profile,level) VALUES(?,?,?,?,?,?,?)";
 
             PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
-            pstmt.setLong(1, now.getTime());
+            pstmt.setLong(1, lastSeen.getTime());
             pstmt.setString(2,this.location.getName());
             pstmt.setString(3, tamagotchi.getMood().toString());
             pstmt.setString(4, tamagotchi.getShape().toString());
@@ -76,7 +83,6 @@ public class GameSave {
         }catch(SQLException e){
                 e.printStackTrace();
         }
-        this.lastSeen=now;
     }
 
     /**

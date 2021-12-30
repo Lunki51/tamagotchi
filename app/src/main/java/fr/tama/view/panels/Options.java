@@ -23,6 +23,7 @@ public class Options extends JPanel implements Updatable {
     private final TamaCheckBox musicSwitch;
     private final JLabel musicTitle;
     private final JLabel langTitle;
+    private final JPanel aboutPanel;
 
     public Options(){
         super(new GridLayout(4,3));
@@ -37,8 +38,6 @@ public class Options extends JPanel implements Updatable {
 
         this.cancelButton = new TamaBigButton(LangFile.getLangFile().getString("option.cancel"));
         this.saveButton = new TamaBigButton(LangFile.getLangFile().getString("option.save"));
-
-
 
         JPanel titlePanel = new JPanel(new BorderLayout());
 
@@ -105,7 +104,14 @@ public class Options extends JPanel implements Updatable {
             radioLangPanel.add(e.nextElement(),c);
         }
 
-
+        this.aboutPanel = new JPanel();
+        this.aboutPanel.setBackground(Constants.BLUE);
+        this.aboutPanel.add(new JLabel("Tamagotchi version " + Constants.version));
+        this.aboutPanel.add(new JLabel("Chef de projet et direction artistique : DIBERDER Evan"));
+        this.aboutPanel.add(new JLabel("Responsable de la conception : COSNIER Quentin"));
+        this.aboutPanel.add(new JLabel("Responsable qualité et tests : REGNIER Alix"));
+        this.aboutPanel.add(new JLabel("Responsable développement : BUAN Kilian"));
+        this.aboutPanel.add(new JLabel("Musiques et graphismes par DIBERDER Evan sous CC-BY-SA"));
         this.add(new JLabel()); // 0 0
         this.add(titlePanel);        // 0 1
         this.add(new JLabel()); // 0 2
@@ -116,7 +122,7 @@ public class Options extends JPanel implements Updatable {
         this.add(langPanel);    // 2 1
         this.add(new JLabel()); // 2 2
         this.add(cancelButton); // 3 0
-        this.add(new JLabel()); // 3 1
+        this.add(aboutPanel); // 3 1
         this.add(saveButton);   // 3 2
     }
 

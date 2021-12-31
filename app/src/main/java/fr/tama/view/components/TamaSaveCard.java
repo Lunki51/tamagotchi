@@ -464,7 +464,7 @@ class CustomTField extends PlainDocument {
 class Difficulty extends JPanel implements Updatable{
 
     private final AbstractButton validation;
-    private final JComboBox difficulty;
+    private final JComboBox<String> difficulty;
     private final AbstractButton retour;
     private final JLabel title;
 
@@ -479,7 +479,7 @@ class Difficulty extends JPanel implements Updatable{
         c.weighty=1;
         this.retour = new TamaButton("Retour");
         this.validation = new TamaButton("");
-        this.difficulty = new JComboBox(difficulties);
+        this.difficulty = new JComboBox<>(difficulties);
         this.difficulty.setPreferredSize(new Dimension(200,40));
         this.title = new JLabel("");
         this.title.setFont(Constants.BASIC_FONT);
@@ -507,7 +507,7 @@ class Difficulty extends JPanel implements Updatable{
         return validation;
     }
 
-    public JComboBox getDifficulty() {
+    public JComboBox<String> getDifficulty() {
         return difficulty;
     }
 
@@ -522,7 +522,7 @@ class Difficulty extends JPanel implements Updatable{
                 LangFile.getLangFile().getString("menu.difficulty.1"),
                 LangFile.getLangFile().getString("menu.difficulty.2")};
         int selected = this.difficulty.getSelectedIndex();
-        this.difficulty.setModel(new DefaultComboBoxModel(difficulties));
+        this.difficulty.setModel(new DefaultComboBoxModel<String>(difficulties));
         this.difficulty.setSelectedIndex(selected);
         this.title.setText(LangFile.getLangFile().getString("menu.difficulty"));
         this.retour.setText(LangFile.getLangFile().getString("save.back"));

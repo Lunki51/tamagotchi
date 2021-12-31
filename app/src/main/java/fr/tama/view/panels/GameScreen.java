@@ -3,7 +3,8 @@ package fr.tama.view.panels;
 import fr.tama.controller.GameInstance;
 import fr.tama.model.*;
 import fr.tama.model.Robot;
-import fr.tama.view.utils.Animation;
+import fr.tama.view.utils.AnimationPos;
+import fr.tama.view.utils.AnimationSprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,16 +21,27 @@ public class GameScreen extends JPanel {
     ImageIcon toilets = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/toilets.png")));
     ImageIcon living = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/living_room.png")));
     ImageIcon bedroom1 = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/dodo.png")));
-    Animation bedroomSleep= new Animation(new String[]{"sprites/background/dodo_anim1.png","sprites/background/dodo_anim2.png"},700,false);
+    AnimationSprite bedroomSleep= new AnimationSprite(new String[]{"sprites/background/dodo_anim1.png","sprites/background/dodo_anim2.png"},700,-1);
+    AnimationPos tamaBath;
+    AnimationPos tamaJump;
 
     private final GameInstance gameInstance;
 
     public GameScreen(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
+        bedroomSleep.start();
+        tamaBath = new AnimationPos(new float[]{0,0},new float[]{0,0},500,2000,1);
+        tamaJump = new AnimationPos(new float[]{0,0},new float[]{0,0},100,0,3);
+
+        tamaBath.addMiddleListener(e->{
+            tamaJump.start();
+        });
+        tamaBath.setMovement(new float[]{-100,-200});
+        tamaJump.setMovement(new float[]{0,-50});
     }
 
-    public Animation[] getAnimations() {
-        return new Animation[]{bedroomSleep};
+    public AnimationSprite[] getAnimations() {
+        return new AnimationSprite[]{bedroomSleep};
     }
 
     @Override
@@ -87,9 +99,21 @@ public class GameScreen extends JPanel {
         fileName+=".png";
         if(gameInstance.getTamagotchi().getCurrent()==Current.AWAKE){
             ImageIcon icon = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource(fileName)));
-            g.drawImage(icon.getImage(),this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2,(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
+            tamaBath.setInitial(new float[]{this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2});
 
+            tamaJump.setInitial(tamaBath.getPos());
+
+            g.drawImage(icon.getImage(),(int)tamaJump.getPos()[0],(int)tamaJump.getPos()[1],(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
+            //g.drawImage(icon.getImage(),this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2,(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
         }
 
+    }
+
+    public AnimationPos getTamaJump() {
+        return tamaJump;
+    }
+
+    public AnimationPos getTamaBath() {
+        return tamaBath;
     }
 }

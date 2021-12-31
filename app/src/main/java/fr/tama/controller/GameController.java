@@ -2,7 +2,7 @@ package fr.tama.controller;
 
 import fr.tama.model.*;
 import fr.tama.view.GameFrame;
-import fr.tama.view.utils.Animation;
+import fr.tama.view.utils.AnimationSprite;
 import fr.tama.view.GameView;
 import fr.tama.view.components.TamaSaveCard;
 
@@ -59,6 +59,8 @@ public class GameController {
             this.gameView.getGameFrame().repaint();
         });
 
+        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaBath().addUpdateListener(e->this.gameView.getGameFrame().updatePanel());
+        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaJump().addUpdateListener(e->this.gameView.getGameFrame().updatePanel());
         this.gameView.getGameFrame().getGamePanel().getActionButton().addActionListener(e->{
             if(INSTANCE.getTamagotchi().getLevel()==Level.EGG)return;
             if(INSTANCE.getTamagotchi().getCurrent()==Current.ASLEEP && !Objects.equals(INSTANCE.getLocation().getAction(), "tiredness"))return;
@@ -72,6 +74,7 @@ public class GameController {
                     else this.gameView.getMusic().initGameMusic();
                     break;
                 case "cleanliness":
+                    this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaBath().start();
                     INSTANCE.getTamagotchi().wash();
                     break;
                 case "toilet":
@@ -224,8 +227,8 @@ public class GameController {
             save.delete();
         });
 
-        Animation[] anims = this.gameView.getGameFrame().getGamePanel().getGameScreen().getAnimations();
-        for(Animation anim : anims){
+        AnimationSprite[] anims = this.gameView.getGameFrame().getGamePanel().getGameScreen().getAnimations();
+        for(AnimationSprite anim : anims){
             anim.addUpdateListener(e->{
                 if(this.gameView.getGameFrame().getCurrentPanel()==3)this.gameView.updatePanel();
             });

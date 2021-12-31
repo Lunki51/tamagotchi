@@ -76,7 +76,7 @@ public class TamaSaveCard extends JPanel implements Updatable {
         this.setSize( d.height, d.height);
     }
 
-    void changePanel(int newPanel){
+    public void changePanel(int newPanel){
         this.currentPanel=newPanel;
         switch(currentPanel){
             case 0:
@@ -224,6 +224,8 @@ class CreatedSave extends AbstractButton implements Updatable {
         this.image.updatePanel();
         this.repaint();
     }
+
+
 }
 
 class EmptySave extends JButton implements Updatable {
@@ -502,6 +504,7 @@ class Difficulty extends JPanel implements Updatable{
         c.insets=new Insets(0,0,0,0);
         c.fill = GridBagConstraints.NONE;
         c.gridy=2;
+        this.difficulty.setSelectedIndex(1);
         this.add(validation,c);
     }
 

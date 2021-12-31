@@ -126,7 +126,9 @@ public class Saves extends JPanel implements Updatable {
 
     @Override
     public void updatePanel() {
-
+        if(GameSave.loadSave(0)==null)this.saveCardPanel1.changePanel(0);
+        if(GameSave.loadSave(1)==null)this.saveCardPanel2.changePanel(0);
+        if(GameSave.loadSave(2)==null)this.saveCardPanel3.changePanel(0);
         this.saveCardPanel1.updatePanel();
         this.saveCardPanel2.updatePanel();
         this.saveCardPanel3.updatePanel();

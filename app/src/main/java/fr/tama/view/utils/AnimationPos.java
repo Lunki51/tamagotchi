@@ -58,13 +58,13 @@ public class AnimationPos implements Runnable{
             int count = 0;
             while(count!=delta){
                 try{
-                    current[0] += movement[0]/delta;
-                    current[1] += movement[1]/delta;
-                    count++;
+                    current[0] += (movement[0]/delta)*100;
+                    current[1] += (movement[1]/delta)*100;
+                    count+=100;
                     for(ActionListener l : this.listeners){
                         l.actionPerformed(new ActionEvent(this,0,"update"));
                     }
-                    Thread.sleep(1);
+                    Thread.sleep(100);
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
@@ -80,13 +80,13 @@ public class AnimationPos implements Runnable{
 
             while(count!=0){
                 try{
-                    current[0] -= movement[0]/delta;
-                    current[1] -= movement[1]/delta;
-                    count--;
+                    current[0] -= (movement[0]/delta)*100;
+                    current[1] -= (movement[1]/delta)*100;
+                    count-=100;
                     for(ActionListener l : this.listeners){
                         l.actionPerformed(new ActionEvent(this,0,"update"));
                     }
-                    Thread.sleep(1);
+                    Thread.sleep(100);
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }

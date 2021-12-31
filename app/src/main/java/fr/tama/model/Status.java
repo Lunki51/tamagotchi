@@ -1,7 +1,7 @@
 package fr.tama.model;
 
 /**
- * Represent the current status of an attribute of the tamagotchi
+ * Represent status that can take mental or physical state of the tamagotchi
  */
 public enum Status {
     VERY_BAD,

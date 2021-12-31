@@ -150,10 +150,18 @@ public abstract class Tamagotchi {
         return attributes;
     }
 
+    /**
+     * Set a new name to the tamagotchi
+     * @param name new name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Set a new sex to the tamagotchi
+     * @param sex new sex
+     */
     public void setSex(boolean sex) {
         this.sex = sex;
     }
@@ -162,10 +170,18 @@ public abstract class Tamagotchi {
         this.mood = mood;
     }
 
+    /**
+     * Set a shape Status to the tamagotchi
+     * @param shape Status to set
+     */
     public void setShape(Status shape) {
         this.shape = shape;
     }
 
+    /**
+     * Set what the tamagotchi is doing
+     * @param current Action that it's doing
+     */
     public void setCurrent(Current current) {
         this.current = current;
     }
@@ -201,6 +217,7 @@ public abstract class Tamagotchi {
                 ", attributes=" + Arrays.toString(attributes) +
                 '}';
     }
+
     public abstract void eat();
     public abstract void sleep();
     public abstract void play();
@@ -214,7 +231,6 @@ public abstract class Tamagotchi {
             evolCD.resetCD();
             return;
         }
-
 
         if(evolCD.getCoolDown()==0){
             if(this.getShape().isGood() && this.getMood().isGood()){
@@ -239,7 +255,6 @@ public abstract class Tamagotchi {
         }else if(this.current==Current.ASLEEP){
             this.getAttribute("tiredness").increase(7);
         }
-        //
 
         Attribute shapeCD = this.getAttribute("shapeCD");
         if(this.getAttribute("tiredness").isMax()){
@@ -268,7 +283,6 @@ public abstract class Tamagotchi {
                 moodCD.resetCD();
             }
         }else moodCD.reduceCD();
-        //
 
         //LIFE DECREASE
         Attribute lifeCD = this.getAttribute("lifeCD");
@@ -278,6 +292,7 @@ public abstract class Tamagotchi {
             }else{
                 this.getAttribute("health").decrease(1);
             }
+
             if(this.shape.isGood()){
                 this.getAttribute("health").increase(1);
             }else{
@@ -287,10 +302,12 @@ public abstract class Tamagotchi {
         }else{
             lifeCD.reduceCD();
         }
-        //
-
     }
 
+    /**
+     * Return if the tamagotchi is dead or not
+     * @return true if the tamagotchi is dead else false
+     */
     public boolean isDead(){
         return this.getAttribute("health").getValue()==0;
     }

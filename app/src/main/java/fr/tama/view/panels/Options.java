@@ -105,8 +105,8 @@ public class Options extends JPanel implements Updatable {
         this.aboutPanel.add(new JLabel("Tamagotchi version " + Constants.version));
         this.aboutPanel.add(new JLabel("Chef de projet et direction artistique : DIBERDER Evan"));
         this.aboutPanel.add(new JLabel("Responsable de la conception : COSNIER Quentin"));
-        this.aboutPanel.add(new JLabel("Responsable qualité et tests : REGNIER Alix"));
-        this.aboutPanel.add(new JLabel("Responsable développement : BUAN Kilian"));
+        this.aboutPanel.add(new JLabel("Responsable qualitÃ© et tests : REGNIER Alix"));
+        this.aboutPanel.add(new JLabel("Responsable dÃ©veloppement : BUAN Kilian"));
         this.aboutPanel.add(new JLabel("Musiques et graphismes par DIBERDER Evan sous CC-BY-SA"));
         this.add(new JLabel()); // 0 0
         this.add(titlePanel);   // 0 1

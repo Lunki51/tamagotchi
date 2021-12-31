@@ -19,25 +19,32 @@ public class TamaSaveCard extends JPanel implements Updatable {
     private final SaveCreation saveCreationPanel;
     private final CreatedSave createdSavePanel;
     private final Difficulty difficultyPanel;
+    private final ConfirmDelete confirmDeletePanel;
 
     public static final String EMPTY = "0";
     public static final String SAVE_CREATION = "1";
     public static final String CREATED = "2";
     public static final String DIFFICULTY = "3";
+    public static final String CONFIRM_DELETE = "4";
 
     public TamaSaveCard() {
         this.setLayout(new CardLayout());
         emptySavePanel = new EmptySave(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/egg_plus.png")));
         saveCreationPanel = new SaveCreation();
         createdSavePanel = new CreatedSave();
+        this.confirmDeletePanel = new ConfirmDelete();
         this.difficultyPanel = new Difficulty();
         this.add(emptySavePanel,EMPTY);
         emptySavePanel.addActionListener(e-> this.changePanel(SAVE_CREATION));
         saveCreationPanel.getValidation().addActionListener(e->this.changePanel(DIFFICULTY));
         difficultyPanel.getRetour().addActionListener(e->this.changePanel(SAVE_CREATION));
+        createdSavePanel.getBin().addActionListener(e->this.changePanel(CONFIRM_DELETE));
+        confirmDeletePanel.getReturnButton().addActionListener(e->this.changePanel(CREATED));
+
         this.add(saveCreationPanel,SAVE_CREATION);
         this.add(createdSavePanel,CREATED);
         this.add(difficultyPanel,DIFFICULTY);
+        this.add(confirmDeletePanel,CONFIRM_DELETE);
         this.changePanel(DIFFICULTY);
         this.changePanel(EMPTY);
         this.setBackground(Constants.PURPLE);
@@ -74,6 +81,9 @@ public class TamaSaveCard extends JPanel implements Updatable {
             case "3":
                 ((Updatable)this.difficultyPanel).updatePanel();
                 break;
+            case "4":
+                ((Updatable)this.confirmDeletePanel).updatePanel();
+                break;
         }
         this.repaint();
     }
@@ -95,8 +105,8 @@ public class TamaSaveCard extends JPanel implements Updatable {
     }
 
     public void addDeleteSaveListener(ActionListener l){
-        this.createdSavePanel.getBin().addActionListener(e-> this.changePanel(EMPTY));
-        this.createdSavePanel.getBin().addActionListener(l);
+        this.confirmDeletePanel.getConfirmButton().addActionListener(e-> this.changePanel(EMPTY));
+        this.confirmDeletePanel.getConfirmButton().addActionListener(l);
     }
 
     public void addLoadSaveListener(ActionListener l) {
@@ -508,5 +518,54 @@ class Difficulty extends JPanel implements Updatable{
         this.difficulty.setSelectedIndex(selected);
         this.title.setText(LangFile.getLangFile().getString("menu.difficulty"));
         this.retour.setText(LangFile.getLangFile().getString("save.back"));
+    }
+}
+
+class ConfirmDelete extends JPanel implements Updatable{
+
+    private final JLabel confirmText;
+    private final AbstractButton confirmButton;
+    private final AbstractButton returnButton;
+
+    public ConfirmDelete() {
+        super();
+        this.setLayout(new GridBagLayout());
+        this.setBackground(Constants.PURPLE);
+        this.confirmText = new JLabel();
+        this.confirmButton = new TamaButton("");
+        this.returnButton = new TamaButton("");
+        this.confirmText.setFont(Constants.BASIC_FONT);
+        this.confirmText.setForeground(Color.WHITE);
+        this.confirmText.setVerticalAlignment(SwingConstants.CENTER);
+
+        GridBagConstraints c =new GridBagConstraints();
+        c.weightx=1;
+        c.gridx=0;
+        c.weighty=1;
+        c.gridy=0;
+        c.gridwidth=2;
+        this.add(confirmText,c);
+        c.gridy=1;
+        c.gridwidth=1;
+        this.add(returnButton,c);
+        c.gridx=1;
+        this.add(confirmButton,c);
+
+
+    }
+
+    public AbstractButton getConfirmButton() {
+        return confirmButton;
+    }
+
+    public AbstractButton getReturnButton() {
+        return returnButton;
+    }
+
+    @Override
+    public void updatePanel() {
+        this.confirmText.setText(LangFile.getLangFile().getString("save.delete.confirm"));
+        this.confirmButton.setText(LangFile.getLangFile().getString("save.yes"));
+        this.returnButton.setText(LangFile.getLangFile().getString("save.no"));
     }
 }

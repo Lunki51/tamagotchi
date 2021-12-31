@@ -48,13 +48,11 @@ public class Game extends JPanel implements Updatable {
     private final GameScreen gameScreen;
 
     private final GameInstance gameInstance;
-    private final LangFile lang;
+    private final JLabel infoLabel;
 
     public Game(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
         this.setLayout(new GridLayout(1,2));
-
-        this.lang = LangFile.getLangFile();
 
         JSplitPane pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         pane.setResizeWeight(0.9);
@@ -79,23 +77,23 @@ public class Game extends JPanel implements Updatable {
         c.weighty=0.1;
         c.gridy=0;
         c.gridx=0;
-        this.returnButton = new TamaBigButton(LangFile.getLangFile().getString("menu.back"));
+        this.returnButton = new TamaBigButton("");
         this.controlPanel.add(this.returnButton,c);
 
         this.tamaName = new JLabel();
         this.tamaName.setHorizontalAlignment(JLabel.LEFT);
         this.tamaName.setForeground(Color.WHITE);
-        this.tamaName.setFont(new Font("Arial", Font.BOLD, 30));
+        this.tamaName.setFont(Constants.BASIC_FONT);
         c.weighty=0.2;
         c.gridy=1;
         c.insets=new Insets(0,50,0,0);
         this.controlPanel.add(this.tamaName,c);
         c.insets=new Insets(0,0,0,0);
 
-        JLabel infoLabel = new JLabel("Informations : ");
+        infoLabel = new JLabel("");
         infoLabel.setHorizontalAlignment(JLabel.CENTER);
         infoLabel.setForeground(Color.WHITE);
-        infoLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        infoLabel.setFont(Constants.BASIC_FONT);
 
         c.gridy=2;
         this.controlPanel.add(infoLabel,c);
@@ -109,23 +107,23 @@ public class Game extends JPanel implements Updatable {
         c2.gridwidth=2;
         c2.insets = new Insets(2,5,2,0);
         statusPanel.setBackground(Constants.BLUE);
-        this.mStateLabel = new JLabel("État mental : ");
+        this.mStateLabel = new JLabel("");
         this.mStateLabel.setHorizontalAlignment(JLabel.RIGHT);
         this.mStateLabel.setForeground(Color.WHITE);
         c2.gridx=0;
         statusPanel.add(this.mStateLabel,c2);
-        this.tamaMState = new JLabel("Bon");
+        this.tamaMState = new JLabel("");
         this.tamaMState.setHorizontalAlignment(JLabel.LEFT);
         this.tamaMState.setForeground(Color.WHITE);
         c2.gridx=2;
         statusPanel.add(this.tamaMState,c2);
-        this.pStateLabel = new JLabel("État physique : ");
+        this.pStateLabel = new JLabel("");
         this.pStateLabel.setHorizontalAlignment(JLabel.RIGHT);
         this.pStateLabel.setForeground(Color.WHITE);
         c2.gridx=0;
         c2.gridy=1;
         statusPanel.add(this.pStateLabel,c2);
-        this.tamaPState = new JLabel("Mauvais");
+        this.tamaPState = new JLabel("");
         this.tamaPState.setHorizontalAlignment(JLabel.LEFT);
         this.tamaPState.setForeground(Color.WHITE);
         c2.gridx=2;
@@ -143,7 +141,7 @@ public class Game extends JPanel implements Updatable {
         c2.gridwidth=1;
         c2.weightx=1;
         c2.gridx=3;
-        this.hungerLabel = new JLabel("Faim");
+        this.hungerLabel = new JLabel("");
         this.hungerLabel.setHorizontalAlignment(JLabel.CENTER);
         this.hungerLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hungerLabel,c2);
@@ -153,7 +151,7 @@ public class Game extends JPanel implements Updatable {
         c2.gridwidth=1;
         c2.weightx=1;
         c2.gridx=3;
-        this.hygeneLabel = new JLabel("Hygiène");
+        this.hygeneLabel = new JLabel("");
         this.hygeneLabel.setHorizontalAlignment(JLabel.CENTER);
         this.hygeneLabel.setForeground(Color.WHITE);
         statusPanel.add(this.hygeneLabel,c2);
@@ -164,7 +162,7 @@ public class Game extends JPanel implements Updatable {
 
         c2.gridy=4;
         c2.gridx=3;
-        this.happinessLabel = new JLabel("Bonheur");
+        this.happinessLabel = new JLabel("");
         this.happinessLabel.setHorizontalAlignment(JLabel.CENTER);
         this.happinessLabel.setForeground(Color.WHITE);
         statusPanel.add(this.happinessLabel,c2);
@@ -174,7 +172,7 @@ public class Game extends JPanel implements Updatable {
 
         c2.gridy=5;
         c2.gridx=3;
-        this.toiletLabel = new JLabel("Toilettes");
+        this.toiletLabel = new JLabel("");
         this.toiletLabel.setHorizontalAlignment(JLabel.CENTER);
         this.toiletLabel.setForeground(Color.WHITE);
         statusPanel.add(this.toiletLabel,c2);
@@ -184,7 +182,7 @@ public class Game extends JPanel implements Updatable {
 
         c2.gridy=6;
         c2.gridx=3;
-        this.energyLabel = new JLabel("Energie");
+        this.energyLabel = new JLabel("");
         this.energyLabel.setHorizontalAlignment(JLabel.CENTER);
         this.energyLabel.setForeground(Color.WHITE);
         statusPanel.add(this.energyLabel,c2);
@@ -245,9 +243,14 @@ public class Game extends JPanel implements Updatable {
         this.hungerGauge.updateDisplay(tamagotchi.getAttribute("hunger").getMax(),tamagotchi.getAttribute("hunger").getValue());
         this.hygeneGauge.updateDisplay(tamagotchi.getAttribute("cleanliness").getMax(),tamagotchi.getAttribute("cleanliness").getValue());
         this.toiletGauge.updateDisplay(tamagotchi.getAttribute("toilet").getMax(),tamagotchi.getAttribute("toilet").getValue());
-        this.tamaName.setText(this.gameInstance.getTamagotchi().getName()+this.gameInstance.getTamagotchi().getAttribute("evolCD").getCoolDown()+"-"+this.gameInstance.getTamagotchi().getDifficulty());
-        this.tamaMState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getMood().name())+tamagotchi.getAttribute("moodCD").getCoolDown());
-        this.tamaPState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getShape().name())+tamagotchi.getAttribute("shapeCD").getCoolDown());
+        this.tamaName.setText(this.gameInstance.getTamagotchi().getName());
+        this.tamaMState.setText(LangFile.getLangFile().getString("state." + this.gameInstance.getTamagotchi().getMood().name()));
+        this.tamaPState.setText(LangFile.getLangFile().getString("state." + this.gameInstance.getTamagotchi().getShape().name()));
+        this.infoLabel.setText(LangFile.getLangFile().getString("game.info"));
+        this.returnButton.setText(LangFile.getLangFile().getString("menu.back"));
+        this.mStateLabel.setText(LangFile.getLangFile().getString("game.mood"));
+        this.pStateLabel.setText(LangFile.getLangFile().getString("game.shape"));
+
         if(this.gameInstance.getTamagotchi().getDifficulty()==2){
             this.energyGauge.setVisible(false);
             this.happinessGauge.setVisible(false);

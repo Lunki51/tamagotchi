@@ -283,6 +283,7 @@ class SaveCreation extends JPanel implements Updatable {
     private final EmptySave image;
     private final AbstractButton validation;
     private final JTextField jTextField;
+    private final JLabel nameLabel;
 
     public SaveCreation() {
         this.setLayout(new GridBagLayout());
@@ -298,17 +299,17 @@ class SaveCreation extends JPanel implements Updatable {
         c.gridwidth=3;
         JPanel name = new JPanel();
         name.setBackground(Constants.PURPLE);
-        JLabel label = new JLabel(LangFile.getLangFile().getString("menu.name")  + " : " );
-        label.setFont(Constants.BASIC_FONT);
-        label.setForeground(Color.WHITE);
+        nameLabel = new JLabel( );
+        nameLabel.setFont(Constants.BASIC_FONT);
+        nameLabel.setForeground(Color.WHITE);
         this.jTextField = new JTextField(7);
         this.jTextField.setBackground(Constants.PURPLE);
         this.jTextField.setBorder(new MatteBorder(0,0,1,0,Color.WHITE));
         this.jTextField.setFont(Constants.BASIC_FONT);
         this.jTextField.setForeground(Color.WHITE);
         this.jTextField.setDocument(new CustomTField(10));
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        name.add(label);
+        nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        name.add(nameLabel);
         name.add(this.jTextField);
         this.add(name,c);
 
@@ -382,11 +383,20 @@ class SaveCreation extends JPanel implements Updatable {
         c.gridheight=1;
         JPanel validate = new JPanel();
         validate.setBackground(Constants.PURPLE);
-        validation = new TamaButton(LangFile.getLangFile().getString("menu.validate"));
+        validation = new TamaButton("");
         validate.add(validation);
 
         this.add(validate,c);
 
+    }
+
+    @Override
+    public void updatePanel() {
+        image.setIcon((images[currentEgg]));
+        image.updatePanel();
+        this.nameLabel.setText(LangFile.getLangFile().getString("menu.name")  + " : ");
+        this.validation.setText(LangFile.getLangFile().getString("menu.validate"));
+        this.repaint();
     }
 
     public AbstractButton getValidation() {
@@ -411,12 +421,7 @@ class SaveCreation extends JPanel implements Updatable {
         }
     }
 
-    @Override
-    public void updatePanel() {
-        image.setIcon((images[currentEgg]));
-        image.updatePanel();
-        this.repaint();
-    }
+
 }
 
 class CustomTField extends PlainDocument {

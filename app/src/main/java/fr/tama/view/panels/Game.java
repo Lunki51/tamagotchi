@@ -242,7 +242,7 @@ public class Game extends JPanel implements Updatable {
         this.hungerGauge.updateDisplay(tamagotchi.getAttribute("hunger").getMax(),tamagotchi.getAttribute("hunger").getValue());
         this.hygeneGauge.updateDisplay(tamagotchi.getAttribute("cleanliness").getMax(),tamagotchi.getAttribute("cleanliness").getValue());
         this.toiletGauge.updateDisplay(tamagotchi.getAttribute("toilet").getMax(),tamagotchi.getAttribute("toilet").getValue());
-        this.tamaName.setText(this.gameInstance.getTamagotchi().getName()+this.gameInstance.getTamagotchi().getAttribute("evolCD").getCoolDown());
+        this.tamaName.setText(this.gameInstance.getTamagotchi().getName()+this.gameInstance.getTamagotchi().getAttribute("evolCD").getCoolDown()+"-"+this.gameInstance.getTamagotchi().getDifficulty());
         this.tamaMState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getMood().name())+tamagotchi.getAttribute("moodCD").getCoolDown());
         this.tamaPState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getShape().name())+tamagotchi.getAttribute("shapeCD").getCoolDown());
         this.repaint();

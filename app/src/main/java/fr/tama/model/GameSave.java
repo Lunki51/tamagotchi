@@ -19,6 +19,7 @@ public class GameSave {
     private final int slot;
     private final Tamagotchi tamagotchi;
     private Location location;
+    private int difficulty;
     //private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private GameSave(Date creationDate,Date lastSeen, Tamagotchi tamagotchi,int slot,Location location){
@@ -121,6 +122,7 @@ public class GameSave {
                 if(rs.next()){
                     String name = rs.getString("name");
                     boolean sex = rs.getBoolean("sex");
+                    int difficulty = rs.getInt("difficulty");
                     creationDate = new Date(rs.getLong("creationDate"));
                     String type = rs.getString("type");
 
@@ -137,7 +139,7 @@ public class GameSave {
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
-                                        name, level);
+                                        name, level,difficulty);
                                     break;
                                 case "Chat" :
                                     tamagotchi = new Chat(
@@ -145,7 +147,7 @@ public class GameSave {
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
-                                        name,level);
+                                        name,level,difficulty);
                                     break;
                                  case "Lapin" :
                                      tamagotchi = new Lapin(
@@ -153,7 +155,7 @@ public class GameSave {
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
-                                        name,level);
+                                        name,level,difficulty);
                                      break;
                                  case "Robot" :
                                      tamagotchi = new Robot(
@@ -161,7 +163,7 @@ public class GameSave {
                                         statusFromString(rs2.getString("shape")),
                                         currentFromString(rs2.getString("current")),
                                         sex,
-                                        name,level);
+                                        name,level,difficulty);
                                      break;
                                  default :
                                      return null;
@@ -202,7 +204,7 @@ public class GameSave {
 
         try{
 
-        String sql = "INSERT INTO profile VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO profile VALUES(?,?,?,?,?,?)";
         PreparedStatement pstmt = DBConnection.getConnection().prepareStatement(sql);
             pstmt.setInt(1, slot);
             String name = tamagotchi.getClass().getName();
@@ -211,6 +213,7 @@ public class GameSave {
             pstmt.setBoolean(3,tamagotchi.isSex());
             pstmt.setString(4, tamagotchi.getName());
             pstmt.setLong(5, date.getTime());
+            pstmt.setInt(6,tamagotchi.getDifficulty());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

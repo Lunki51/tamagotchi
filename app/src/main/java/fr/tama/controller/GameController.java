@@ -248,19 +248,19 @@ public class GameController {
         switch (panel.getTamagotchi()){
             case "Chien":
                 tamagotchi = new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
-                        panel.getName(),Level.EGG);
+                        panel.getName(),Level.EGG,panel.getDifficulty());
                 break;
             case "Chat":
                 tamagotchi = new Chat(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
-                        panel.getName(),Level.EGG);
+                        panel.getName(),Level.EGG,panel.getDifficulty());
                 break;
             case "Lapin":
                 tamagotchi = new Lapin(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
-                        panel.getName(),Level.EGG);
+                        panel.getName(),Level.EGG,panel.getDifficulty());
                 break;
             default:
                 tamagotchi = new Robot(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
-                        panel.getName(),Level.EGG);
+                        panel.getName(),Level.EGG,panel.getDifficulty());
                 break;
         }
         return tamagotchi;

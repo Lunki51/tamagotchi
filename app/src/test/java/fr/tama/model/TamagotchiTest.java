@@ -21,10 +21,10 @@ public class TamagotchiTest {
     {
         tamas = new Tamagotchi[]
         { 
-            new Chat( MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL),
-            new Chien(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL),
-            new Lapin(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL),
-            new Robot(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL)
+            new Chat( MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL,0),
+            new Chien(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL,0),
+            new Lapin(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL,0),
+            new Robot(MOOD, SHAPE, CURRENT, SEX, NAME,LEVEL,0)
         };
     }
 

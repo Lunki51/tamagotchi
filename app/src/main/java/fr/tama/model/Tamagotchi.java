@@ -15,6 +15,7 @@ public abstract class Tamagotchi {
     private Current current;
     private Level level;
     private Attribute[] attributes;
+    private final int difficulty;
     /**
      * Create a new tamagotchi object
      * @param mood the mood of the tamagotchi
@@ -22,8 +23,9 @@ public abstract class Tamagotchi {
      * @param current the current status of the tamagotchi
      * @param name the name of the tamagotchi
      */
-    public Tamagotchi(Status mood, Status shape, Current current,boolean sex,String name,Level level) {
+    public Tamagotchi(Status mood, Status shape, Current current,boolean sex,String name,Level level,int difficulty) {
         this.mood = mood;
+        this.difficulty=difficulty;
         this.shape = shape;
         this.current = current;
         this.name=name;
@@ -39,6 +41,10 @@ public abstract class Tamagotchi {
      */
     public boolean isSex() {
         return sex;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
     }
 
     /**

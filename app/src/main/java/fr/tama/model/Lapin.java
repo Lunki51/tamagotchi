@@ -1,8 +1,8 @@
 package fr.tama.model;
 
 public class Lapin extends Tamagotchi{
-    public Lapin(Status mood, Status shape, Current current,boolean sex,String name,Level level) {
-        super(mood, shape, current,sex,name,level);
+    public Lapin(Status mood, Status shape, Current current,boolean sex,String name,Level level,int difficulty) {
+        super(mood, shape, current,sex,name,level,difficulty);
     }
 
     @Override

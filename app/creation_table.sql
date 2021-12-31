@@ -15,7 +15,8 @@ CREATE TABLE profile(
 	type TEXT NOT NULL CHECK(type='Chien' OR type='Chat' OR type='Lapin' OR type='Robot'),
 	sex BOOLEAN NOT NULL,
 	name TEXT NOT NULL,
-	creationDate INTEGER
+	creationDate INTEGER NOT NULL,
+    difficulty INTEGER NOT NULL CHECK(difficulty=0 OR difficulty=1 OR difficulty=2)
 );
 
 CREATE TABLE save(

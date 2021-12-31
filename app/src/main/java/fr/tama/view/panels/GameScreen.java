@@ -24,15 +24,18 @@ public class GameScreen extends JPanel {
     AnimationSprite bedroomSleep= new AnimationSprite(new String[]{"sprites/background/dodo_anim1.png","sprites/background/dodo_anim2.png"},700,-1);
     AnimationPos tamaBath;
     AnimationPos tamaJump;
+    AnimationPos tamaPoop;
 
     private final GameInstance gameInstance;
 
     public GameScreen(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
         bedroomSleep.start();
-        tamaBath = new AnimationPos(new float[]{0,0},new float[]{0,0},500,2000,1);
+        tamaBath = new AnimationPos(new float[]{0,0},new float[]{0,0},500,1000,1);
         tamaJump = new AnimationPos(new float[]{0,0},new float[]{0,0},100,0,3);
+        tamaPoop = new AnimationPos(new float[]{0,0},new float[]{0,0},200,1000,1);
 
+        tamaPoop.addMiddleListener(e->tamaJump.start());
         tamaBath.addMiddleListener(e->{
             tamaJump.start();
         });
@@ -58,6 +61,7 @@ public class GameScreen extends JPanel {
                 g.drawImage(toilets.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
                 break;
             case "living":
+
                 g.drawImage(living.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
                 break;
             case "bedroom":
@@ -99,14 +103,27 @@ public class GameScreen extends JPanel {
         fileName+=".png";
         if(gameInstance.getTamagotchi().getCurrent()==Current.AWAKE){
             ImageIcon icon = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource(fileName)));
-            tamaBath.setInitial(new float[]{this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2});
 
-            tamaJump.setInitial(tamaBath.getPos());
 
+            if(this.gameInstance.getLocation().getName().equals("bathroom")){
+                tamaBath.setInitial(new float[]{this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2});
+                tamaBath.setMovement(new float[]{-this.getWidth()/8,-this.getHeight()/3});
+                tamaJump.setInitial(tamaBath.getPos());
+            }else {
+                tamaPoop.setInitial(new float[]{this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2});
+                tamaPoop.setMovement(new float[]{this.getWidth()/4,0});
+                tamaJump.setInitial(tamaPoop.getPos());
+            }
+            tamaJump.setMovement(new float[]{0,-this.getHeight()/8});
             g.drawImage(icon.getImage(),(int)tamaJump.getPos()[0],(int)tamaJump.getPos()[1],(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
             //g.drawImage(icon.getImage(),this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2,(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
         }
 
+    }
+
+
+    public AnimationPos getTamaPoop() {
+        return tamaPoop;
     }
 
     public AnimationPos getTamaJump() {

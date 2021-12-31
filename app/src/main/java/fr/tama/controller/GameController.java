@@ -66,7 +66,9 @@ public class GameController {
             if(INSTANCE.getTamagotchi().getCurrent()==Current.ASLEEP && !Objects.equals(INSTANCE.getLocation().getAction(), "tiredness"))return;
             switch(INSTANCE.getLocation().getAction()){
                 case "hunger":
-                    INSTANCE.getTamagotchi().eat();
+                    if(INSTANCE.getTamagotchi().getAttribute("hungry").getCoolDown()==0){
+                        INSTANCE.getTamagotchi().eat();
+                    }
                     break;
                 case "tiredness":
                     INSTANCE.getTamagotchi().sleep();
@@ -74,14 +76,22 @@ public class GameController {
                     else this.gameView.getMusic().initGameMusic();
                     break;
                 case "cleanliness":
-                    this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaBath().start();
-                    INSTANCE.getTamagotchi().wash();
+                    if(INSTANCE.getTamagotchi().getAttribute("cleanliness").getCoolDown()==0){
+                        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaBath().start();
+                        INSTANCE.getTamagotchi().wash();
+                    }
                     break;
                 case "toilet":
-                    INSTANCE.getTamagotchi().toilet();
+                    if(INSTANCE.getTamagotchi().getAttribute("toilet").getCoolDown()==0){
+                        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaPoop().start();
+                        INSTANCE.getTamagotchi().toilet();
+                    }
                     break;
                 case "happiness":
-                    INSTANCE.getTamagotchi().play();
+                    if(INSTANCE.getTamagotchi().getAttribute("happiness").getCoolDown()==0){
+                        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaJump().start();
+                        INSTANCE.getTamagotchi().play();
+                    }
                     break;
             }
 

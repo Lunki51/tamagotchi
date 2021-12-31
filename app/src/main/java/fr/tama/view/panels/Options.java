@@ -103,11 +103,11 @@ public class Options extends JPanel implements Updatable {
         this.aboutPanel = new JPanel();
         this.aboutPanel.setBackground(Constants.BLUE);
         this.aboutPanel.add(new JLabel("Tamagotchi version " + Constants.version));
-        this.aboutPanel.add(new JLabel("Chef de projet et direction artistique : DIBERDER Evan"));
-        this.aboutPanel.add(new JLabel("Responsable de la conception : COSNIER Quentin"));
-        this.aboutPanel.add(new JLabel("Responsable qualité et tests : REGNIER Alix"));
-        this.aboutPanel.add(new JLabel("Responsable développement : BUAN Kilian"));
-        this.aboutPanel.add(new JLabel("Musiques et graphismes par DIBERDER Evan sous CC-BY-SA"));
+        this.aboutPanel.add(new JLabel(LangFile.getLangFile().getString("option.evan")));
+        this.aboutPanel.add(new JLabel(LangFile.getLangFile().getString("option.quentin")));
+        this.aboutPanel.add(new JLabel(LangFile.getLangFile().getString("option.alix")));
+        this.aboutPanel.add(new JLabel(LangFile.getLangFile().getString("option.kilian")));
+        this.aboutPanel.add(new JLabel(LangFile.getLangFile().getString("option.copyrights")));
         this.add(new JLabel()); // 0 0
         this.add(titlePanel);   // 0 1
         this.add(new JLabel()); // 0 2
@@ -157,6 +157,12 @@ public class Options extends JPanel implements Updatable {
         this.title.setText(LangFile.getLangFile().getString("menu.options"));
         this.musicTitle.setText(LangFile.getLangFile().getString("option.volume") + " : ");
         this.langTitle.setText(LangFile.getLangFile().getString("menu.lang") + " : ");
+
+        String[] s = { "option.evan", "option.quentin", "option.alix", "option.kilian", "option.copyrights" };
+        
+        for(int i = 1; i < aboutPanel.getComponentCount(); i++)
+            ((JLabel)aboutPanel.getComponent(i)).setText(LangFile.getLangFile().getString(s[i-1]));
+
         this.repaint();
     }
 }

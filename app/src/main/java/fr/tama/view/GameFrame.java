@@ -61,8 +61,10 @@ public class GameFrame extends JFrame implements Updatable {
         return options;
     }
 
-    public Saves getSavesPanel() {
-        return savesPanel;
+    public Saves getSavesPanel() { return savesPanel; }
+
+    public Death getDeathPanel() {
+        return death;
     }
 
 

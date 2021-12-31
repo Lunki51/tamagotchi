@@ -246,6 +246,11 @@ public class GameController {
                 this.gameView.updatePanel();
             });
         }
+
+        //Death menu control events
+        this.gameView.getGameFrame().getDeathPanel().getReturnButton().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.MENU));
+
+        this.gameView.getGameFrame().getDeathPanel().getButtonQuit().addActionListener(e -> System.exit(0));
     }
 
     private Tamagotchi getCorrespondingTama(TamaSaveCard panel){

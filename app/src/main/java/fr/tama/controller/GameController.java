@@ -4,13 +4,11 @@ import fr.tama.model.*;
 import fr.tama.view.GameFrame;
 import fr.tama.view.utils.AnimationSprite;
 import fr.tama.view.GameView;
+import fr.tama.view.components.TamaRadioButton;
 import fr.tama.view.components.TamaSaveCard;
 
-import java.util.Enumeration;
 import java.util.Objects;
 
-import javax.swing.AbstractButton;
-import javax.swing.JRadioButton;
 
 /**
 *   Class ensuring View's initialization
@@ -39,10 +37,7 @@ public class GameController {
         //Menu control events
         this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.SAVES));
 
-        this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(GameFrame.OPTIONS);
-            this.gameView.getGameFrame().repaint();
-        });
+        this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.OPTIONS));
 
         this.gameView.getGameFrame().getMenuPanel().getButtonQuit().addActionListener(e -> System.exit(0));
 
@@ -50,13 +45,11 @@ public class GameController {
         this.gameView.getGameFrame().getGamePanel().getMoveLeftButton().addActionListener(e->{
             if(INSTANCE.getLocation().getNext()!=null)INSTANCE.setLocation(INSTANCE.getLocation().getNext());
             this.gameView.getGameFrame().getGamePanel().updatePanel();
-            this.gameView.getGameFrame().repaint();
         });
 
         this.gameView.getGameFrame().getGamePanel().getMoveRightButton().addActionListener(e->{
             if(INSTANCE.getLocation().getPrevious()!=null)INSTANCE.setLocation(INSTANCE.getLocation().getPrevious());
             this.gameView.getGameFrame().getGamePanel().updatePanel();
-            this.gameView.getGameFrame().repaint();
         });
 
         this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaBath().addUpdateListener(e->this.gameView.getGameFrame().updatePanel());
@@ -117,54 +110,47 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getSaveButton().addActionListener(e -> {
+            LangFile.saveLang();
             this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
-            this.gameView.getGameFrame().getMenuPanel().repaint();
             this.gameView.getMusic().saveVolume();
             this.gameView.getMusic().saveMute();
-            LangFile.saveLang();
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getCancelButton().addActionListener(e -> {
-            boolean b = DBConfig.getBoolean("mute");
-            this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(b);
-            this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(b ? this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getMinimum() : DBConfig.getInt("volume"));
-        
-            if(DBConfig.getString("lang").equals(LangFile.lang))
-            {
-                this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
-                this.gameView.getGameFrame().getMenuPanel().repaint();
-            }
-            else
-            {
+            if(!DBConfig.getString("lang").equals(LangFile.lang))
                 LangFile.switchLang(DBConfig.getString("lang"));
-                this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
-                Enumeration<AbstractButton> buttons = this.gameView.getGameFrame().getOptionsPanel().getRadioButtons();
-                String name = LangFile.getName(LangFile.lang);
-                while(buttons.hasMoreElements())
-                {
-                    AbstractButton button = buttons.nextElement();
-                    button.setSelected(name.equals(button.getText()));
-                }
-            }
+            this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
+            String name = LangFile.getName(LangFile.lang);
 
+            for(TamaRadioButton t : this.gameView.getGameFrame().getOptionsPanel().getRadioButtons())
+                t.setSelected(t.getText().equals(name));
+
+            this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(DBConfig.getBoolean("mute"));
+            this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected() ? this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getMinimum() : DBConfig.getInt("volume"));
+        
             this.gameView.getMusic().setVolume(DBConfig.getInt("volume"));
 
-            if(DBConfig.getBoolean("mute"))
+            if(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected())
                 this.gameView.getMusic().stop();
             else if(this.gameView.getMusic().isStopped())
                 this.gameView.getMusic().start();
         });
 
-        this.gameView.getGameFrame().getSavesPanel().getReturnButton().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
-            this.gameView.getGameFrame().getMenuPanel().repaint();
-        });
+        for(TamaRadioButton t : this.gameView.getGameFrame().getOptionsPanel().getRadioButtons())
+        {
+            t.addItemListener(e -> {
+                LangFile.switchLang(t.getText());
+                this.gameView.updatePanel();
+            });
+        }
+
+        //Save control events
+        this.gameView.getGameFrame().getSavesPanel().getReturnButton().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.MENU));
 
         this.gameView.getGameFrame().getGamePanel().getReturnButton().addActionListener(e -> {
             this.gameView.getMusic().initGameMusic();
             this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
             INSTANCE.alive=false;
-            this.gameView.getGameFrame().getMenuPanel().repaint();
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1().addCreateSaveListener(e->{
@@ -237,16 +223,6 @@ public class GameController {
         for(AnimationSprite anim : anims){
             anim.addUpdateListener(e->{
                 if(this.gameView.getGameFrame().getCurrentPanel()==3)this.gameView.updatePanel();
-            });
-        }
-
-        Enumeration<AbstractButton> buttons = this.gameView.getGameFrame().getOptionsPanel().getRadioButtons();
-        while(buttons.hasMoreElements())
-        {
-            JRadioButton b = (JRadioButton)buttons.nextElement();
-            b.addItemListener(e -> {
-                LangFile.switchLang(b.getText());
-                this.gameView.updatePanel();
             });
         }
 

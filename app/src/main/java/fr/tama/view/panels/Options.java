@@ -4,7 +4,6 @@ import fr.tama.controller.LangFile;
 import fr.tama.controller.DBConfig;
 import fr.tama.model.Constants;
 import fr.tama.view.components.TamaBigButton;
-import fr.tama.view.components.TamaButton;
 import fr.tama.view.utils.Updatable;
 import fr.tama.view.components.TamaCheckBox;
 import fr.tama.view.components.TamaRadioButton;
@@ -25,6 +24,9 @@ public class Options extends JPanel implements Updatable {
     private final JLabel langTitle;
     private final JPanel aboutPanel;
 
+    /**
+     * 
+    */
     public Options(){
         super(new GridLayout(4,3));
         super.setBackground(Constants.BLUE);
@@ -92,24 +94,19 @@ public class Options extends JPanel implements Updatable {
                 b.setSelected(true);
             b.setBackground(Constants.BLUE);
             b.setForeground(Color.white);
+
             langButtons.add(b);
+            radioLangPanel.add(b,c);
         }
 
-        Enumeration<AbstractButton> e = langButtons.getElements();
-        while(e.hasMoreElements()){
-            JPanel panel = new JPanel();
-            panel.setBackground(Constants.BLUE);
-            panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            radioLangPanel.add(e.nextElement(),c);
-        }
 
         this.aboutPanel = new JPanel();
         this.aboutPanel.setBackground(Constants.BLUE);
         this.aboutPanel.add(new JLabel("Tamagotchi version " + Constants.version));
         this.aboutPanel.add(new JLabel("Chef de projet et direction artistique : DIBERDER Evan"));
         this.aboutPanel.add(new JLabel("Responsable de la conception : COSNIER Quentin"));
-        this.aboutPanel.add(new JLabel("Responsable qualitÃ© et tests : REGNIER Alix"));
-        this.aboutPanel.add(new JLabel("Responsable dÃ©veloppement : BUAN Kilian"));
+        this.aboutPanel.add(new JLabel("Responsable qualité et tests : REGNIER Alix"));
+        this.aboutPanel.add(new JLabel("Responsable développement : BUAN Kilian"));
         this.aboutPanel.add(new JLabel("Musiques et graphismes par DIBERDER Evan sous CC-BY-SA"));
         this.add(new JLabel()); // 0 0
         this.add(titlePanel);   // 0 1
@@ -141,9 +138,15 @@ public class Options extends JPanel implements Updatable {
         return saveButton;
     }
     
-    public Enumeration<AbstractButton> getRadioButtons()
+    public TamaRadioButton[] getRadioButtons()
     {
-        return langButtons.getElements();
+        TamaRadioButton[] b = new TamaRadioButton[langButtons.getButtonCount()];
+        Enumeration<AbstractButton> e = langButtons.getElements();
+        
+        int i = 0;
+        while(e.hasMoreElements())
+            b[i++] = (TamaRadioButton)e.nextElement();
+        return b;
     }
 
     @Override

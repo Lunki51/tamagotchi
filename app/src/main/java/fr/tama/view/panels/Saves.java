@@ -126,9 +126,25 @@ public class Saves extends JPanel implements Updatable {
 
     @Override
     public void updatePanel() {
-        if(GameSave.loadSave(0)==null)this.saveCardPanel1.changePanel(TamaSaveCard.EMPTY);
-        if(GameSave.loadSave(1)==null)this.saveCardPanel2.changePanel(TamaSaveCard.EMPTY);
-        if(GameSave.loadSave(2)==null)this.saveCardPanel3.changePanel(TamaSaveCard.EMPTY);
+        GameSave save;
+        save = GameSave.loadSave(0);
+        if(save==null){
+            this.saveCardPanel1.changePanel(TamaSaveCard.EMPTY);
+        }else{
+            this.saveCardPanel1.setLevel(save.getTamagotchi().getLevel().name());
+        }
+        save = GameSave.loadSave(1);
+        if(save==null){
+            this.saveCardPanel2.changePanel(TamaSaveCard.EMPTY);
+        }else{
+            this.saveCardPanel2.setLevel(save.getTamagotchi().getLevel().name());
+        }
+        save = GameSave.loadSave(2);
+        if(save==null){
+            this.saveCardPanel3.changePanel(TamaSaveCard.EMPTY);
+        }else{
+            this.saveCardPanel3.setLevel(save.getTamagotchi().getLevel().name());
+        }
         this.saveLabel.setText(LangFile.getLangFile().getString("menu.saves"));
         this.returnButton.setText(LangFile.getLangFile().getString("menu.back"));
         this.saveCardPanel1.updatePanel();

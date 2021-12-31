@@ -66,6 +66,10 @@ public class TamaSaveCard extends JPanel implements Updatable {
         this.updatePanel();
     }
 
+    public void setLevel(String level){
+        this.createdSavePanel.setLevel(level);
+    }
+
     @Override
     public void updatePanel() {
         switch (currentPanel){
@@ -179,6 +183,10 @@ class CreatedSave extends AbstractButton implements Updatable {
         this.type=type;
         this.level=level;
         this.updatePanel();
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public EmptySave getBin() {

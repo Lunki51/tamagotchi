@@ -42,8 +42,9 @@ public class TamaAttribBarComponent extends JComponent {
 
         Graphics2D g2d = (Graphics2D)g ;
         g2d.setColor(Color.BLACK);
-        g2d.setStroke(new BasicStroke(2));
+        g2d.setStroke(new BasicStroke(3));
 
         g2d.drawRoundRect(1,1,this.getWidth()-2,this.getHeight()-2, 10, 10);
+
     }
 }

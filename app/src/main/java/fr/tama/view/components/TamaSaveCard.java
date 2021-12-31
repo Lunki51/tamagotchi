@@ -14,11 +14,16 @@ import java.awt.event.ActionListener;
 
 public class TamaSaveCard extends JPanel implements Updatable {
 
-    private int currentPanel; // = 0 par défaut
+    private String currentPanel; // = 0 par défaut
     private final EmptySave emptySavePanel;
     private final SaveCreation saveCreationPanel;
     private final CreatedSave createdSavePanel;
     private final Difficulty difficultyPanel;
+
+    public static final String EMPTY = "0";
+    public static final String SAVE_CREATION = "1";
+    public static final String CREATED = "2";
+    public static final String DIFFICULTY = "3";
 
     public TamaSaveCard() {
         this.setLayout(new CardLayout());
@@ -26,32 +31,20 @@ public class TamaSaveCard extends JPanel implements Updatable {
         saveCreationPanel = new SaveCreation();
         createdSavePanel = new CreatedSave();
         this.difficultyPanel = new Difficulty();
-        this.add(emptySavePanel,"0");
-        emptySavePanel.addActionListener(e-> this.changePanel(1));
-        saveCreationPanel.getValidation().addActionListener(e->this.changePanel(3));
-        this.add(saveCreationPanel,"1");
-        this.add(createdSavePanel,"2");
-        this.add(difficultyPanel,"3");
-        switch(currentPanel){
-            case 0:
-                ((CardLayout)this.getLayout()).show(this,"0");
-                break;
-            case 1:
-                ((CardLayout)this.getLayout()).show(this,"1");
-                break;
-            case 2:
-                ((CardLayout)this.getLayout()).show(this,"2");
-                break;
-            case 3:
-                ((CardLayout)this.getLayout()).show(this,"3");
-                break;
-        }
+        this.add(emptySavePanel,EMPTY);
+        emptySavePanel.addActionListener(e-> this.changePanel(SAVE_CREATION));
+        saveCreationPanel.getValidation().addActionListener(e->this.changePanel(DIFFICULTY));
+        difficultyPanel.getRetour().addActionListener(e->this.changePanel(SAVE_CREATION));
+        this.add(saveCreationPanel,SAVE_CREATION);
+        this.add(createdSavePanel,CREATED);
+        this.add(difficultyPanel,DIFFICULTY);
+        this.changePanel(EMPTY);
         this.setBackground(Constants.PURPLE);
     }
 
     public TamaSaveCard(String name, String type, String level){
         this();
-        this.changePanel(2);
+        this.changePanel(CREATED);
         this.createdSavePanel.setup(name,type,level);
     }
 
@@ -76,38 +69,25 @@ public class TamaSaveCard extends JPanel implements Updatable {
         this.setSize( d.height, d.height);
     }
 
-    public void changePanel(int newPanel){
+    public void changePanel(String newPanel){
         this.currentPanel=newPanel;
-        switch(currentPanel){
-            case 0:
-                ((CardLayout)this.getLayout()).show(this,"0");
-                break;
-            case 1:
-                ((CardLayout)this.getLayout()).show(this,"1");
-                break;
-            case 2:
-                ((CardLayout)this.getLayout()).show(this,"2");
-                break;
-            case 3:
-                ((CardLayout)this.getLayout()).show(this,"3");
-                break;
-        }
+        ((CardLayout)this.getLayout()).show(this,currentPanel);
         this.updatePanel();
     }
 
     @Override
     public void updatePanel() {
         switch (currentPanel){
-            case 0:
+            case "0":
                 ((Updatable)this.emptySavePanel).updatePanel();
                 break;
-            case 1:
+            case "1":
                 ((Updatable)this.saveCreationPanel).updatePanel();
                 break;
-            case 2:
+            case "2":
                 ((Updatable)this.createdSavePanel).updatePanel();
                 break;
-            case 3:
+            case "3":
                 ((Updatable)this.difficultyPanel).updatePanel();
                 break;
         }
@@ -124,14 +104,14 @@ public class TamaSaveCard extends JPanel implements Updatable {
 
     public void addCreateSaveListener(ActionListener l){
         this.difficultyPanel.getValidation().addActionListener(e->{
-            this.changePanel(2);
+            this.changePanel(CREATED);
             this.createdSavePanel.setup(this.saveCreationPanel.getName(),this.saveCreationPanel.getTamagotchi(),"egg");
         });
         this.difficultyPanel.getValidation().addActionListener(l);
     }
 
     public void addDeleteSaveListener(ActionListener l){
-        this.createdSavePanel.getBin().addActionListener(e-> this.changePanel(0));
+        this.createdSavePanel.getBin().addActionListener(e-> this.changePanel(EMPTY));
         this.createdSavePanel.getBin().addActionListener(l);
     }
 
@@ -478,6 +458,7 @@ class Difficulty extends JPanel implements Updatable{
 
     private final AbstractButton validation;
     private final JComboBox difficulty;
+    private final AbstractButton retour;
     private final JLabel title;
 
     public Difficulty() {
@@ -489,6 +470,7 @@ class Difficulty extends JPanel implements Updatable{
         GridBagConstraints c = new GridBagConstraints();
         c.weightx=1;
         c.weighty=1;
+        this.retour = new TamaButton("Retour");
         this.validation = new TamaButton("");
         this.difficulty = new JComboBox(difficulties);
         this.difficulty.setPreferredSize(new Dimension(200,40));
@@ -496,8 +478,10 @@ class Difficulty extends JPanel implements Updatable{
         this.title.setFont(Constants.BASIC_FONT);
         this.title.setForeground(Color.WHITE);
         this.title.setVerticalAlignment(SwingConstants.CENTER);
+        c.gridwidth=2;
         this.add(title,c);
         c.gridy=1;
+
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets=new Insets(0,50,0,50);
         this.add(this.difficulty,c);
@@ -505,6 +489,10 @@ class Difficulty extends JPanel implements Updatable{
         c.fill = GridBagConstraints.NONE;
         c.gridy=2;
         this.difficulty.setSelectedIndex(1);
+        c.gridwidth=1;
+        this.add(retour,c);
+
+        c.gridx=1;
         this.add(validation,c);
     }
 
@@ -516,13 +504,20 @@ class Difficulty extends JPanel implements Updatable{
         return difficulty;
     }
 
+    public AbstractButton getRetour() {
+        return retour;
+    }
+
     @Override
     public void updatePanel() {
         this.validation.setText(LangFile.getLangFile().getString("menu.validate"));
         String[] difficulties = {LangFile.getLangFile().getString("menu.difficulty.0"),
                 LangFile.getLangFile().getString("menu.difficulty.1"),
                 LangFile.getLangFile().getString("menu.difficulty.2")};
+        int selected = this.difficulty.getSelectedIndex();
         this.difficulty.setModel(new DefaultComboBoxModel(difficulties));
+        this.difficulty.setSelectedIndex(selected);
         this.title.setText(LangFile.getLangFile().getString("menu.difficulty"));
+        this.retour.setText(LangFile.getLangFile().getString("save.back"));
     }
 }

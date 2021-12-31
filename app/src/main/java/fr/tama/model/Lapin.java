@@ -9,7 +9,12 @@ public class Lapin extends Tamagotchi{
     public void eat() {
         Attribute food = this.getAttribute("hungry");
         if(food.getCoolDown()==0){
-            food.increase(1400);
+            if(this.getDifficulty()==0){
+                food.increase(1600);
+            }else{
+                food.increase(1400);
+            }
+
             Attribute shapeCD = this.getAttribute("shapeCD");
             if(shapeCD.getCoolDown()==0 && food.isMax()){
                 this.setShape(this.getShape().getPlus());
@@ -33,9 +38,16 @@ public class Lapin extends Tamagotchi{
     public void play() {
         Attribute attrib = this.getAttribute("happiness");
         if(attrib.getCoolDown()==0){
-            this.getAttribute("tiredness").decrease(50);
-            this.getAttribute("toilet").decrease(50);
-            attrib.increase(500);
+            if(this.getDifficulty()==0){
+                this.getAttribute("tiredness").decrease(25);
+                this.getAttribute("toilet").decrease(25);
+                attrib.increase(750);
+            }else{
+                this.getAttribute("tiredness").decrease(50);
+                this.getAttribute("toilet").decrease(50);
+                attrib.increase(500);
+            }
+
 
             Attribute moodCD = this.getAttribute("moodCD");
             if(moodCD.getCoolDown()==0 && attrib.isMax()){
@@ -51,7 +63,12 @@ public class Lapin extends Tamagotchi{
     public void toilet() {
         Attribute attrib = this.getAttribute("toilet");
         if(attrib.getCoolDown()==0){
-            this.getAttribute("toilet").increase(1100);
+            if(this.getDifficulty()==0){
+                this.getAttribute("toilet").increase(1300);
+            }else{
+                this.getAttribute("toilet").increase(1100);
+            }
+
 
             Attribute moodCD = this.getAttribute("moodCD");
             if(moodCD.getCoolDown()==0 && this.getAttribute("happiness").isMax()){
@@ -67,7 +84,12 @@ public class Lapin extends Tamagotchi{
     public void wash() {
         Attribute attrib = this.getAttribute("cleanliness");
         if(attrib.getCoolDown()==0){
-            attrib.increase(2000);
+            if(this.getDifficulty()==0){
+                attrib.increase(2500);
+            }else{
+                attrib.increase(2000);
+            }
+
             if(this.getAttribute("cleanliness").isMax()){
                 Attribute moodCD = this.getAttribute("moodCD");
                 Attribute shapeCD = this.getAttribute("shapeCD");

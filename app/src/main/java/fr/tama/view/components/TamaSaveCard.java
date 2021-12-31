@@ -282,6 +282,8 @@ class ArrowButton extends JButton{
 
     @Override
     protected void paintComponent(Graphics g) {
+        g.setColor(Constants.PURPLE);
+        g.fillRect(0,0,this.getWidth(),this.getHeight());
         g.setColor(this.getBackground());
         switch (this.side){
             case 0:

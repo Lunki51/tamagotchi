@@ -222,6 +222,8 @@ public class Game extends JPanel implements Updatable {
         pane.add(controlPanel);
 
         this.add(pane);
+
+
     }
 
     public GameScreen getGameScreen() {
@@ -229,6 +231,7 @@ public class Game extends JPanel implements Updatable {
     }
 
     public void updatePanel(){
+
         Tamagotchi tamagotchi = this.gameInstance.getTamagotchi();
         if(tamagotchi.getAttribute(this.gameInstance.getLocation().getAction()).getCoolDown()!=0 && !this.gameInstance.getLocation().getAction().equals("tiredness")){
             this.actionButton.setText(String.valueOf(tamagotchi.getAttribute(this.gameInstance.getLocation().getAction()).getCoolDown()));
@@ -245,6 +248,29 @@ public class Game extends JPanel implements Updatable {
         this.tamaName.setText(this.gameInstance.getTamagotchi().getName()+this.gameInstance.getTamagotchi().getAttribute("evolCD").getCoolDown()+"-"+this.gameInstance.getTamagotchi().getDifficulty());
         this.tamaMState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getMood().name())+tamagotchi.getAttribute("moodCD").getCoolDown());
         this.tamaPState.setText(lang.getString("state." + this.gameInstance.getTamagotchi().getShape().name())+tamagotchi.getAttribute("shapeCD").getCoolDown());
+        if(this.gameInstance.getTamagotchi().getDifficulty()==2){
+            this.energyGauge.setVisible(false);
+            this.happinessGauge.setVisible(false);
+            this.hungerGauge.setVisible(false);
+            this.hygeneGauge.setVisible(false);
+            this.toiletGauge.setVisible(false);
+            this.toiletLabel.setText("");
+            this.energyLabel.setText("");
+            this.hungerLabel.setText("");
+            this.hygeneLabel.setText("");
+            this.happinessLabel.setText("");
+        }else{
+            this.energyGauge.setVisible(true);
+            this.happinessGauge.setVisible(true);
+            this.hungerGauge.setVisible(true);
+            this.hygeneGauge.setVisible(true);
+            this.toiletGauge.setVisible(true);
+            this.toiletLabel.setText(LangFile.getLangFile().getString("attribute_name_toilet"));
+            this.energyLabel.setText(LangFile.getLangFile().getString("attribute_name_tiredness"));
+            this.hungerLabel.setText(LangFile.getLangFile().getString("attribute_name_hunger"));
+            this.hygeneLabel.setText(LangFile.getLangFile().getString("attribute_name_cleanliness"));
+            this.happinessLabel.setText(LangFile.getLangFile().getString("attribute_name_happiness"));
+        }
         this.repaint();
     }
 

@@ -4,7 +4,6 @@ import fr.tama.model.GameSave;
 import fr.tama.model.Location;
 import fr.tama.model.Tamagotchi;
 import fr.tama.view.GameFrame;
-import fr.tama.view.panels.Game;
 
 import java.util.Date;
 

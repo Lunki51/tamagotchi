@@ -8,7 +8,6 @@ import fr.tama.view.utils.Updatable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 public class Death extends JPanel implements Updatable {
 

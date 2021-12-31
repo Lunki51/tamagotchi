@@ -138,7 +138,13 @@ public class GameController {
             {
                 LangFile.switchLang(DBConfig.getString("lang"));
                 this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
-                this.applyListeners();
+                Enumeration<AbstractButton> buttons = this.gameView.getGameFrame().getOptionsPanel().getRadioButtons();
+                String name = LangFile.getName(LangFile.lang);
+                while(buttons.hasMoreElements())
+                {
+                    AbstractButton button = buttons.nextElement();
+                    button.setSelected(name.equals(button.getText()));
+                }
             }
 
             this.gameView.getMusic().setVolume(DBConfig.getInt("volume"));
@@ -241,9 +247,13 @@ public class GameController {
             b.addItemListener(e -> {
                 LangFile.switchLang(b.getText());
                 this.gameView.updatePanel();
-                //this.applyListeners();
             });
         }
+
+        //Death menu control events
+        this.gameView.getGameFrame().getDeathPanel().getReturnButton().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.MENU));
+
+        this.gameView.getGameFrame().getDeathPanel().getButtonQuit().addActionListener(e -> System.exit(0));
     }
 
     private Tamagotchi getCorrespondingTama(TamaSaveCard panel){

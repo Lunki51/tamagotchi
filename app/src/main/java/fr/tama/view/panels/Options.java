@@ -82,9 +82,8 @@ public class Options extends JPanel implements Updatable {
         radioLangPanel.setBackground(Constants.BLUE);
         langPanel.add(radioLangPanel, BorderLayout.CENTER);
 
-        //RadioButtons aren't initialized if they were already initialized in a former OptionsPanel instance
-            musicSwitch.setSelected(DBConfig.getBoolean("mute"));
-            musicSlider.setValue(musicSwitch.isSelected() ? musicSlider.getMinimum() : DBConfig.getInt("volume"));
+        musicSwitch.setSelected(DBConfig.getBoolean("mute"));
+        musicSlider.setValue(musicSwitch.isSelected() ? musicSlider.getMinimum() : DBConfig.getInt("volume"));
 
         langButtons = new ButtonGroup();
         for(String s : LangFile.getLangs().keySet()) {

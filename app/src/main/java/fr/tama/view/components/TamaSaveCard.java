@@ -38,6 +38,7 @@ public class TamaSaveCard extends JPanel implements Updatable {
         this.add(saveCreationPanel,SAVE_CREATION);
         this.add(createdSavePanel,CREATED);
         this.add(difficultyPanel,DIFFICULTY);
+        this.changePanel(DIFFICULTY);
         this.changePanel(EMPTY);
         this.setBackground(Constants.PURPLE);
     }
@@ -49,24 +50,7 @@ public class TamaSaveCard extends JPanel implements Updatable {
     }
 
     public int getDifficulty() {
-        if(difficultyPanel.getDifficulty().getSelectedIndex()==0){
-            return 0;
-        }else if(difficultyPanel.getDifficulty().getSelectedIndex()==1){
-            return 1;
-        }else if(difficultyPanel.getDifficulty().getSelectedIndex()==2){
-            return 2;
-        }
-        return 0;
-    }
-
-    @Override
-    public void setSize(int width, int height) {
-        super.setSize(height, height);
-    }
-
-    @Override
-    public void setSize(Dimension d) {
-        this.setSize( d.height, d.height);
+        return difficultyPanel.getDifficulty().getSelectedIndex();
     }
 
     public void changePanel(String newPanel){

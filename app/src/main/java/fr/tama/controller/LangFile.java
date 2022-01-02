@@ -6,7 +6,15 @@ import java.util.ResourceBundle;
 
 public class LangFile {
 
-    private static final HashMap<String,LangTuple> langs = new HashMap<>();
+    private static final HashMap<String,LangTuple> langs;
+
+    static
+    {
+        langs = new HashMap<>();
+        langs.put("fr", new LangTuple("Français", Locale.FRENCH));
+        langs.put("en", new LangTuple("English", Locale.ENGLISH));
+    }
+
     ResourceBundle bundle;
     public static String lang;
 
@@ -14,20 +22,33 @@ public class LangFile {
         this.bundle = bundle;
     }
 
+    /**
+     * Set in database current language
+    */
     public static void saveLang()
     {
         DBConfig.setString("lang", lang);
     }
 
-    public String getString (String string) {
-        return bundle.getString(string);
+    /**
+     * Return the value of a property in current language
+     * @param property Property to get in language file
+     * @return Value of the specified property
+     */
+    public String getString (String property) {
+        return bundle.getString(property);
     }
 
-    public static String getName(String sigle)
+    /**
+     * Function that return language name from code ("fr" and "en" are codes associated to language name "Français" and "English")
+     * @param code Code from which retrieve language name
+     * @return Language name
+     */
+    public static String getName(String code)
     {
-        if(langs.containsKey(sigle))
-            return langs.get(sigle).getName();
-        throw new RuntimeException("Requested language undefined: '" + sigle + "'");
+        if(langs.containsKey(code))
+            return langs.get(code).getName();
+        throw new RuntimeException("Requested language undefined: '" + code + "'");
     }
 
     public static void switchLang(String l){
@@ -56,14 +77,6 @@ public class LangFile {
 
     public static LangFile getLangFile()
     {
-        //-----------LANGUAGES-----------
-        if(langs.size() == 0)
-        {
-            langs.put("fr", new LangTuple("Français", Locale.FRENCH));
-            langs.put("en", new LangTuple("English", Locale.ENGLISH));
-        }
-        //-------------------------------
-
         if(lang == null)
             lang = DBConfig.getString("lang");
             

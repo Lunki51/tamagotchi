@@ -30,14 +30,26 @@ public class GameInstance implements Runnable{
         this.gameFrame = gameFrame;
     }
 
+    /**
+     * Return the tamagotchi stored in save
+     * @return Tamagotchi stored in save
+     */
     public Tamagotchi getTamagotchi(){
         return save.getTamagotchi();
     }
 
+    /**
+     * Return in which room is located the tamagotchi in save
+     * @return Location stored in save
+     */
     public Location getLocation(){
         return save.getLocation();
     }
 
+    /**
+     * Return save itself
+     * @return GameSave instance
+     */
     public GameSave getSave() {
         return save;
     }

@@ -11,7 +11,7 @@ import java.util.Objects;
 
 
 /**
-*   Class ensuring View's initialization
+*   Class ensuring link between Controller and View
 */
 public class GameController {
     private final GameView gameView;
@@ -22,7 +22,7 @@ public class GameController {
     }
 
     /**
-    *   Method that initializes controls event
+    *   Method that initializes components event
     */
     public void startGame() {
         //Language initialization before initializating controls
@@ -32,6 +32,9 @@ public class GameController {
         this.applyListeners();
     }
 
+    /**
+     * Apply an ActionListener to components of View
+     */
     public void applyListeners()
     {
         //Menu control events

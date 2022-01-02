@@ -14,6 +14,11 @@ public class DBConnection {
 
     private DBConnection(){}
 
+    /**
+     * If no connection is established with the database, initialize the connection
+     * Return the established connection
+     * @return Connection instance opened with the database
+     */
     public static Connection getConnection(){
         if(connection==null){
             try{
@@ -27,6 +32,9 @@ public class DBConnection {
         return connection;
     }
 
+    /**
+     * Close connection with the database
+     */
     public static void closeConnection(){
         try{
             connection.close();

@@ -123,6 +123,7 @@ public class GameScreen extends JPanel {
 
                 tamaJump.setInitial(tamaBath.getPos());
                 g.drawImage(icon.getImage(),(int)tamaJump.getPos()[0],(int)tamaJump.getPos()[1],(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
+                this.tamaPoop.resetMiddle();
             }else if(this.gameInstance.getLocation().getName().equals("toilet")){
                     tamaPoop.setInitial(new float[]{this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2});
                     tamaPoop.setMovement(new float[]{this.getWidth()/4,0});
@@ -140,12 +141,14 @@ public class GameScreen extends JPanel {
                     g.drawImage(bonbonSprite.getImage(), (int) bonbon.getPos()[0], (int) bonbon.getPos()[1], (this.getHeight() / 2 * bonbonSprite.getIconWidth()) / bonbonSprite.getIconHeight() / 4, this.getHeight() / 2 / 4, null);
                 }
 
-
+                this.tamaPoop.resetMiddle();
             }else if(this.gameInstance.getLocation().getName().equals("living")){
                 tamaJump.setInitial(new float[]{this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2});
                 g.drawImage(icon.getImage(),(int)tamaJump.getPos()[0],(int)tamaJump.getPos()[1],(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
+                this.tamaPoop.resetMiddle();
             }else{
                 g.drawImage(icon.getImage(),this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2,(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
+                this.tamaPoop.resetMiddle();
             }
 
 

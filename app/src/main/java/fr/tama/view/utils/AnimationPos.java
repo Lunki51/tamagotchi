@@ -115,7 +115,6 @@ public class AnimationPos extends Animation{
         }
         this.semaphore.countDown();
         thisThread.interrupt();
-
     }
 
     /**
@@ -140,6 +139,10 @@ public class AnimationPos extends Animation{
 
     public boolean isMiddle(){
         return this.middle;
+    }
+
+    public void resetMiddle(){
+        this.middle=false;
     }
 
     /**

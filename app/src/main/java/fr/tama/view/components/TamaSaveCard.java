@@ -90,6 +90,14 @@ public class TamaSaveCard extends JPanel implements Updatable {
         this.createdSavePanel.setLevel(level);
     }
 
+    /**
+     * Change the current panel displayed by the card
+     * 0 - No save created
+     * 1 - Save creation panel
+     * 2 - Save already created
+     * 3 - Difficulty choose panel
+     * 4 - Confirm delete panel
+     */
     @Override
     public void updatePanel() {
         switch (currentPanel){
@@ -128,6 +136,10 @@ public class TamaSaveCard extends JPanel implements Updatable {
         return this.saveCreationPanel.getName();
     }
 
+    /**
+     * Add a listener that is triggered when a save is created
+     * @param l the listener to add
+     */
     public void addCreateSaveListener(ActionListener l){
         this.difficultyPanel.getValidation().addActionListener(e->{
             this.changePanel(CREATED);
@@ -136,11 +148,19 @@ public class TamaSaveCard extends JPanel implements Updatable {
         this.difficultyPanel.getValidation().addActionListener(l);
     }
 
+    /**
+     * Add a listener that is triggered when a save is deleted
+     * @param l the listener to add
+     */
     public void addDeleteSaveListener(ActionListener l){
         this.confirmDeletePanel.getConfirmButton().addActionListener(e-> this.changePanel(EMPTY));
         this.confirmDeletePanel.getConfirmButton().addActionListener(l);
     }
 
+    /**
+     * Add a listener that is triggered when a save is loaded
+     * @param l the listener to add
+     */
     public void addLoadSaveListener(ActionListener l) {
         this.createdSavePanel.addActionListener(l);
     }
@@ -156,7 +176,7 @@ class CreatedSave extends AbstractButton implements Updatable {
     private final EmptySave bin;
 
     /**
-     * Default save
+     * A panel that render a created save
      */
     public CreatedSave() {
         super();
@@ -210,7 +230,7 @@ class CreatedSave extends AbstractButton implements Updatable {
     }
 
     /**
-     * Set attributes raw information
+     * Set that attrbutes of the save to render
      * @param name Name of the tamagotchi
      * @param type Type of the tamagotchi
      * @param level Level of the tamagotchi
@@ -230,16 +250,27 @@ class CreatedSave extends AbstractButton implements Updatable {
         this.level = level;
     }
 
+    /**
+     * Get the bin button
+     * @return
+     */
     public EmptySave getBin() {
         return bin;
     }
 
+    /**
+     * Add a listener when the save panel is pressed
+     * @param l the listener to add
+     */
     @Override
     public void addActionListener(ActionListener l) {
         super.addActionListener(l);
         this.image.addActionListener(l);
     }
 
+    /**
+     * Update the panel
+     */
     @Override
     public void updatePanel() {
         this.label.setText(this.name);
@@ -254,6 +285,10 @@ class EmptySave extends JButton implements Updatable {
     private ImageIcon icon;
     private boolean hasBackground;
 
+    /**
+     * A panel that represent an empty save
+     * @param icon
+     */
     public EmptySave(ImageIcon icon) {
         this.setBackground(Constants.PURPLE);
         this.icon=icon;
@@ -261,10 +296,18 @@ class EmptySave extends JButton implements Updatable {
         this.setBorder(null);
     }
 
+    /**
+     * Define if the panel have to render his background
+     * @param hasBackground
+     */
     public void setHasBackground(boolean hasBackground) {
         this.hasBackground = hasBackground;
     }
 
+    /**
+     * Render the panel
+     * @param g graphic context for render
+     */
     @Override
     protected void paintComponent(Graphics g) {
         if(this.hasBackground){
@@ -281,10 +324,17 @@ class EmptySave extends JButton implements Updatable {
         }
     }
 
+    /**
+     * Change the icon of the save
+     * @param icon the new icon of the save
+     */
     public void setIcon(ImageIcon icon) {
         this.icon = icon;
     }
 
+    /**
+     * Update the panel
+     */
     @Override
     public void updatePanel() {
         this.repaint();
@@ -298,11 +348,21 @@ class ArrowButton extends JButton{
     public static int BOTTOM = 3;
     private final int side;
 
+    /**
+     * Represent a button that display an arrow
+     * @param side the side of the arrow
+     *             0 - LEFT
+     *             1 - RIGHT
+     */
     public ArrowButton(int side) {
         this.side = side;
         this.setBorder(null);
     }
 
+    /**
+     * Render the button with the arrow
+     * @param g the graphic context to render
+     */
     @Override
     protected void paintComponent(Graphics g) {
         g.setColor(Constants.PURPLE);
@@ -337,6 +397,9 @@ class SaveCreation extends JPanel implements Updatable {
     private final JTextField jTextField;
     private final JLabel nameLabel;
 
+    /**
+     * A panel used to create a save
+     */
     public SaveCreation() {
         this.setLayout(new GridBagLayout());
         this.setBackground(Constants.PURPLE);
@@ -442,6 +505,9 @@ class SaveCreation extends JPanel implements Updatable {
 
     }
 
+    /**
+     * Update the panel
+     */
     @Override
     public void updatePanel() {
         image.setIcon((images[currentEgg]));
@@ -451,14 +517,26 @@ class SaveCreation extends JPanel implements Updatable {
         this.repaint();
     }
 
+    /**
+     * Return the validation button of the creation
+     * @return the abstract button
+     */
     public AbstractButton getValidation() {
         return validation;
     }
 
+    /**
+     * Return the name of the tamagotchi to created
+     * @return the name of the tamagotchi
+     */
     public String getName(){
         return this.jTextField.getText();
     }
 
+    /**
+     * Return the type of tamagotchi selected
+     * @return the type of tamagotchi as a string
+     */
     public String getTamagotchi(){
         switch (this.currentEgg){
             case 0:
@@ -479,6 +557,10 @@ class CustomTField extends PlainDocument {
 
     private final int maxSize;
 
+    /**
+     * Document used to setup the defaut JTextField
+     * @param maxSize
+     */
     public CustomTField(int maxSize) {
         super();
         this.maxSize=maxSize;
@@ -501,6 +583,9 @@ class Difficulty extends JPanel implements Updatable{
     private final AbstractButton retour;
     private final JLabel title;
 
+    /**
+     * The panel used to choose the difficulty
+     */
     public Difficulty() {
         this.setBackground(Constants.PURPLE);
         this.setLayout(new GridBagLayout());
@@ -536,18 +621,33 @@ class Difficulty extends JPanel implements Updatable{
         this.add(validation,c);
     }
 
+    /**
+     * Return the validation button of the pannel
+     * @return the abstract button to validate
+     */
     public AbstractButton getValidation() {
         return validation;
     }
 
+    /**
+     * The ComboBox that represent the difficulty choosed
+     * @return the JComboBox used to choose the difficulty
+     */
     public JComboBox<String> getDifficulty() {
         return difficulty;
     }
 
+    /**
+     * Return the button to return from the difficulty choose
+     * @return the return button of the difficulty choose
+     */
     public AbstractButton getRetour() {
         return retour;
     }
 
+    /**
+     * Update the panel
+     */
     @Override
     public void updatePanel() {
         this.validation.setText(LangFile.getLangFile().getString("menu.validate"));
@@ -596,14 +696,25 @@ class ConfirmDelete extends JPanel implements Updatable{
         this.add(confirmButton,c);
     }
 
+    /**
+     * Return the button used to confirm the deletion
+     * @return the button used to confirm the deletion
+     */
     public AbstractButton getConfirmButton() {
         return confirmButton;
     }
 
+    /**
+     * Return the button used to cancel the deletion
+     * @return the button used to cancel the deletion
+     */
     public AbstractButton getReturnButton() {
         return returnButton;
     }
 
+    /**
+     * Update the panel
+     */
     @Override
     public void updatePanel() {
         this.confirmText.setText(LangFile.getLangFile().getString("save.delete.confirm"));

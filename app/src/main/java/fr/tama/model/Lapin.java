@@ -10,9 +10,9 @@ public class Lapin extends Tamagotchi{
         Attribute food = this.getAttribute("hungry");
         if(food.getCoolDown()==0){
             if(this.getDifficulty()==0){
-                food.increase(1600);
+                food.increase(1750);
             }else{
-                food.increase(1400);
+                food.increase(1500);
             }
 
             Attribute shapeCD = this.getAttribute("shapeCD");
@@ -41,11 +41,11 @@ public class Lapin extends Tamagotchi{
             if(this.getDifficulty()==0){
                 this.getAttribute("tiredness").decrease(25);
                 this.getAttribute("toilet").decrease(25);
-                attrib.increase(750);
+                attrib.increase(950);
             }else{
                 this.getAttribute("tiredness").decrease(50);
                 this.getAttribute("toilet").decrease(50);
-                attrib.increase(500);
+                attrib.increase(600);
             }
 
 

@@ -112,7 +112,7 @@ public class Chat extends Tamagotchi{
         super.update();
         this.getAttribute("tiredness").decrease(2);
         this.getAttribute("toilet").decrease(2);
-        this.getAttribute("happiness").decrease(2);
+        this.getAttribute("happiness").increase(1);
     }
 
     @Override

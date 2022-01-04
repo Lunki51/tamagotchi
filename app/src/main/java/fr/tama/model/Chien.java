@@ -43,11 +43,11 @@ public class Chien extends Tamagotchi{
             if(this.getDifficulty()==0){
                 this.getAttribute("tiredness").decrease(25);
                 this.getAttribute("toilet").decrease(25);
-                attrib.increase(1250);
+                attrib.increase(1350);
             }else{
                 this.getAttribute("tiredness").decrease(50);
                 this.getAttribute("toilet").decrease(50);
-                attrib.increase(1000);
+                attrib.increase(1200);
             }
 
 

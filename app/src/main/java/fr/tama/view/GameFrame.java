@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class GameFrame extends JFrame implements Updatable {
 
-    ImageIcon icon = new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/baby_chat.png"));
+    ImageIcon icon = new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/egg_chat.png"));
 
     private final Menu menu;
     private final Saves savesPanel;

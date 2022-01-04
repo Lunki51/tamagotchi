@@ -4,6 +4,7 @@ import fr.tama.controller.LangFile;
 import fr.tama.model.Constants;
 import fr.tama.view.components.TamaBigButton;
 import fr.tama.view.components.TamaButton;
+import fr.tama.view.components.TamaCheckBox;
 import fr.tama.view.utils.Updatable;
 
 import javax.swing.*;
@@ -13,12 +14,13 @@ public class Death extends JPanel implements Updatable {
 
     private final TamaButton returnButton;
     private final TamaButton buttonQuit;
+    private JLabel deathLabel;
 
     public Death() {
 
         super(new BorderLayout());
         super.setBackground(Constants.BLUE);
-        JLabel deathLabel = new JLabel(LangFile.getLangFile().getString("death"));
+        this.deathLabel = new JLabel(LangFile.getLangFile().getString("death"));
         deathLabel.setHorizontalAlignment(JLabel.CENTER);
         deathLabel.setForeground(Color.WHITE);
         deathLabel.setFont(new Font("Arial", Font.BOLD, 35));
@@ -49,6 +51,7 @@ public class Death extends JPanel implements Updatable {
     public void updatePanel() {
         this.returnButton.setText(LangFile.getLangFile().getString("menu.back"));
         this.buttonQuit.setText(LangFile.getLangFile().getString("menu.quit"));
+        this.deathLabel.setText(LangFile.getLangFile().getString("death"));
         this.repaint();
     }
 }

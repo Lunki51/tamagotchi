@@ -34,8 +34,17 @@ public class TamaAttribBarComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         g.setColor(this.color);
-        g.fillRect(0,0,(int)(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0))),this.getHeight());
-        g.setColor(Color.BLACK);
-        g.drawRect(0,0,this.getWidth()-1,this.getHeight()-1);
+        g.fillRoundRect(0,0,(int)(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0))),this.getHeight(), 10, 10);
+        if(this.currentValue!=this.maxValue &&(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))>12&&(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))<(this.getWidth()*(((float)maxValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))-12){
+            g.fillRect((int)(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))-10,0,10,this.getHeight());
+        }
+
+
+        Graphics2D g2d = (Graphics2D)g ;
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(3));
+
+        g2d.drawRoundRect(1,1,this.getWidth()-2,this.getHeight()-2, 10, 10);
+
     }
 }

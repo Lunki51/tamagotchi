@@ -2,6 +2,7 @@ package fr.tama.view;
 
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
+import fr.tama.model.Current;
 import fr.tama.view.utils.Music;
 import fr.tama.view.utils.Updatable;
 
@@ -17,7 +18,10 @@ public class GameView implements Updatable {
 
     public GameView(GameInstance gameInstance){
         this.gameInstance = gameInstance;
-        this.music = new Music();
+        if(this.gameInstance.getSave() == null){
+            this.music = new Music(false);
+        } else
+            this.music = new Music(this.gameInstance.getTamagotchi().getCurrent() == Current.ASLEEP);
     }
 
     /**

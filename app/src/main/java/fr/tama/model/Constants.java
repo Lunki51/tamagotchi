@@ -4,7 +4,8 @@ import java.awt.*;
 
 public class Constants {
     public final static double version = 1.0;
-    public static Color BLUE = new Color(76,156,152);
+    public static final Color LIGHT_PURPLE =  new Color(170,30,165);
+    public static final Color BLUE = new Color(76,156,152);
     public final static Color PURPLE = new Color(130,3,120);
     public final static Color DARK_PURPLE = ColorShift(PURPLE, -45);
     public final static Font BASIC_FONT = new Font(Font.SANS_SERIF,  Font.BOLD, 20);

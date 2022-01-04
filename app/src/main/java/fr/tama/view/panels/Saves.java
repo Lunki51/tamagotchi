@@ -18,11 +18,11 @@ public class Saves extends JPanel implements Updatable {
     private final TamaSaveCard saveCardPanel2;
     private final TamaSaveCard saveCardPanel3;
     private final TamaButton returnButton;
-    private final LangFile lang;
+
+    private final JLabel saveLabel;
 
     public Saves() {
         super(new GridBagLayout());
-        this.lang = LangFile.getLangFile();
         this.setBackground(Constants.BLUE);
         GridBagConstraints mainC = new GridBagConstraints();
         mainC.fill = GridBagConstraints.BOTH;
@@ -33,12 +33,12 @@ public class Saves extends JPanel implements Updatable {
         mainC.gridx=0;
 
         JPanel titlePanel = new JPanel(new BorderLayout());
-        JLabel label = new JLabel(lang.getString("menu.saves"));
-        label.setForeground(Color.white);
-        label.setFont(Constants.TITLE_FONT);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
+        saveLabel = new JLabel("");
+        saveLabel.setForeground(Color.white);
+        saveLabel.setFont(Constants.TITLE_FONT);
+        saveLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titlePanel.setBackground(Constants.BLUE);
-        titlePanel.add(label,BorderLayout.CENTER);
+        titlePanel.add(saveLabel,BorderLayout.CENTER);
         mainC.gridheight=1;
         mainC.weighty=0.75;
         mainC.gridy=0;
@@ -111,7 +111,7 @@ public class Saves extends JPanel implements Updatable {
         fill.setBackground(Constants.BLUE);
         buttonsPanel.add(fill,c3);
         c3.gridy=1;
-        this.returnButton = new TamaBigButton(lang.getString("menu.back"));
+        this.returnButton = new TamaBigButton("");
         buttonsPanel.add(this.returnButton,c3);
         c3.gridx=1;
         c3.weightx=1;
@@ -126,7 +126,27 @@ public class Saves extends JPanel implements Updatable {
 
     @Override
     public void updatePanel() {
-
+        GameSave save;
+        save = GameSave.loadSave(0);
+        if(save==null){
+            this.saveCardPanel1.changePanel(TamaSaveCard.EMPTY);
+        }else{
+            this.saveCardPanel1.setLevel(save.getTamagotchi().getLevel().name());
+        }
+        save = GameSave.loadSave(1);
+        if(save==null){
+            this.saveCardPanel2.changePanel(TamaSaveCard.EMPTY);
+        }else{
+            this.saveCardPanel2.setLevel(save.getTamagotchi().getLevel().name());
+        }
+        save = GameSave.loadSave(2);
+        if(save==null){
+            this.saveCardPanel3.changePanel(TamaSaveCard.EMPTY);
+        }else{
+            this.saveCardPanel3.setLevel(save.getTamagotchi().getLevel().name());
+        }
+        this.saveLabel.setText(LangFile.getLangFile().getString("menu.saves"));
+        this.returnButton.setText(LangFile.getLangFile().getString("menu.back"));
         this.saveCardPanel1.updatePanel();
         this.saveCardPanel2.updatePanel();
         this.saveCardPanel3.updatePanel();

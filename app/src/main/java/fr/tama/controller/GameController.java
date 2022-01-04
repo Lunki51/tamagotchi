@@ -1,18 +1,17 @@
 package fr.tama.controller;
 
 import fr.tama.model.*;
-import fr.tama.view.utils.Animation;
+import fr.tama.view.GameFrame;
+import fr.tama.view.utils.AnimationSprite;
 import fr.tama.view.GameView;
+import fr.tama.view.components.TamaRadioButton;
 import fr.tama.view.components.TamaSaveCard;
 
-import java.util.Enumeration;
 import java.util.Objects;
 
-import javax.swing.AbstractButton;
-import javax.swing.JRadioButton;
 
 /**
-*   Class ensuring View's initialization
+*   Class ensuring link between Controller and View
 */
 public class GameController {
     private final GameView gameView;
@@ -23,7 +22,7 @@ public class GameController {
     }
 
     /**
-    *   Method that initializes controls event
+    *   Method that initializes components event
     */
     public void startGame() {
         //Language initialization before initializating controls
@@ -33,15 +32,15 @@ public class GameController {
         this.applyListeners();
     }
 
+    /**
+     * Apply an ActionListener to components of View
+     */
     public void applyListeners()
     {
         //Menu control events
-        this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(2));
+        this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.SAVES));
 
-        this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(4);
-            this.gameView.getGameFrame().repaint();
-        });
+        this.gameView.getGameFrame().getMenuPanel().getButtonOption().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.OPTIONS));
 
         this.gameView.getGameFrame().getMenuPanel().getButtonQuit().addActionListener(e -> System.exit(0));
 
@@ -49,21 +48,23 @@ public class GameController {
         this.gameView.getGameFrame().getGamePanel().getMoveLeftButton().addActionListener(e->{
             if(INSTANCE.getLocation().getNext()!=null)INSTANCE.setLocation(INSTANCE.getLocation().getNext());
             this.gameView.getGameFrame().getGamePanel().updatePanel();
-            this.gameView.getGameFrame().repaint();
         });
 
         this.gameView.getGameFrame().getGamePanel().getMoveRightButton().addActionListener(e->{
             if(INSTANCE.getLocation().getPrevious()!=null)INSTANCE.setLocation(INSTANCE.getLocation().getPrevious());
             this.gameView.getGameFrame().getGamePanel().updatePanel();
-            this.gameView.getGameFrame().repaint();
         });
 
+        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaBath().addUpdateListener(e->this.gameView.getGameFrame().updatePanel());
+        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaJump().addUpdateListener(e->this.gameView.getGameFrame().updatePanel());
         this.gameView.getGameFrame().getGamePanel().getActionButton().addActionListener(e->{
             if(INSTANCE.getTamagotchi().getLevel()==Level.EGG)return;
             if(INSTANCE.getTamagotchi().getCurrent()==Current.ASLEEP && !Objects.equals(INSTANCE.getLocation().getAction(), "tiredness"))return;
             switch(INSTANCE.getLocation().getAction()){
                 case "hunger":
-                    INSTANCE.getTamagotchi().eat();
+                    if(INSTANCE.getTamagotchi().getAttribute("hungry").getCoolDown()==0){
+                        INSTANCE.getTamagotchi().eat();
+                    }
                     break;
                 case "tiredness":
                     INSTANCE.getTamagotchi().sleep();
@@ -71,13 +72,22 @@ public class GameController {
                     else this.gameView.getMusic().initGameMusic();
                     break;
                 case "cleanliness":
-                    INSTANCE.getTamagotchi().wash();
+                    if(INSTANCE.getTamagotchi().getAttribute("cleanliness").getCoolDown()==0){
+                        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaBath().start();
+                        INSTANCE.getTamagotchi().wash();
+                    }
                     break;
                 case "toilet":
-                    INSTANCE.getTamagotchi().toilet();
+                    if(INSTANCE.getTamagotchi().getAttribute("toilet").getCoolDown()==0){
+                        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaPoop().start();
+                        INSTANCE.getTamagotchi().toilet();
+                    }
                     break;
                 case "happiness":
-                    INSTANCE.getTamagotchi().play();
+                    if(INSTANCE.getTamagotchi().getAttribute("happiness").getCoolDown()==0){
+                        this.gameView.getGameFrame().getGamePanel().getGameScreen().getTamaJump().start();
+                        INSTANCE.getTamagotchi().play();
+                    }
                     break;
             }
 
@@ -113,89 +123,98 @@ public class GameController {
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getSaveButton().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(1);
-            this.gameView.getGameFrame().getMenuPanel().repaint();
+            LangFile.saveLang();
+            this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
             this.gameView.getMusic().saveVolume();
             this.gameView.getMusic().saveMute();
-            LangFile.saveLang();
         });
 
         this.gameView.getGameFrame().getOptionsPanel().getCancelButton().addActionListener(e -> {
-            boolean b = DBConfig.getBoolean("mute");
-            this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(b);
-            this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(b ? this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getMinimum() : DBConfig.getInt("volume"));
-        
-            if(DBConfig.getString("lang").equals(LangFile.lang))
-            {
-                this.gameView.getGameFrame().switchPanel(1);
-                this.gameView.getGameFrame().getMenuPanel().repaint();
-            }
-            else
-            {
+            if(!DBConfig.getString("lang").equals(LangFile.lang))
                 LangFile.switchLang(DBConfig.getString("lang"));
-                this.gameView.getGameFrame().switchPanel(1);
-                this.applyListeners();
-            }
+            this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
+            String name = LangFile.getName(LangFile.lang);
 
+            for(TamaRadioButton t : this.gameView.getGameFrame().getOptionsPanel().getRadioButtons())
+                t.setSelected(t.getText().equals(name));
+
+            this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().setSelected(DBConfig.getBoolean("mute"));
+            this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().setValue(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected() ? this.gameView.getGameFrame().getOptionsPanel().getMusicSlider().getMinimum() : DBConfig.getInt("volume"));
+        
             this.gameView.getMusic().setVolume(DBConfig.getInt("volume"));
 
-            if(DBConfig.getBoolean("mute"))
+            if(this.gameView.getGameFrame().getOptionsPanel().getMusicSwitch().isSelected())
                 this.gameView.getMusic().stop();
             else if(this.gameView.getMusic().isStopped())
                 this.gameView.getMusic().start();
         });
 
-        this.gameView.getGameFrame().getSavesPanel().getReturnButton().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(1);
-            this.gameView.getGameFrame().getMenuPanel().repaint();
-        });
+        for(TamaRadioButton t : this.gameView.getGameFrame().getOptionsPanel().getRadioButtons())
+        {
+            t.addItemListener(e -> {
+                LangFile.switchLang(t.getText());
+                this.gameView.updatePanel();
+            });
+        }
+
+        //Save control events
+        this.gameView.getGameFrame().getSavesPanel().getReturnButton().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.MENU));
 
         this.gameView.getGameFrame().getGamePanel().getReturnButton().addActionListener(e -> {
-            this.gameView.getGameFrame().switchPanel(1);
+            this.gameView.getMusic().initGameMusic();
+            this.gameView.getGameFrame().switchPanel(GameFrame.MENU);
             INSTANCE.alive=false;
-            this.gameView.getGameFrame().getMenuPanel().repaint();
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1().addCreateSaveListener(e->{
             GameSave save=GameSave.createSave(0,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1()),Location.getDefaultLocation());
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2().addCreateSaveListener(e->{
             GameSave save=GameSave.createSave(1,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2()),Location.getDefaultLocation());
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3().addCreateSaveListener(e->{
             GameSave save=GameSave.createSave(2,getCorrespondingTama(this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3()),Location.getDefaultLocation());
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1().addLoadSaveListener(e->{
             GameSave save = GameSave.loadSave(0);
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            if(INSTANCE.getTamagotchi().getCurrent() == Current.ASLEEP){
+                this.gameView.getMusic().initSleepMusic();
+            }
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel2().addLoadSaveListener(e->{
             GameSave save = GameSave.loadSave(1);
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            if(INSTANCE.getTamagotchi().getCurrent() == Current.ASLEEP){
+                this.gameView.getMusic().initSleepMusic();
+            }
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel3().addLoadSaveListener(e->{
             GameSave save = GameSave.loadSave(2);
             INSTANCE.setInstance(save,this.gameView.getGameFrame());
             INSTANCE.start();
-            this.gameView.getGameFrame().switchPanel(3);
+            if(INSTANCE.getTamagotchi().getCurrent() == Current.ASLEEP){
+                this.gameView.getMusic().initSleepMusic();
+            }
+            this.gameView.getGameFrame().switchPanel(GameFrame.GAME);
         });
 
         this.gameView.getGameFrame().getSavesPanel().getSaveCardPanel1().addDeleteSaveListener(e->{
@@ -213,23 +232,17 @@ public class GameController {
             save.delete();
         });
 
-        Animation[] anims = this.gameView.getGameFrame().getGamePanel().getGameScreen().getAnimations();
-        for(Animation anim : anims){
+        AnimationSprite[] anims = this.gameView.getGameFrame().getGamePanel().getGameScreen().getAnimations();
+        for(AnimationSprite anim : anims){
             anim.addUpdateListener(e->{
                 if(this.gameView.getGameFrame().getCurrentPanel()==3)this.gameView.updatePanel();
             });
         }
 
-        Enumeration<AbstractButton> buttons = this.gameView.getGameFrame().getOptionsPanel().getRadioButtons();
-        while(buttons.hasMoreElements())
-        {
-            JRadioButton b = (JRadioButton)buttons.nextElement();
-            b.addItemListener(e -> {
-                LangFile.switchLang(b.getText());
-                this.gameView.updatePanel();
-                //this.applyListeners();
-            });
-        }
+        //Death menu control events
+        this.gameView.getGameFrame().getDeathPanel().getReturnButton().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.MENU));
+
+        this.gameView.getGameFrame().getDeathPanel().getButtonQuit().addActionListener(e -> System.exit(0));
     }
 
     private Tamagotchi getCorrespondingTama(TamaSaveCard panel){
@@ -237,19 +250,19 @@ public class GameController {
         switch (panel.getTamagotchi()){
             case "Chien":
                 tamagotchi = new Chien(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
-                        panel.getName(),Level.EGG);
+                        panel.getName(),Level.EGG,panel.getDifficulty());
                 break;
             case "Chat":
                 tamagotchi = new Chat(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
-                        panel.getName(),Level.EGG);
+                        panel.getName(),Level.EGG,panel.getDifficulty());
                 break;
             case "Lapin":
                 tamagotchi = new Lapin(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
-                        panel.getName(),Level.EGG);
+                        panel.getName(),Level.EGG,panel.getDifficulty());
                 break;
             default:
                 tamagotchi = new Robot(Status.GOOD,Status.GOOD,Current.AWAKE,Math.random()>0.5,
-                        panel.getName(),Level.EGG);
+                        panel.getName(),Level.EGG,panel.getDifficulty());
                 break;
         }
         return tamagotchi;

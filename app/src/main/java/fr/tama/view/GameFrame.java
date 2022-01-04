@@ -2,10 +2,8 @@ package fr.tama.view;
 
 import fr.tama.controller.GameInstance;
 import fr.tama.controller.LangFile;
-import fr.tama.view.panels.Game;
+import fr.tama.view.panels.*;
 import fr.tama.view.panels.Menu;
-import fr.tama.view.panels.Options;
-import fr.tama.view.panels.Saves;
 import fr.tama.view.utils.Updatable;
 
 import javax.swing.*;
@@ -18,7 +16,8 @@ public class GameFrame extends JFrame implements Updatable {
     private final Menu menu;
     private final Saves savesPanel;
     private final Game gamePanel;
-    private Options options;
+    private final Options options;
+    private final Death death;
     private int currentPanel;
 
     /**
@@ -30,9 +29,10 @@ public class GameFrame extends JFrame implements Updatable {
         super(LangFile.getLangFile().getString("title"));
         this.menu = new Menu();
         this.savesPanel = new Saves();
-        this.options = new Options(this.options);
+        this.options = new Options();
+        this.death = new Death();
         this.gamePanel = new Game(gameInstance);
-        this.currentPanel=1;
+        this.currentPanel=MENU;
 
         this.setSize(1280,720);
         this.setIconImage(icon.getImage());
@@ -80,8 +80,10 @@ public class GameFrame extends JFrame implements Updatable {
      * Return the JPanel instance handling saves
      * @return Return the JPanel instance handling saves
      */
-    public Saves getSavesPanel() {
-        return savesPanel;
+    public Saves getSavesPanel() { return savesPanel; }
+
+    public Death getDeathPanel() {
+        return death;
     }
 
     /**
@@ -109,6 +111,10 @@ public class GameFrame extends JFrame implements Updatable {
                 this.getContentPane().add(this.options);
                 this.options.updatePanel();
                 break;
+            case 5:
+                this.getContentPane().add(this.death);
+                this.death.updatePanel();
+                break;
         }
         this.getContentPane().revalidate();
         this.repaint();
@@ -132,6 +138,9 @@ public class GameFrame extends JFrame implements Updatable {
                 break;
             case 4:
                 this.options.updatePanel();
+                break;
+            case 5:
+                this.death.updatePanel();
                 break;
         }
         this.repaint();

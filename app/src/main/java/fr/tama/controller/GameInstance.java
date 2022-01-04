@@ -4,7 +4,6 @@ import fr.tama.model.GameSave;
 import fr.tama.model.Location;
 import fr.tama.model.Tamagotchi;
 import fr.tama.view.GameFrame;
-import fr.tama.view.panels.Game;
 
 import java.util.Date;
 
@@ -13,32 +12,44 @@ import java.util.Date;
 */
 public class GameInstance implements Runnable{
 
-    private static final int INTERVAL = 5000; // In milliseconds
+    private static final int INTERVAL = 1000;
     //private static final int INTERVAL = 300000;
 
     GameSave save;
     boolean alive = true;
     Thread thisThread=null;
     Date lastSeen;
-    Game gamePanel;
+    GameFrame gameFrame;
 
 
-    void setInstance(GameSave save, GameFrame gamePanel){
+    void setInstance(GameSave save, GameFrame gameFrame){
         if(this.thisThread!= null)this.thisThread.interrupt();
         this.save =save;
         this.thisThread = new Thread(this,new Date().toString());
         this.lastSeen = save.getLastSeen();
-        this.gamePanel = gamePanel.getGamePanel();
+        this.gameFrame = gameFrame;
     }
 
+    /**
+     * Return the tamagotchi stored in save
+     * @return Tamagotchi stored in save
+     */
     public Tamagotchi getTamagotchi(){
         return save.getTamagotchi();
     }
 
+    /**
+     * Return in which room is located the tamagotchi in save
+     * @return Location stored in save
+     */
     public Location getLocation(){
         return save.getLocation();
     }
 
+    /**
+     * Return save itself
+     * @return GameSave instance
+     */
     public GameSave getSave() {
         return save;
     }
@@ -75,10 +86,14 @@ public class GameInstance implements Runnable{
                 Thread.sleep(INTERVAL-skipped);
                 skipped=0;
                 this.getTamagotchi().update();
-                this.gamePanel.updatePanel();
-                this.gamePanel.repaint();
+                this.gameFrame.updatePanel();
                 this.save.updateLastSeen();
                 this.save.save();
+                if(this.getTamagotchi().isDead()){
+                    this.alive=false;
+                    this.gameFrame.switchPanel(GameFrame.DEATH);
+                    this.save.delete();
+                }
             }catch (InterruptedException e){
                 this.alive=false;
                 thisThread.interrupt();

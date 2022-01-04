@@ -1,7 +1,9 @@
 package fr.tama.controller;
 import java.util.Locale;
 
-
+/**
+ * Class that shall link Locale and language name in its own language
+ */
 public class LangTuple
 {
     private String name;

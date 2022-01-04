@@ -7,10 +7,13 @@ import java.util.HashSet;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * Class used as an interface to get or set configurations in database
+ */
 public class DBConfig {
     private static HashSet<String> columns;
     
-    static
+    static //Columns of the table in database
     {
         columns = new HashSet<>();
         columns.add("lang");
@@ -22,9 +25,13 @@ public class DBConfig {
     {
         try
         {
+            if(!columns.contains(columnName))
+                throw new RuntimeException("Unknown COLUMN : " + columnName);
+
             Statement stm = DBConnection.getConnection().createStatement();
             ResultSet st = stm.executeQuery("SELECT * FROM config");
-            if(st.next() && columns.contains(columnName))
+
+            if(st.next())
                 return st;
         }
         catch(SQLException e)
@@ -35,7 +42,11 @@ public class DBConfig {
         throw new RuntimeException("Query returned null");
     }
 
-    
+    /**
+     * Method that retrieve an integer in a specified column
+     * @param columnName Column to query
+     * @return Integer stored in queried column
+     */
     public static int getInt(String columnName)
     {
         try {
@@ -46,6 +57,11 @@ public class DBConfig {
         throw new RuntimeException("Query returned null");
     }
     
+    /**
+     * Method that retrieve a boolean in a specified column
+     * @param columnName Column to query
+     * @return Boolean stored in queried column
+     */
     public static boolean getBoolean(String columnName)
     {
         try {
@@ -57,6 +73,11 @@ public class DBConfig {
         throw new RuntimeException("Query returned null");
     }
     
+    /**
+     * Method that retrieve a string in a specified column
+     * @param columnName Column to query
+     * @return String stored in queried column
+     */
     public static String getString(String columnName)
     {
         try {
@@ -73,7 +94,7 @@ public class DBConfig {
         {
             //Prevents SQL injections and invalid columnName
             if(!columns.contains(columnName))
-                throw new RuntimeException("Unknown ColumnName in config table: " + columnName);
+                throw new RuntimeException("Unknown COLUMN : " + columnName);
             
             return DBConnection.getConnection().prepareStatement("UPDATE config SET " + columnName + "=? WHERE TRUE");
         }
@@ -82,14 +103,19 @@ public class DBConfig {
             e.printStackTrace();
         }
 
-        throw new RuntimeException("SQL error was encountered");
+        throw new RuntimeException("An SQL error was encountered");
     }
 
-    public static void setBoolean(String columnName, Boolean o)
+    /**
+     * Method that put a boolean in a specified column
+     * @param columnName Column to query
+     * @param value Value to be put
+     */
+    public static void setBoolean(String columnName, Boolean value)
     {
         try {
             PreparedStatement p = setValue(columnName);
-            p.setBoolean(1, o);
+            p.setBoolean(1, value);
             p.executeUpdate();
             
         } catch (SQLException e) {
@@ -97,11 +123,16 @@ public class DBConfig {
         }
     }
     
-    public static void setInt(String columnName, int o)
+    /**
+     * Method that put an integer in a specified column
+     * @param columnName Column to query
+     * @param value Value to be put
+     */
+    public static void setInt(String columnName, int value)
     {
         try {
             PreparedStatement p = setValue(columnName);
-            p.setInt(1, o);
+            p.setInt(1, value);
             p.executeUpdate();
             
         } catch (SQLException e) {
@@ -109,11 +140,16 @@ public class DBConfig {
         }
     }
 
-    public static void setString(String columnName, String o)
+    /**
+     * Method that put a string in a specified column
+     * @param columnName Column to query
+     * @param value Value to be put
+     */
+    public static void setString(String columnName, String value)
     {
         try {
             PreparedStatement p = setValue(columnName);
-            p.setString(1, o);
+            p.setString(1, value);
             p.executeUpdate();
             
         } catch (SQLException e) {

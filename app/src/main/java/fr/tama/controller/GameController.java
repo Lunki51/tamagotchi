@@ -2,6 +2,7 @@ package fr.tama.controller;
 
 import fr.tama.model.*;
 import fr.tama.view.GameFrame;
+import fr.tama.view.utils.Animation;
 import fr.tama.view.utils.AnimationSprite;
 import fr.tama.view.GameView;
 import fr.tama.view.components.TamaRadioButton;
@@ -63,6 +64,7 @@ public class GameController {
             switch(INSTANCE.getLocation().getAction()){
                 case "hunger":
                     if(INSTANCE.getTamagotchi().getAttribute("hungry").getCoolDown()==0){
+                        this.gameView.getGameFrame().getGamePanel().getGameScreen().getBonbon().start();
                         INSTANCE.getTamagotchi().eat();
                     }
                     break;
@@ -232,8 +234,8 @@ public class GameController {
             save.delete();
         });
 
-        AnimationSprite[] anims = this.gameView.getGameFrame().getGamePanel().getGameScreen().getAnimations();
-        for(AnimationSprite anim : anims){
+        Animation[] anims = this.gameView.getGameFrame().getGamePanel().getGameScreen().getAnimations();
+        for(Animation anim : anims){
             anim.addUpdateListener(e->{
                 if(this.gameView.getGameFrame().getCurrentPanel()==3)this.gameView.updatePanel();
             });

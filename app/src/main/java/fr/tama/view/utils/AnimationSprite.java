@@ -5,18 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AnimationSprite implements Runnable{
+public class AnimationSprite extends Animation{
 
     ImageIcon[] frames;
     int currentFrame;
-    long delta;
-    private int nbLoop;
-    private final ArrayList<ActionListener> listeners = new ArrayList<>();
+
 
     public AnimationSprite(String[] files, long delta, int nbLoop){
+        super(delta, nbLoop);
         frames = new ImageIcon[files.length];
-        this.delta = delta;
-        this.nbLoop = nbLoop;
         for(int i=0;i<files.length;i++){
             frames[i] = new ImageIcon(this.getClass().getClassLoader().getResource(files[i]));
         }
@@ -50,9 +47,7 @@ public class AnimationSprite implements Runnable{
 
     }
 
-    public void addUpdateListener(ActionListener l){
-        this.listeners.add(l);
-    }
+
 
     public ImageIcon getCurrentImage(){
         return this.frames[currentFrame];

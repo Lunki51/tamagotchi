@@ -3,32 +3,30 @@ package fr.tama.view.utils;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 
-public class AnimationPos implements Runnable{
+public class AnimationPos extends Animation{
 
     float[] initial;
     float[] movement;
     float[] current;
-    int currentFrame;
-    long delta;
-    private int nbLoop;
     Thread thisThread;
-    private long pause;
-    private final ArrayList<ActionListener> endListeners = new ArrayList<>();
-    private final ArrayList<ActionListener> listeners = new ArrayList<>();
+    private AnimationPos child;
+    private CountDownLatch semaphore;
 
-    public AnimationPos(float[] pos,float[] movement, long delta,long pause, int nbLoop){
-        this.delta = delta;
-        this.nbLoop = nbLoop;
+    public AnimationPos(float[] pos,float[] movement, long delta, int nbLoop){
+        super(delta,nbLoop);
         this.movement = movement;
-        this.pause=pause;
         this.initial=pos;
+        this.child = null;
         this.current = new float[]{0,0};
 
     }
 
     public void start(){
         this.current = new float[]{0,0};
+        semaphore = new CountDownLatch(1);
         thisThread = new Thread(this);
         thisThread.start();
     }
@@ -56,52 +54,54 @@ public class AnimationPos implements Runnable{
             int count = 0;
             while(count!=delta){
                 try{
-                    current[0] += (movement[0]/delta)*100;
-                    current[1] += (movement[1]/delta)*100;
-                    count+=100;
-                    for(ActionListener l : this.listeners){
-                        l.actionPerformed(new ActionEvent(this,0,"update"));
-                    }
-                    Thread.sleep(100);
+                    current[0] += (movement[0]/delta)*10;
+                    current[1] += (movement[1]/delta)*10;
+                    count+=10;
+                    for(ActionListener l : this.listeners)
+                        l.actionPerformed(new ActionEvent(this,0,"refresh"));
+                    Thread.sleep(10);
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
             }
-            try{
-                for(ActionListener l : this.endListeners){
-                    l.actionPerformed(new ActionEvent(this,0,"update"));
+
+            if(this.child !=null){
+                try{
+                    this.child.start();
+                    this.child.semaphore.await();
+                }catch (InterruptedException e){
+                    e.printStackTrace();
                 }
-                Thread.sleep(pause);
-            }catch (InterruptedException e){
-                e.printStackTrace();
             }
 
             while(count!=0){
                 try{
-                    current[0] -= (movement[0]/delta)*100;
-                    current[1] -= (movement[1]/delta)*100;
-                    count-=100;
-                    for(ActionListener l : this.listeners){
-                        l.actionPerformed(new ActionEvent(this,0,"update"));
-                    }
-                    Thread.sleep(100);
+                    current[0] -= (movement[0]/delta)*10;
+                    current[1] -= (movement[1]/delta)*10;
+                    count-=10;
+                    for(ActionListener l : this.listeners)
+                        l.actionPerformed(new ActionEvent(this,0,"refresh"));
+                    Thread.sleep(10);
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
             }
             if(loop>0)loop--;
         }
+        this.semaphore.countDown();
         thisThread.interrupt();
 
     }
 
-    public void addUpdateListener(ActionListener l){
-        this.listeners.add(l);
+    public void setChild(AnimationPos child){
+        this.child = child;
     }
 
-    public void addMiddleListener(ActionListener l){
-        this.endListeners.add(l);
+    public boolean isRunning(){
+        if(thisThread==null)return false;
+        return thisThread.isAlive();
     }
+
 
     public float[] getPos(){
         return new float[]{this.initial[0]+this.current[0],this.initial[1]+this.current[1]};

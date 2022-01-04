@@ -232,7 +232,10 @@ public class Game extends JPanel implements Updatable {
 
         Tamagotchi tamagotchi = this.gameInstance.getTamagotchi();
         if(tamagotchi.getAttribute(this.gameInstance.getLocation().getAction()).getCoolDown()!=0 && !this.gameInstance.getLocation().getAction().equals("tiredness")){
-            this.actionButton.setText(String.valueOf(tamagotchi.getAttribute(this.gameInstance.getLocation().getAction()).getCoolDown()*5)+" "+LangFile.getLangFile().getString("game.minute"));
+            int time = tamagotchi.getAttribute(this.gameInstance.getLocation().getAction()).getCoolDown()*5;
+            int minuts = time%5;
+            int hours = time/60;
+            this.actionButton.setText(hours+" "+LangFile.getLangFile().getString("game.hour")+" "+minuts   +" "+LangFile.getLangFile().getString("game.minute"));
         }else{
             this.actionButton.setText(LangFile.getLangFile().getString("attribute_action_"+this.gameInstance.getLocation().getAction()+"_"+(this.gameInstance.getTamagotchi().getCurrent()==Current.ASLEEP?"off":"on")));
         }

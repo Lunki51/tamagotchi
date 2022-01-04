@@ -36,7 +36,7 @@ public class GameController {
     /**
      * Apply an ActionListener to components of View
      */
-    public void applyListeners()
+    private void applyListeners()
     {
         //Menu control events
         this.gameView.getGameFrame().getMenuPanel().getButtonPlay().addActionListener(e -> this.gameView.getGameFrame().switchPanel(GameFrame.SAVES));

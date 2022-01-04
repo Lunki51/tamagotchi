@@ -245,7 +245,12 @@ public class Game extends JPanel implements Updatable {
             int hours = time/60;
             String text = "";
             if(hours!=0){
-                text+=hours + " " + LangFile.getLangFile().getString("game.hour")+" ";
+                if(hours==1){
+                    text+=hours + " " + LangFile.getLangFile().getString("game.hour")+" ";
+                }else{
+                    text+=hours + " " + LangFile.getLangFile().getString("game.hours")+" ";
+                }
+
             }
             if(minuts!=0){
                 text+=minuts + " " + LangFile.getLangFile().getString("game.minute");

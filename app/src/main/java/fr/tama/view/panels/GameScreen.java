@@ -24,6 +24,7 @@ public class GameScreen extends JPanel {
     ImageIcon bedroom1 = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/dodo.png")));
     ImageIcon bonbonSprite = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("sprites/background/bonbon.png")));
     AnimationSprite bedroomSleep= new AnimationSprite(new String[]{"sprites/background/dodo_anim1.png","sprites/background/dodo_anim2.png"},700,-1);
+    AnimationSprite poopAnim = new AnimationSprite(new String[]{"sprites/tamagotchi/crotte_1.png","sprites/tamagotchi/crotte_2.png","sprites/tamagotchi/crotte_3.png","sprites/tamagotchi/crotte_4.png","sprites/tamagotchi/crotte_5.png","sprites/tamagotchi/crotte_6.png","sprites/tamagotchi/crotte_7.png"},100,-1);
     AnimationPos tamaBath;
     AnimationPos tamaJump;
     AnimationPos bonbon;
@@ -37,6 +38,7 @@ public class GameScreen extends JPanel {
     public GameScreen(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
         bedroomSleep.start();
+        poopAnim.start();
         tamaBath = new AnimationPos(new float[]{0,0},new float[]{0,0},500,1);
         tamaJump = new AnimationPos(new float[]{0,0},new float[]{0,0},100,3);
         tamaPoop = new AnimationPos(new float[]{0,0},new float[]{0,0},500,1);
@@ -49,7 +51,7 @@ public class GameScreen extends JPanel {
     }
 
     public Animation[] getAnimations() {
-        return new Animation[]{bedroomSleep,tamaBath,tamaJump,tamaPoop,bonbon};
+        return new Animation[]{bedroomSleep,tamaBath,tamaJump,tamaPoop,bonbon,poopAnim};
     }
 
     @Override
@@ -124,9 +126,12 @@ public class GameScreen extends JPanel {
             }else if(this.gameInstance.getLocation().getName().equals("toilet")){
                     tamaPoop.setInitial(new float[]{this.getWidth()/2 - (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2),this.getHeight()/2});
                     tamaPoop.setMovement(new float[]{this.getWidth()/4,0});
-
                 tamaJump.setInitial(tamaPoop.getPos());
-                g.drawImage(icon.getImage(),(int)tamaJump.getPos()[0],(int)tamaJump.getPos()[1],(this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight(),this.getHeight()/2,null);
+                    if(tamaPoop.isMiddle())
+                {
+                    g.drawImage(poopAnim.getCurrentImage().getImage(),(3*(this.getWidth() / 4)) - ( (((this.getHeight()/2*poopAnim.getCurrentImage().getIconWidth())/poopAnim.getCurrentImage().getIconHeight())/2)/4),7* this.getHeight() / 10,((this.getHeight()/2*poopAnim.getCurrentImage().getIconWidth())/poopAnim.getCurrentImage().getIconHeight() )/4,this.getHeight()/8,null);
+                }
+                g.drawImage(icon.getImage(),(int)tamaJump.getPos()[0],(int)tamaJump.getPos()[1],(this.getHeight() / 2 * icon.getIconWidth()) / icon.getIconHeight(), this.getHeight() / 2,null);
             }else if(this.gameInstance.getLocation().getName().equals("kitchen")) {
                     bonbon.setInitial(new float[]{this.getWidth() / 2 - ( (((this.getHeight()/2*icon.getIconWidth())/icon.getIconHeight())/2)/4),3* this.getHeight() / 4});
                     bonbon.setMovement(new float[]{0, -this.getHeight() / 32});

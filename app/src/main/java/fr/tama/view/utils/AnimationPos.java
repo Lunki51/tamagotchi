@@ -14,13 +14,13 @@ public class AnimationPos extends Animation{
     Thread thisThread;
     private AnimationPos child;
     private CountDownLatch semaphore;
+    private boolean middle;
 
     /**
      * Round-trip animation between two locations
      * @param pos Initial location of the animation
      * @param movement Break location where ends the animation before going back to its initial location
      * @param delta ?? //TODO
-     * @param pause Time staying at the middle of the round-trip
      * @param nbLoop Number of loop that animation have to do
      */
     public AnimationPos(float[] pos,float[] movement, long delta, int nbLoop){
@@ -70,8 +70,10 @@ public class AnimationPos extends Animation{
      */
     @Override
     public void run() {
+
         int loop=nbLoop;
         while(loop!=0){
+            middle= false;
             //POS - POS + MOVEMENT en DELTA
             int count = 0;
             while(count!=delta){
@@ -86,7 +88,7 @@ public class AnimationPos extends Animation{
                     e.printStackTrace();
                 }
             }
-
+            middle = true;
             if(this.child !=null){
                 try{
                     this.child.start();
@@ -95,6 +97,7 @@ public class AnimationPos extends Animation{
                     e.printStackTrace();
                 }
             }
+
 
             while(count!=0){
                 try{
@@ -134,6 +137,10 @@ public class AnimationPos extends Animation{
         return thisThread.isAlive();
     }
 
+
+    public boolean isMiddle(){
+        return this.middle;
+    }
 
     /**
      * Return the current location of the animation

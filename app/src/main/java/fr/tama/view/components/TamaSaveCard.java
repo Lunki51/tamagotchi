@@ -27,6 +27,9 @@ public class TamaSaveCard extends JPanel implements Updatable {
     public static final String DIFFICULTY = "3";
     public static final String CONFIRM_DELETE = "4";
 
+    /**
+     * Customized JPanel handling the display of a save or the creation of a new one
+     */
     public TamaSaveCard() {
         this.setLayout(new CardLayout());
         emptySavePanel = new EmptySave(new ImageIcon(this.getClass().getClassLoader().getResource("sprites/tamagotchi/egg_plus.png")));
@@ -50,22 +53,39 @@ public class TamaSaveCard extends JPanel implements Updatable {
         this.setBackground(Constants.PURPLE);
     }
 
+    /**
+     * Initialize from raw information
+     * @param name Name of the tamagotchi
+     * @param type Type of the tamagotchi
+     * @param level Level of the tamagotchi
+     */
     public TamaSaveCard(String name, String type, String level){
         this();
         this.changePanel(CREATED);
         this.createdSavePanel.setup(name,type,level);
     }
 
+    /**
+     * Return the Difficulty instance from the save
+     * @return Difficulty instance of the save
+     */
     public int getDifficulty() {
         return difficultyPanel.getDifficulty().getSelectedIndex();
     }
 
+    /**
+     * Change 
+     */
     public void changePanel(String newPanel){
         this.currentPanel=newPanel;
         ((CardLayout)this.getLayout()).show(this,currentPanel);
         this.updatePanel();
     }
 
+    /**
+     * Modify the level
+     * @param level Level to be set
+     */
     public void setLevel(String level){
         this.createdSavePanel.setLevel(level);
     }
@@ -92,10 +112,18 @@ public class TamaSaveCard extends JPanel implements Updatable {
         this.repaint();
     }
 
+    /**
+     * Return type of the tamagotchi
+     * @return Type of tamagotchi
+     */
     public String getTamagotchi(){
         return this.saveCreationPanel.getTamagotchi();
     }
 
+    /**
+     * Return name of the tamagotchi
+     * @return Name of the tamagotchi
+     */
     public String getName(){
         return this.saveCreationPanel.getName();
     }
@@ -127,6 +155,9 @@ class CreatedSave extends AbstractButton implements Updatable {
     private final EmptySave image;
     private final EmptySave bin;
 
+    /**
+     * Default save
+     */
     public CreatedSave() {
         super();
         this.name = LangFile.getLangFile().getString("menu.name");
@@ -178,6 +209,12 @@ class CreatedSave extends AbstractButton implements Updatable {
         this.add(pane,BorderLayout.CENTER);
     }
 
+    /**
+     * Set attributes raw information
+     * @param name Name of the tamagotchi
+     * @param type Type of the tamagotchi
+     * @param level Level of the tamagotchi
+     */
     public void setup(String name, String type,String level){
         this.name = name;
         this.type=type;
@@ -185,6 +222,10 @@ class CreatedSave extends AbstractButton implements Updatable {
         this.updatePanel();
     }
 
+    /**
+     * Set new level value
+     * @param level new value
+     */
     public void setLevel(String level) {
         this.level = level;
     }
@@ -206,8 +247,6 @@ class CreatedSave extends AbstractButton implements Updatable {
         this.image.updatePanel();
         this.repaint();
     }
-
-
 }
 
 class EmptySave extends JButton implements Updatable {
@@ -269,21 +308,16 @@ class ArrowButton extends JButton{
         g.setColor(Constants.PURPLE);
         g.fillRect(0,0,this.getWidth(),this.getHeight());
         g.setColor(this.getBackground());
-        switch (this.side){
-            case 0:
-                g.fillPolygon(new int[]{0,this.getWidth()/3,this.getWidth()/3},new int[]{this.getHeight()/2,0,this.getHeight()},3);
-                g.fillRect(this.getWidth()/3,this.getHeight()/2 - (this.getHeight()/6),(this.getWidth()/3)*2,(this.getHeight()/3));
-                break;
-            case 1:
-                g.fillPolygon(new int[]{this.getWidth(),(this.getWidth()/3)*2,(this.getWidth()/3)*2},new int[]{this.getHeight()/2,0,this.getHeight()},3);
-                g.fillRect(0,this.getHeight()/2 - (this.getHeight()/6),(this.getWidth()/3)*2,(this.getHeight()/3));
-                break;
-            case 2:
 
-                break;
-            case 3:
-
-                break;
+        if(this.side == 0)
+        {
+            g.fillPolygon(new int[]{0,this.getWidth()/3,this.getWidth()/3},new int[]{this.getHeight()/2,0,this.getHeight()},3);
+            g.fillRect(this.getWidth()/3,this.getHeight()/2 - (this.getHeight()/6),(this.getWidth()/3)*2,(this.getHeight()/3));
+        }
+        else if(this.side == 1)
+        {
+            g.fillPolygon(new int[]{this.getWidth(),(this.getWidth()/3)*2,(this.getWidth()/3)*2},new int[]{this.getHeight()/2,0,this.getHeight()},3);
+            g.fillRect(0,this.getHeight()/2 - (this.getHeight()/6),(this.getWidth()/3)*2,(this.getHeight()/3));
         }
     }
 }
@@ -421,7 +455,6 @@ class SaveCreation extends JPanel implements Updatable {
         return validation;
     }
 
-
     public String getName(){
         return this.jTextField.getText();
     }
@@ -535,6 +568,9 @@ class ConfirmDelete extends JPanel implements Updatable{
     private final AbstractButton confirmButton;
     private final AbstractButton returnButton;
 
+    /**
+     * Customized JPanel displaying asking confirmation to deletion of a save
+     */
     public ConfirmDelete() {
         super();
         this.setLayout(new GridBagLayout());
@@ -558,8 +594,6 @@ class ConfirmDelete extends JPanel implements Updatable{
         this.add(returnButton,c);
         c.gridx=1;
         this.add(confirmButton,c);
-
-
     }
 
     public AbstractButton getConfirmButton() {

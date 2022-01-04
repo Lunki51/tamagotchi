@@ -16,6 +16,9 @@ public class Music {
         else initGameMusic();
     }
 
+    /**
+     * Track main music
+     */
     public void initGameMusic() {
         if(!isStopped() && !isSleepingmusic) return;
         try{
@@ -51,6 +54,9 @@ public class Music {
             start();
     }
 
+    /**
+     * Track sleeping music
+     */
     public void initSleepMusic() {
         float oldVolume = getVolume();
         boolean isstopped = isStopped();
@@ -81,33 +87,57 @@ public class Music {
         }
     }
 
+    /**
+     * Return music volume
+     * @return music volume
+     */
     public float getVolume() {
         return fc.getValue();
     }
 
+    /**
+     * Set music volume to a new volume value
+     * @param volume value to set
+     */
     public void setVolume(float volume) {
         fc.setValue(volume);
     }
 
+    /**
+     * Save current volume value into the database
+     */
     public void saveVolume()
     {
         DBConfig.setInt("volume",(int)fc.getValue());
     }
 
+    /**
+     * Save current state of music into the database
+     */
     public void saveMute()
     {   
-        DBConfig.setBoolean("mute", !this.clip.isActive());
+        DBConfig.setBoolean("mute", this.isStopped());
     }
 
+    /**
+     * Start playing music
+     */
     public void start()  {
         if(!this.clip.isActive())
             this.clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    /**
+     * Stop music
+     */
     public void stop(){
         this.clip.stop();
     }
 
+    /**
+     * Check if music is stopped or played
+     * @return true if stopped else false
+     */
     public boolean isStopped()
     {
         return this.clip == null ? true : !this.clip.isActive();

@@ -8,6 +8,14 @@ public class TamaRadioButton extends JRadioButton {
     private final Color buttonSelectedColor;
     private final Color buttonColor;
 
+    /**
+     * Customized JRadioButton
+     * @param text Label
+     * @param buttonColor Button color
+     * @param buttonSelectedColor Button selected color
+     * @param fontColor Font color
+     * @param bgColor Background color
+     */
     public TamaRadioButton(String text, Color buttonColor, Color buttonSelectedColor, Color fontColor, Color bgColor) {
         super(text);
         setForeground(fontColor);

@@ -16,6 +16,9 @@ public class Menu extends JPanel implements Updatable {
     private final TamaButton buttonOption;
     private final TamaButton buttonQuit;
 
+    /**
+     * Initialize Menu Panel and its components
+     */
     public Menu() {
 
         super(new BorderLayout());
@@ -52,6 +55,9 @@ public class Menu extends JPanel implements Updatable {
         return this.buttonQuit;
     }
 
+    /**
+     * Method handling repainting of the panel
+     */
     @Override
     public void updatePanel() {
         this.buttonPlay.setText(LangFile.getLangFile().getString("menu.play"));

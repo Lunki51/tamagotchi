@@ -218,10 +218,25 @@ public abstract class Tamagotchi {
                 '}';
     }
 
+    /**
+     * Ask tamagotchi for eating
+     */
     public abstract void eat();
+    /**
+     * Ask tamagotchi for sleeping
+     */
     public abstract void sleep();
+    /**
+     * Ask tamagotchi for playing
+     */
     public abstract void play();
+    /**
+     * Ask tamagotchi for taking out the sausage guillotine
+     */
     public abstract void toilet();
+    /**
+     * Ask tamagotchi for washing
+     */
     public abstract void wash();
 
     public void update(){

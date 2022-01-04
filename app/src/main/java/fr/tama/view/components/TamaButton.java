@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TamaButton extends JButton {
+    /**
+     * Customized JButton
+     * @param text Text in button
+     */
     public TamaButton(String text) {
         super(text);
         this.setHorizontalTextPosition(JButton.CENTER);

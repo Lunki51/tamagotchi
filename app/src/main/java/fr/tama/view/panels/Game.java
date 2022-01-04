@@ -50,6 +50,10 @@ public class Game extends JPanel implements Updatable {
     private final GameInstance gameInstance;
     private final JLabel infoLabel;
 
+    /**
+     * Initialize JPanel and in-game components
+     * @param gameInstance thread manipulating current game
+     */
     public Game(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
         this.setLayout(new GridLayout(1,2));
@@ -228,6 +232,10 @@ public class Game extends JPanel implements Updatable {
         return gameScreen;
     }
 
+    /**
+     * Method handling repainting of the panel
+     */
+    @Override
     public void updatePanel(){
 
         Tamagotchi tamagotchi = this.gameInstance.getTamagotchi();

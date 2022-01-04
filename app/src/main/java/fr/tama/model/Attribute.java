@@ -77,6 +77,10 @@ public class Attribute {
         this.name = name;
     }
 
+    /**
+     * Return maximum value of the attribute
+     * @return the maximum value of the attribute
+     */
     public int getMax() {
         return max;
     }
@@ -93,14 +97,24 @@ public class Attribute {
         this.value = value;
     }
 
+    /**
+     * Reduce cooldown by 1
+     */
     public void reduceCD(){
         if(this.coolDown!=0)this.coolDown--;
     }
 
+    /**
+     * Reset cooldown
+     */
     public void resetCD(){
         this.coolDown = maxCoolDown;
     }
 
+    /**
+     * Return current cooldown
+     * @return current cooldown value
+     */
     public int getCoolDown() {
         return coolDown;
     }

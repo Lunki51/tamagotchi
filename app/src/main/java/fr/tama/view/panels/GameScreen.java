@@ -31,6 +31,9 @@ public class GameScreen extends JPanel {
 
     private final GameInstance gameInstance;
 
+    /**
+     * Handle backgrounds and animations
+     */
     public GameScreen(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
         bedroomSleep.start();

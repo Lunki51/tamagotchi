@@ -10,6 +10,10 @@ public class TamaAttribBarComponent extends JComponent {
     private int currentValue;
     private Color color;
 
+    /**
+     * Customized ProgressBar
+     * @param color Color of bar
+     */
     public TamaAttribBarComponent(Color color){
         this.minValue=0;
         this.maxValue=0;
@@ -17,16 +21,32 @@ public class TamaAttribBarComponent extends JComponent {
         this.color=color;
     }
 
+    /**
+     * Set new values and update the component
+     * @param minValue new minimum value
+     * @param maxValue new maximum value
+     * @param currentValue new value
+     */
     public void updateDisplay(int minValue,int maxValue,int currentValue){
         this.minValue=minValue;
         this.maxValue=maxValue;
         this.currentValue=currentValue;
         repaint();
     }
+
+    /**
+     * Set new values and update the component
+     * @param maxValue new maximum value
+     * @param currentValue new value
+     */
     public void updateDisplay(int maxValue,int currentValue){
         this.updateDisplay(0,maxValue,currentValue);
     }
 
+    /**
+     * Set new bar color
+     * @param color new color
+     */
     public void setColor(Color color) {
         this.color = color;
     }
@@ -38,7 +58,6 @@ public class TamaAttribBarComponent extends JComponent {
         if(this.currentValue!=this.maxValue &&(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))>12&&(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))<(this.getWidth()*(((float)maxValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))-12){
             g.fillRect((int)(this.getWidth()*(((float)currentValue)/((float)maxValue-Math.abs((float)minValue)+1.0)))-10,0,10,this.getHeight());
         }
-
 
         Graphics2D g2d = (Graphics2D)g ;
         g2d.setColor(Color.BLACK);

@@ -13,10 +13,18 @@ public enum Level {
         this.level = level;
     }
 
+    /**
+     * Return current Level value as integer
+     * @return current level value as integer
+     */
     public int getValue(){
         return this.level;
     }
 
+    /**
+     * Return next Level value
+     * @return next level value
+     */
     public Level next(){
         if(this.level==0)return BLOB;
         if(this.level==1)return HEAD;
@@ -25,6 +33,11 @@ public enum Level {
         return this;
     }
 
+    /**
+     * Transform an integer into a Level value
+     * @param value integer to compare
+     * @return corresponding Level value
+     */
     public static Level getLevel(int value){
         switch (value){
             case 0: return EGG;

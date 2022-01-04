@@ -11,6 +11,12 @@ public class AnimationSprite extends Animation{
     int currentFrame;
 
 
+    /**
+     * Create an animation from consecutives files
+     * @param files Frames of animation
+     * @param delta Time between animation frames
+     * @param nbLoop Number of loop that animation have to do (-1 = infinite)
+     */
     public AnimationSprite(String[] files, long delta, int nbLoop){
         super(delta, nbLoop);
         frames = new ImageIcon[files.length];
@@ -19,10 +25,16 @@ public class AnimationSprite extends Animation{
         }
     }
 
+    /**
+     * Start animation
+     */
     public void start(){
         new Thread(this).start();
     }
 
+    /**
+     * Run animation
+     */
     @Override
     public void run() {
         while(nbLoop!=0){
@@ -49,6 +61,10 @@ public class AnimationSprite extends Animation{
 
 
 
+    /**
+     * Get current animation frame
+     * @return Frame as an ImageIcon
+     */
     public ImageIcon getCurrentImage(){
         return this.frames[currentFrame];
     }

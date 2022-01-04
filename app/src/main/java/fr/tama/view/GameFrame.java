@@ -26,6 +26,11 @@ public class GameFrame extends JFrame implements Updatable {
     public static final int OPTIONS = 4;
     public static final int DEATH = 5;
 
+    /**
+     * Initializes a JFrame instance which handles multiple JPanels used in-game
+     * @param gameInstance
+     * @throws HeadlessException
+     */
     public GameFrame(GameInstance gameInstance) throws HeadlessException {
         super(LangFile.getLangFile().getString("title"));
         this.menu = new Menu();
@@ -45,30 +50,52 @@ public class GameFrame extends JFrame implements Updatable {
         switchPanel(this.currentPanel);
     }
 
+    /**
+     * Return current panel shown
+     * @return index of panel shown <ul><li>1 = Menu</li><li>2 = Saves</li><li>3 = Game</li><li>4 = Options</li><li>5 = Death screen</li></ul>
+     */
     public int getCurrentPanel() {
         return currentPanel;
     }
 
+    /**
+     * Return the JPanel instance handling menu
+     * @return Return the JPanel instance handling menu
+     */
     public Menu getMenuPanel() {
         return this.menu;
     }
 
+    /**
+     * Return the JPanel instance handling game
+     * @return Return the JPanel instance handling game
+     */
     public Game getGamePanel() {
         return this.gamePanel;
     }
 
+    /**
+     * Return the JPanel instance handling options
+     * @return Return the JPanel instance handling options
+     */
     public Options getOptionsPanel() {
         return options;
     }
 
+    /**
+     * Return the JPanel instance handling saves
+     * @return Return the JPanel instance handling saves
+     */
     public Saves getSavesPanel() { return savesPanel; }
 
     public Death getDeathPanel() {
         return death;
     }
 
-
-
+    /**
+     * Ask GameFrame for show a specified panel
+     * @param panel <ul><li>1 = Menu</li><li>2 = Saves</li><li>3 = Game</li><li>4 = Options</li><li>5 = Death screen</li></ul>
+     */
     public void switchPanel(int panel) {
         this.currentPanel=panel;
         this.getContentPane().removeAll();
@@ -99,7 +126,9 @@ public class GameFrame extends JFrame implements Updatable {
         this.repaint();
     }
 
-
+    /**
+     * Call updatePanel() method from current panel shown
+     */
     @Override
     public void updatePanel() {
         switch(this.currentPanel) {

@@ -11,6 +11,12 @@ public class Constants {
     public final static Font BASIC_FONT = new Font(Font.SANS_SERIF,  Font.BOLD, 20);
     public final static Font TITLE_FONT = new Font(Font.SANS_SERIF,  Font.BOLD, 30);
 
+    /**
+     * Modify color's bytes by a specified value
+     * @param c Color to modify
+     * @param shift Value to apply on each bytes
+     * @return new Color with modified bytes
+     */
     public static Color ColorShift(Color c, int shift)
     {
         int[] cv = new int[]{c.getRed(), c.getGreen(), c.getBlue()};

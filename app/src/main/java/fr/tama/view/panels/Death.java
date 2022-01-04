@@ -16,6 +16,9 @@ public class Death extends JPanel implements Updatable {
     private final TamaButton buttonQuit;
     private JLabel deathLabel;
 
+    /**
+     * Initialization of Death screen panel
+     */
     public Death() {
 
         super(new BorderLayout());
@@ -41,12 +44,16 @@ public class Death extends JPanel implements Updatable {
         buttonPanel.add(new JLabel());
         buttonPanel.add(new JLabel());
     }
+    
 
     public TamaButton getReturnButton() { return this.returnButton; }
     public TamaButton getButtonQuit() {
         return this.buttonQuit;
     }
 
+    /**
+     * Method handling repainting of the panel
+     */
     @Override
     public void updatePanel() {
         this.returnButton.setText(LangFile.getLangFile().getString("menu.back"));

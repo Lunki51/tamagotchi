@@ -3,6 +3,9 @@ package fr.tama.view.components;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * a custom bar for the tamagotchi stats
+ */
 public class TamaAttribBarComponent extends JComponent {
 
     private int minValue;

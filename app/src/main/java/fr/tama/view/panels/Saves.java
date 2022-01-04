@@ -11,6 +11,9 @@ import fr.tama.view.utils.Updatable;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The "My Saves" screen allows to start or laod a save
+ */
 public class Saves extends JPanel implements Updatable {
 
 

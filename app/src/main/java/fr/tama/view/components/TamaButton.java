@@ -5,6 +5,9 @@ import fr.tama.model.Constants;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * a custom button for the menus
+ */
 public class TamaButton extends JButton {
     /**
      * Customized JButton

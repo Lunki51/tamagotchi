@@ -12,6 +12,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
 
+/**
+ * Options screen
+ */
 public class Options extends JPanel implements Updatable {
 
     private final JSlider musicSlider;

@@ -3,6 +3,9 @@ package fr.tama.view.components;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * a custom radio button for the options in particular
+ */
 public class TamaRadioButton extends JRadioButton {
 
     private final Color buttonSelectedColor;

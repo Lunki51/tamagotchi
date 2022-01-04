@@ -24,7 +24,7 @@ public class GameView implements Updatable {
             this.music = new Music(this.gameInstance.getTamagotchi().getCurrent() == Current.ASLEEP);
     }
 
-    /**
+    /** 
      * Init the View and create
      */
     public void start(){

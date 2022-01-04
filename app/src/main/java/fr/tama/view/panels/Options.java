@@ -25,8 +25,8 @@ public class Options extends JPanel implements Updatable {
     private final JPanel aboutPanel;
 
     /**
-     * 
-    */
+     * Initialize Options Panel and its components
+     */
     public Options(){
         super(new GridLayout(4,3));
         super.setBackground(Constants.BLUE);
@@ -138,6 +138,10 @@ public class Options extends JPanel implements Updatable {
         return saveButton;
     }
     
+    /**
+     * Return an array of JRadioButton used to switch language
+     * @return an array of JRadioButton
+     */
     public TamaRadioButton[] getRadioButtons()
     {
         TamaRadioButton[] b = new TamaRadioButton[langButtons.getButtonCount()];
@@ -149,6 +153,9 @@ public class Options extends JPanel implements Updatable {
         return b;
     }
 
+    /**
+     * Method handling repainting of the panel
+     */
     @Override
     public void updatePanel() {
         this.musicSwitch.setText(LangFile.getLangFile().getString("option.mute"));

@@ -13,6 +13,12 @@ public class AnimationSprite implements Runnable{
     private int nbLoop;
     private final ArrayList<ActionListener> listeners = new ArrayList<>();
 
+    /**
+     * Create an animation from consecutives files
+     * @param files Frames of animation
+     * @param delta Time between animation frames
+     * @param nbLoop Number of loop that animation have to do (-1 = infinite)
+     */
     public AnimationSprite(String[] files, long delta, int nbLoop){
         frames = new ImageIcon[files.length];
         this.delta = delta;
@@ -22,10 +28,16 @@ public class AnimationSprite implements Runnable{
         }
     }
 
+    /**
+     * Start thread
+     */
     public void start(){
         new Thread(this).start();
     }
 
+    /**
+     * Run animation
+     */
     @Override
     public void run() {
         while(nbLoop!=0){
@@ -50,10 +62,18 @@ public class AnimationSprite implements Runnable{
 
     }
 
+    /**
+     * Add a listener to the animation
+     * @param l the listener to add
+     */
     public void addUpdateListener(ActionListener l){
         this.listeners.add(l);
     }
 
+    /**
+     * Get current animation frame
+     * @return Frame as an ImageIcon
+     */
     public ImageIcon getCurrentImage(){
         return this.frames[currentFrame];
     }

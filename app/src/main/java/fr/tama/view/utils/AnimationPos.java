@@ -17,6 +17,14 @@ public class AnimationPos implements Runnable{
     private final ArrayList<ActionListener> endListeners = new ArrayList<>();
     private final ArrayList<ActionListener> listeners = new ArrayList<>();
 
+    /**
+     * Round-trip animation between two locations
+     * @param pos Initial location of the animation
+     * @param movement Break location where ends the animation before going back to its initial location
+     * @param delta ?? //TODO
+     * @param pause Time staying at the middle of the round-trip
+     * @param nbLoop Number of loop that animation have to do
+     */
     public AnimationPos(float[] pos,float[] movement, long delta,long pause, int nbLoop){
         this.delta = delta;
         this.nbLoop = nbLoop;
@@ -27,16 +35,27 @@ public class AnimationPos implements Runnable{
 
     }
 
+    /**
+     * Start thread
+     */
     public void start(){
         this.current = new float[]{0,0};
         thisThread = new Thread(this);
         thisThread.start();
     }
 
+    /**
+     * Set where the animation starts
+     * @param initial Initial location
+     */
     public void setInitial(float[] initial) {
         this.initial = initial;
     }
 
+    /**
+     * Set where the animation stops before going back to initial location
+     * @param movement Break location
+     */
     public void setMovement(float[] movement){
         float ratioW = (float)this.movement[0] / (float)movement[0];
         float ratioH = (float)this.movement[1] / (float)movement[1];
@@ -48,6 +67,9 @@ public class AnimationPos implements Runnable{
 
     }
 
+    /**
+     * Run the animation
+     */
     @Override
     public void run() {
         int loop=nbLoop;
@@ -103,6 +125,10 @@ public class AnimationPos implements Runnable{
         this.endListeners.add(l);
     }
 
+    /**
+     * Return the current location of the animation 
+     * @return current location
+     */
     public float[] getPos(){
         return new float[]{this.initial[0]+this.current[0],this.initial[1]+this.current[1]};
     }

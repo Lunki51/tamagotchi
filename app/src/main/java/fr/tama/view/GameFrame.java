@@ -20,6 +20,12 @@ public class GameFrame extends JFrame implements Updatable {
     private final Death death;
     private int currentPanel;
 
+    public static final int MENU = 1;
+    public static final int SAVES = 2;
+    public static final int GAME = 3;
+    public static final int OPTIONS = 4;
+    public static final int DEATH = 5;
+
     /**
      * Initializes a JFrame instance which handles multiple JPanels used in-game
      * @param gameInstance
@@ -46,7 +52,7 @@ public class GameFrame extends JFrame implements Updatable {
 
     /**
      * Return current panel shown
-     * @return index of panel shown
+     * @return index of panel shown <ul><li>1 = Menu</li><li>2 = Saves</li><li>3 = Game</li><li>4 = Options</li><li>5 = Death screen</li></ul>
      */
     public int getCurrentPanel() {
         return currentPanel;
@@ -54,7 +60,7 @@ public class GameFrame extends JFrame implements Updatable {
 
     /**
      * Return the JPanel instance handling menu
-     * @return Return the JPanel instance handling menu@param panel <ul><li>1 = Menu</li><li>2 = Saves</li><li>3 = Game</li><li>4 = Options</li></ul>
+     * @return Return the JPanel instance handling menu
      */
     public Menu getMenuPanel() {
         return this.menu;
@@ -119,7 +125,6 @@ public class GameFrame extends JFrame implements Updatable {
         this.getContentPane().revalidate();
         this.repaint();
     }
-
 
     /**
      * Call updatePanel() method from current panel shown

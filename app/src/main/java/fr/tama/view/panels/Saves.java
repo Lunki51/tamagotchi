@@ -21,6 +21,9 @@ public class Saves extends JPanel implements Updatable {
 
     private final JLabel saveLabel;
 
+    /**
+     * Initialize Saves Panel and its components
+     */
     public Saves() {
         super(new GridBagLayout());
         this.setBackground(Constants.BLUE);
@@ -122,8 +125,15 @@ public class Saves extends JPanel implements Updatable {
         this.add(buttonsPanel,mainC);
     }
 
+    /**
+     * Return the button redirecting to menu
+     * @return Button redirecting to menu 
+     */
     public JButton getReturnButton() { return returnButton; }
 
+    /**
+     * Method handling repainting of the panel
+     */
     @Override
     public void updatePanel() {
         GameSave save;
@@ -153,16 +163,24 @@ public class Saves extends JPanel implements Updatable {
         this.repaint();
     }
 
+    /**
+     * Return first save panel
+     */
     public TamaSaveCard getSaveCardPanel1() {
         return saveCardPanel1;
     }
 
+    /**
+     * Return second save panel
+     */
     public TamaSaveCard getSaveCardPanel2() {
         return saveCardPanel2;
     }
 
+    /**
+     * Return last save panel
+     */
     public TamaSaveCard getSaveCardPanel3() {
         return saveCardPanel3;
     }
-
 }

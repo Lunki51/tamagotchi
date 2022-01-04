@@ -10,6 +10,13 @@ public class TamaCheckBox extends JCheckBox{
     private final Color buttonColor;
     private String text;
 
+    /**
+     * Customized JCheckBox
+     * @param text Label
+     * @param buttonBack Button background Color
+     * @param buttonFore Text color
+     * @param font Font
+     */
     public TamaCheckBox(String text,Color buttonBack,Color buttonFore,Font font) {
         this.buttonColor=buttonFore;
         this.buttonFontColor=buttonBack;
@@ -18,6 +25,7 @@ public class TamaCheckBox extends JCheckBox{
         Rectangle2D strBounds = this.getFont().getStringBounds(this.text,this.getFontMetrics(this.getFont()).getFontRenderContext());
         this.setPreferredSize(new Dimension((int)(strBounds.getWidth()+strBounds.getHeight())+20,(int)strBounds.getHeight()));
     }
+    
     @Override
     public void setText(String text) {
         this.text = text;

@@ -192,24 +192,55 @@ public abstract class Tamagotchi {
                 ", attributes=" + Arrays.toString(attributes) +
                 '}';
     }
+    /**
+     * Ask tamagotchi for eating
+     */
     public abstract void eat();
+    /**
+     * Ask tamagotchi for sleeping
+     */
     public abstract void sleep();
+    /**
+     * Ask tamagotchi for playing
+     */
     public abstract void play();
+    /**
+     * Ask tamagotchi for taking out the sausage guillotine
+     */
     public abstract void toilet();
+    /**
+     * Ask tamagotchi for washing
+     */
     public abstract void wash();
 
+
+    /**
+     * Get shape cooldown of the tamagotchi
+     * @return current shape cooldown
+     */
     public int getShapeCD(){
         return this.statusCD[0];
     }
 
+    /**
+     * Get mood cooldown of the tamagotchi
+     * @return current mood cooldown
+     */
     public int getMoodCD(){
         return this.statusCD[1];
     }
 
+    /**
+     * Get evolving cooldown of the tamagotchi
+     * @return current evolving cooldown
+     */
     public int getEvolCD() {
         return evolCD;
     }
 
+    /**
+     * Change tamagotchi attributes and check if it's ready to evolve
+     */
     public void update(){
         if(this.level == Level.EGG){
             this.levelUp();

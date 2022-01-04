@@ -4,7 +4,6 @@ public class Chat extends Tamagotchi{
     public Chat(Status mood, Status shape, Current current,boolean sex,String name,Level level) {
         super(mood, shape, current,sex,name,level);
     }
-    //TODO CUSTOM UPDATE
 
     @Override
     public void eat() {

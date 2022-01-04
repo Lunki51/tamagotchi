@@ -4,6 +4,10 @@ import fr.tama.controller.DBConfig;
 import javax.sound.sampled.*;
 import java.io.IOException;
 
+/**
+ * Music class
+ * allows to start a music or stop it
+ */
 public class Music {
     private Clip clip;
     private FloatControl fc;

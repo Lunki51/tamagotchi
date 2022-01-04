@@ -80,6 +80,9 @@ public class TamaSaveCard extends JPanel implements Updatable {
         this.currentPanel=newPanel;
         ((CardLayout)this.getLayout()).show(this,currentPanel);
         this.updatePanel();
+
+        if(newPanel.equals(SAVE_CREATION))
+            this.saveCreationPanel.getTextField().requestFocus();
     }
 
     /**
@@ -550,7 +553,10 @@ class SaveCreation extends JPanel implements Updatable {
         }
     }
 
-
+    public JTextField getTextField() 
+    {
+        return this.jTextField;
+    }
 }
 
 class CustomTField extends PlainDocument {

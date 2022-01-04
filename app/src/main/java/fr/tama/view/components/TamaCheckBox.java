@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * A custom check box
+ */
 public class TamaCheckBox extends JCheckBox{
 
     private final Color buttonFontColor;

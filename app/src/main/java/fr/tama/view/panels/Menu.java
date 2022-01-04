@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * Main menu screen
+ */
 public class Menu extends JPanel implements Updatable {
 
     private final TamaButton buttonPlay;
